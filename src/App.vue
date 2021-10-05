@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <b-navbar type="dark" variant="dark">
+      <b-navbar type="dark" variant="primary">
         <b-navbar-brand href="#">MMBOT</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -14,6 +14,7 @@
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
+            <skin-toggle></skin-toggle>
             <b-nav-item-dropdown v-if="isAuthenticated" right>
               <template #button-content>
                 {{ username }}
@@ -31,11 +32,13 @@
 </template>
 
 <script>
+import SkinToggle from './components/SkinToggle.vue'
 import { AUTH_LOGOUT } from './store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions } = createNamespacedHelpers('auth')
 
 export default {
+  components: { SkinToggle },
   computed: {
     ...mapGetters(['username', 'isAuthenticated'])
   },
