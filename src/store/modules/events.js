@@ -1,4 +1,5 @@
 import {
+  EVENTS_VERSION_SET,
   EVENTS_TRADES_ADD,
   EVENTS_TRADES_SET,
   EVENTS_INFOS_ADD,
@@ -6,11 +7,13 @@ import {
 } from '../actions/events'
 
 const state = {
+  backendVersion: 'unknown',
   trades: [],
   infos: {}
 }
 
 const getters = {
+  backendVersion: state => state.backendVersion,
   trades: state => state.trades,
   infos: state => Object.keys(state.infos).map(key => state.infos[key]),
   info: state => (symbol) => state.infos[symbol]
@@ -20,6 +23,9 @@ const actions = {
 }
 
 const mutations = {
+  [EVENTS_VERSION_SET]: (state, version) => {
+    state.backendVersion = version
+  },
   [EVENTS_TRADES_ADD]: (state, trade) => {
     state.trades.push(trade)
   },

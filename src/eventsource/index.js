@@ -1,4 +1,5 @@
 import {
+  EVENTS_VERSION_SET,
   EVENTS_TRADES_ADD,
   EVENTS_TRADES_SET,
   EVENTS_INFOS_ADD,
@@ -38,7 +39,20 @@ export function setupStream () {
           }
           break
 
+        case 'version':
+          store.commit('events/' + EVENTS_VERSION_SET, payload.data)
+          break
+
+        case 'config':
+        case 'performance':
+        case 'price':
+        case 'misc':
+        case 'order':
+        case 'error':
+          break
+
         default:
+          console.log(payload)
           break
       }
       // console.log(payload)
@@ -49,6 +63,8 @@ export function setupStream () {
       // -price
       // -order
       // -misc
+      // -version
+      // -error
     } else {
       // refresh
       // end_refresh

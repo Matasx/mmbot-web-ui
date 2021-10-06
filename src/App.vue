@@ -2,7 +2,7 @@
   <body>
     <header>
       <b-navbar type="dark" variant="primary">
-        <b-navbar-brand href="#">MMBOT</b-navbar-brand>
+        <b-navbar-brand href="#" id="brand">MMBOT</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -24,6 +24,10 @@
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
+      <b-popover target="brand" triggers="hover" placement="bottom" variant="secondary">
+        <template #title>Server version</template>
+        {{ backendVersion }}
+      </b-popover>
     </header>
     <b-container>
       <router-view/>
@@ -35,15 +39,17 @@
 import SkinToggle from './components/SkinToggle.vue'
 import { AUTH_LOGOUT } from './store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions } = createNamespacedHelpers('auth')
+const auth = createNamespacedHelpers('auth')
+const events = createNamespacedHelpers('events')
 
 export default {
   components: { SkinToggle },
   computed: {
-    ...mapGetters(['username', 'isAuthenticated'])
+    ...auth.mapGetters(['username', 'isAuthenticated']),
+    ...events.mapGetters(['backendVersion'])
   },
   methods: {
-    ...mapActions({
+    ...auth.mapActions({
       authLogout: AUTH_LOGOUT
     })
   }
