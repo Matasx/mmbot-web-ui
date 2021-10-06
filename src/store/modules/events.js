@@ -8,14 +8,14 @@ import {
 
 const state = {
   backendVersion: 'unknown',
-  trades: [],
+  trades: {},
   infos: {}
 }
 
 const getters = {
   backendVersion: state => state.backendVersion,
-  trades: state => state.trades,
-  infos: state => Object.keys(state.infos).map(key => state.infos[key]),
+  trades: state => Object.values(state.trades),
+  infos: state => Object.values(state.infos),
   info: state => (symbol) => state.infos[symbol]
 }
 
@@ -27,10 +27,14 @@ const mutations = {
     state.backendVersion = version
   },
   [EVENTS_TRADES_ADD]: (state, trade) => {
-    state.trades.push(trade)
+    state.trades[trade.pk] = trade
   },
   [EVENTS_TRADES_SET]: (state, trades) => {
-    state.trades = trades
+    const newTrades = { }
+    trades.forEach(trade => {
+      newTrades[trade.pk] = trade
+    })
+    state.trades = newTrades
   },
   [EVENTS_INFOS_ADD]: (state, info) => {
     state.infos[info.symbol] = info
