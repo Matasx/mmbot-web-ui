@@ -48,9 +48,18 @@ export function setupStream () {
         case 'price':
         case 'misc':
         case 'order':
-        case 'error':
           break
 
+          // Trade order error (empty data -> clear)
+          // data: {buy: 'binance: -2019 Margin is insufficient. (placeOrder)', sell: 'binance: -2019 Margin is insufficient. (placeOrder)'}
+          // symbol: "binance_COIN-M_BTCUSD_PERP_fast"
+          // type: "error"
+          // Trader error
+          // data: {gen: 'Automatic trading is disabled'}
+          // symbol: "binance_COIN-M_BTCUSD_PERP_fast"
+          // type: "error"
+
+        case 'error':
         default:
           console.log(payload)
           break

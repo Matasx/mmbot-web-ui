@@ -19,7 +19,9 @@
               <template #button-content>
                 {{ username }}
               </template>
-              <b-dropdown-item @click="authLogout">Sign Out</b-dropdown-item>
+              <b-dropdown-item @click="authLogout">
+                <b-icon icon="power" aria-hidden="true"></b-icon> Sign Out
+              </b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
