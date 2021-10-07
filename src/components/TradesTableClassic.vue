@@ -14,7 +14,7 @@
       id="orders"
       striped
       hover
-      sort-by="data.time"
+      sort-by="time"
       sort-desc
       :per-page="perPage"
       :current-page="currentPage"
@@ -23,14 +23,14 @@
       primary-key="pk">
       <template #cell(icon)="data">
         <b-icon v-if="data.item.alert" icon="exclamation-circle-fill" variant="warning" font-scale="1.5"></b-icon>
-        <b-icon v-else-if="data.item.data.achg > 0" icon="plus-circle" variant="success" font-scale="1.5"></b-icon>
+        <b-icon v-else-if="data.item.achg > 0" icon="plus-circle" variant="success" font-scale="1.5"></b-icon>
         <b-icon v-else icon="dash-circle" variant="danger" font-scale="1.5"></b-icon>
       </template>
       <template #cell(broker_icon)="data">
-        <b-img width="25" :src="'https://www.mmbot.trade/live/' + info(data.item.symbol).data.brokerIcon" alt="Ex."></b-img>
+        <b-img width="25" :src="'https://www.mmbot.trade/live/' + info(data.item.symbol).brokerIcon" alt="Ex."></b-img>
       </template>
-      <template #cell(data_normch)="data">
-        <b v-bind:class="[ data.item.data.normch < 0 ? 'text-danger' : 'text-success' ]">{{ data.item.data.normch }}</b>
+      <template #cell(normch)="data">
+        <b v-bind:class="[ data.item.normch < 0 ? 'text-danger' : 'text-success' ]">{{ data.item.normch }}</b>
       </template>
     </b-table>
     <b-pagination
@@ -60,7 +60,7 @@ export default {
       perPage: 10,
       fields: [
         {
-          key: 'data.time',
+          key: 'time',
           label: 'Time',
           sortable: true,
           formatter: value => {
@@ -77,7 +77,7 @@ export default {
           sortable: true,
           sortByFormatted: true,
           formatter: value => {
-            return this.info(value).data.title
+            return this.info(value).title
           }
         },
         {
@@ -85,32 +85,31 @@ export default {
           label: ''
         },
         {
-          key: 'data.achg',
+          key: 'achg',
           label: 'Size',
           sortable: true
         },
         {
-          key: 'data.price',
+          key: 'price',
           label: 'Price',
           sortable: true
         },
         {
-          key: 'data.gain',
+          key: 'gain',
           label: 'P/L',
           sortable: true
         },
         {
-          key: 'data_normch',
+          key: 'normch',
           label: 'norm. P/L',
           sortable: true
         }
-        // 'data'
       ]
     }
   },
   computed: {
     filterOptions () {
-      return this.infos.map(info => ({ text: info.data.title, value: info.symbol }))
+      return this.infos.map(info => ({ text: info.title, value: info.symbol }))
     },
     rows () {
       return this.trades.length
