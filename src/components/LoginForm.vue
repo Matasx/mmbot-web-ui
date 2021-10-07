@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { AUTH_REQUEST } from '../store/actions/auth'
+import { AUTH_REQUEST } from '@/store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
 const { mapActions } = createNamespacedHelpers('auth')
 

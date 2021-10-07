@@ -1,0 +1,15 @@
+import { EVENTS_INFOS_ADD } from '@/store/actions/events'
+
+export default {
+  commitName: EVENTS_INFOS_ADD,
+  map (dao) {
+    dao.pk = dao.symbol
+    return dao
+  },
+  reset (store) {
+    store.infos = {}
+  },
+  add (store, dto) {
+    store.infos[dto.pk] = dto
+  }
+}

@@ -1,50 +1,40 @@
 import {
+  EVENTS_TRANSACTION,
   EVENTS_VERSION_SET,
   EVENTS_TRADES_ADD,
-  EVENTS_TRADES_SET,
-  EVENTS_INFOS_ADD,
-  EVENTS_INFOS_SET
-} from '../actions/events'
+  EVENTS_INFOS_ADD
+} from '@/store/actions/events'
 
 const state = {
-  backendVersion: 'unknown',
-  trades: {},
-  infos: {}
+  data: {
+    backendVersion: 'unknown',
+    trades: {},
+    infos: {}
+  }
 }
 
 const getters = {
-  backendVersion: state => state.backendVersion,
-  trades: state => Object.values(state.trades),
-  infos: state => Object.values(state.infos),
-  info: state => (symbol) => state.infos[symbol]
+  backendVersion: state => state.data.backendVersion,
+  trades: state => Object.values(state.data.trades),
+  infos: state => Object.values(state.data.infos),
+  info: state => (symbol) => state.data.infos[symbol]
 }
 
 const actions = {
 }
 
 const mutations = {
+  [EVENTS_TRANSACTION]: (state, data) => {
+    state.data = data
+  },
   [EVENTS_VERSION_SET]: (state, version) => {
-    state.backendVersion = version
+    state.data.backendVersion = version
   },
   [EVENTS_TRADES_ADD]: (state, trade) => {
-    state.trades[trade.pk] = trade
-  },
-  [EVENTS_TRADES_SET]: (state, trades) => {
-    const newTrades = { }
-    trades.forEach(trade => {
-      newTrades[trade.pk] = trade
-    })
-    state.trades = newTrades
+    state.data.trades[trade.pk] = trade
   },
   [EVENTS_INFOS_ADD]: (state, info) => {
-    state.infos[info.symbol] = info
-  },
-  [EVENTS_INFOS_SET]: (state, events) => {
-    const newInfos = { }
-    events.forEach(info => {
-      newInfos[info.symbol] = info
-    })
-    state.infos = newInfos
+    state.data.infos[info.pk] = info
   }
 }
 

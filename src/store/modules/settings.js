@@ -1,7 +1,7 @@
 import {
   SETTINGS_THEME_SET,
   LIGHT_SKIN
-} from '../actions/settings'
+} from '@/store/actions/settings'
 
 const state = {
   theme: LIGHT_SKIN

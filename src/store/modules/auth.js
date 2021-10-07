@@ -4,9 +4,9 @@ import {
   AUTH_ERROR,
   AUTH_SUCCESS,
   AUTH_LOGOUT
-} from '../actions/auth'
+} from '@/store/actions/auth'
 import axios from 'axios'
-import router from '../../router'
+import router from '@/router'
 
 const state = {
   credentials: null,

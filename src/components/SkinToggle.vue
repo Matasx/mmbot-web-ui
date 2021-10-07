@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { SETTINGS_THEME_SET, LIGHT_SKIN, DARK_SKIN } from '../store/actions/settings'
+import { SETTINGS_THEME_SET, LIGHT_SKIN, DARK_SKIN } from '@/store/actions/settings'
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapMutations } = createNamespacedHelpers('settings')
 

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import TradesTableClassic from '../components/TradesTableClassic.vue'
+import TradesTableClassic from '@/components/TradesTableClassic.vue'
 
 export default {
   components: { TradesTableClassic }
