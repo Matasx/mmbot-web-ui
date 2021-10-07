@@ -4,6 +4,7 @@ import {
   EVENTS_TRADES_ADD,
   EVENTS_INFOS_ADD
 } from '@/store/actions/events'
+import Vue from 'vue'
 
 const state = {
   data: {
@@ -31,10 +32,10 @@ const mutations = {
     state.data.backendVersion = version
   },
   [EVENTS_TRADES_ADD]: (state, trade) => {
-    state.data.trades[trade.pk] = trade
+    Vue.set(state.data.trades, trade.pk, trade)
   },
   [EVENTS_INFOS_ADD]: (state, info) => {
-    state.data.infos[info.pk] = info
+    Vue.set(state.data.infos, info.pk, info)
   }
 }
 
