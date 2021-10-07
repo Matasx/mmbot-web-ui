@@ -3,27 +3,19 @@ import store from '@/store'
 import tradeHandler from './handlers/trade'
 import infoHandler from './handlers/info'
 import versionHandler from './handlers/version'
+import errorHandler from './handlers/error'
 
 // -config
 // -performance
 // -price
 // -order
 // -misc
-// -error
 const handlers = {
   trade: tradeHandler,
   info: infoHandler,
-  version: versionHandler
+  version: versionHandler,
+  error: errorHandler
 }
-
-// Trade order error (empty data -> clear)
-// data: {buy: 'binance: -2019 Margin is insufficient. (placeOrder)', sell: 'binance: -2019 Margin is insufficient. (placeOrder)'}
-// symbol: "binance_COIN-M_BTCUSD_PERP_fast"
-// type: "error"
-// Trader error
-// data: {gen: 'Automatic trading is disabled'}
-// symbol: "binance_COIN-M_BTCUSD_PERP_fast"
-// type: "error"
 
 export function setupStream () {
   const source = new EventSource('https://www.mmbot.trade/live/data') // todo: baseUrl + auth

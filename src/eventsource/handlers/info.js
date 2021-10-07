@@ -1,7 +1,7 @@
-import { EVENTS_INFOS_ADD } from '@/store/actions/events'
+import { EVENTS_INFO_ADD } from '@/store/actions/events'
 
 export default {
-  commitName: EVENTS_INFOS_ADD,
+  commitName: EVENTS_INFO_ADD,
   map (dao) {
     dao.pk = dao.symbol
     return dao

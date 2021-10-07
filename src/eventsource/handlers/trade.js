@@ -1,7 +1,7 @@
-import { EVENTS_TRADES_ADD } from '@/store/actions/events'
+import { EVENTS_TRADE_ADD } from '@/store/actions/events'
 
 export default {
-  commitName: EVENTS_TRADES_ADD,
+  commitName: EVENTS_TRADE_ADD,
   map (dao) {
     // todo: create new object and copy over all props -> change to flat structure
     dao.pk = JSON.stringify(dao.id) + ';' + dao.symbol
