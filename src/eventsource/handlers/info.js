@@ -7,6 +7,7 @@ export default {
       pk: dao.symbol,
       symbol: dao.symbol,
       brokerIcon: dao.data.brokerIcon,
+      brokerName: dao.data.brokerName,
       asset: dao.data.asset, // BTC
       currency: dao.data.currency, // USD
       title: dao.data.title // readable name

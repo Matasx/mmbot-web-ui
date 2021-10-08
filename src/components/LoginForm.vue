@@ -4,7 +4,7 @@
       <b-form-group label-for="input-1" label="Username:">
         <b-input-group>
           <b-input-group-prepend is-text>
-            <b-icon icon="person-fill" aria-hidden="true"></b-icon>
+            <fa-icon icon="user"/>
           </b-input-group-prepend>
           <b-form-input id="input-1" :state="!!username" v-model="username" autocomplete="username" placeholder="Enter your username" type="text" />
         </b-input-group>
@@ -12,7 +12,7 @@
       <b-form-group label-for="input-2" label="Password:">
         <b-input-group>
           <b-input-group-prepend is-text>
-            <b-icon icon="key-fill" aria-hidden="true"></b-icon>
+            <fa-icon icon="key"/>
           </b-input-group-prepend>
           <b-form-input id="input-2" :state="!!password" v-model="password" autocomplete="current-password" placeholder="Enter your password" type="password" />
         </b-input-group>

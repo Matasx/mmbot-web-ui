@@ -22,9 +22,9 @@
       :fields="fields"
       primary-key="pk">
       <template #cell(icon)="data">
-        <b-icon v-if="data.item.alert" icon="exclamation-circle-fill" variant="warning" font-scale="1.5"></b-icon>
-        <b-icon v-else-if="data.item.achg > 0" icon="plus-circle" variant="success" font-scale="1.5"></b-icon>
-        <b-icon v-else icon="dash-circle" variant="danger" font-scale="1.5"></b-icon>
+        <fa-icon v-if="data.item.alert" icon="exclamation-triangle"/>
+        <fa-icon v-else-if="data.item.achg > 0" icon="arrow-right" :style="{ color: '#6a994e' }"/>
+        <fa-icon v-else icon="arrow-left" variant="danger" :style="{ color: '#bc4749' }"/>
       </template>
       <template #cell(broker_icon)="data">
         <b-img width="25" :src="'https://www.mmbot.trade/live/' + info(data.item.symbol).brokerIcon" alt="Ex."></b-img>

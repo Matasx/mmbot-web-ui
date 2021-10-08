@@ -9,7 +9,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item to="/">Home</b-nav-item>
-            <b-nav-item to="/trades">Trades</b-nav-item>
+            <b-nav-item-dropdown text="Trades">
+              <b-dropdown-item to="/trades">Classic</b-dropdown-item>
+              <b-dropdown-item to="/trades-modern">Modern</b-dropdown-item>
+            </b-nav-item-dropdown>
             <b-nav-item to="/test">Test</b-nav-item>
           </b-navbar-nav>
 
@@ -20,7 +23,7 @@
                 {{ username }}
               </template>
               <b-dropdown-item @click="authLogout">
-                <b-icon icon="power" aria-hidden="true"></b-icon> Sign Out
+                <fa-icon icon="power-off" class="mb-1"/> Sign Out
               </b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
