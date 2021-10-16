@@ -6,10 +6,15 @@ import {
   faPowerOff,
   faArrowLeft,
   faArrowRight,
-  faExclamationTriangle
+  faArrowUp,
+  faArrowDown,
+  faExclamationTriangle,
+  faWifi,
+  faSyncAlt
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faUser, faKey, faPowerOff, faArrowLeft, faArrowRight, faExclamationTriangle)
+library.add(faUser, faKey, faPowerOff, faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExclamationTriangle)
+library.add(faWifi, faSyncAlt)
 
 Vue.component('fa-icon', FontAwesomeIcon)

@@ -6,7 +6,7 @@ export default {
     dao.pk = dao.symbol
 
     const dto = {
-      pk: dao.symbol,
+      symbol: dao.symbol,
       type: null,
       error: null,
       buyError: null,
@@ -30,6 +30,6 @@ export default {
     store.errors = {}
   },
   add (store, dto) {
-    store.errors[dto.pk] = dto
+    store.errors[dto.symbol] = dto
   }
 }

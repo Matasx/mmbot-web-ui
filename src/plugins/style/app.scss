@@ -3,10 +3,14 @@
   @import 'node_modules/bootstrap/scss/bootstrap.scss';
   @import 'slate_bootswatch.scss';
   @import 'node_modules/bootstrap-vue/src/index.scss';
+  @import 'common.scss';
+  @import 'charts-dark.scss';
 }
 .light_skin {
   @import 'curelean_variables.scss';
   @import 'node_modules/bootstrap/scss/bootstrap.scss';
   @import 'curelean_bootswatch.scss';
   @import 'node_modules/bootstrap-vue/src/index.scss';
+  @import 'common.scss';
+  @import 'charts-light.scss';
 }

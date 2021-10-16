@@ -8,16 +8,22 @@
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item to="/">Home</b-nav-item>
-            <b-nav-item-dropdown text="Trades">
+            <b-nav-item-dropdown text="Dashboard">
+              <b-dropdown-item to="/">Overview</b-dropdown-item>
+              <b-dropdown-item to="/cards">Cards</b-dropdown-item>
+            </b-nav-item-dropdown>
+            <b-nav-item to="/">Traders</b-nav-item>
+            <b-nav-item-dropdown text="Transactions">
               <b-dropdown-item to="/trades">Classic</b-dropdown-item>
               <b-dropdown-item to="/trades-modern">Modern</b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item to="/">Wallets</b-nav-item>
             <b-nav-item to="/test">Test</b-nav-item>
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <skin-toggle></skin-toggle>
+            <connectivity-indicator/>
+            <skin-toggle/>
             <b-nav-item-dropdown v-if="isAuthenticated" right>
               <template #button-content>
                 {{ username }}
@@ -34,21 +40,20 @@
         {{ backendVersion }}
       </b-popover>
     </header>
-    <b-container>
-      <router-view/>
-    </b-container>
+    <router-view/>
   </body>
 </template>
 
 <script>
 import SkinToggle from './components/SkinToggle.vue'
+import ConnectivityIndicator from './components/ConnectivityIndicator.vue'
 import { AUTH_LOGOUT } from './store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
 const auth = createNamespacedHelpers('auth')
 const events = createNamespacedHelpers('events')
 
 export default {
-  components: { SkinToggle },
+  components: { SkinToggle, ConnectivityIndicator },
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
     ...events.mapGetters(['backendVersion'])

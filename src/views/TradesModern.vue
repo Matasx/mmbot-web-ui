@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <b-container>
     <h1>Trades</h1>
     <trades-table-modern></trades-table-modern>
-  </div>
+  </b-container>
 </template>
 
 <script>

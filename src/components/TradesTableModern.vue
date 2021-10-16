@@ -1,21 +1,13 @@
 <template>
   <div>
-    <b-form-group
-      v-slot="{ ariaDescribedby }">
-      <b-form-checkbox-group
-        v-model="selectedFilter"
-        :options="filterOptions"
-        :aria-describedby="ariaDescribedby"
-        switches
-        name="button-filter"
-      ></b-form-checkbox-group>
-    </b-form-group>
-    <b-container>
+    <trader-filter v-model="selectedFilter"/>
+    <b-container v-for="group in dataView" :key="group.key">
+      <h5 class="mt-3">{{ group.key }}</h5>
       <b-list-group>
-        <b-list-group-item class="row d-flex" v-for="item in sample" :key="item.trade.pk">
+        <b-list-group-item class="row d-flex" v-for="item in group.trades" :key="item.trade.key">
           <div class="col-4 col-md-2 p-0">
             <div class="media align-items-center" v-b-tooltip.top :title="item.info.brokerName">
-              <b-img class="mr-3" width="32" :src="'https://www.mmbot.trade/live/' + item.info.brokerIcon" alt="Ex."></b-img>
+              <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex."></b-img>
               <div class="media-body small-xs no-small-md">
                 <div class="text-muted small text-uppercase">{{ item.info.title }}</div>
                 <div>
@@ -29,11 +21,13 @@
           <div class="col text-right pr-2 pl-0-md pr-0-md">
             <div class="media align-items-center">
               <div class="media-body">
-                <div class="text-muted small text-uppercase mb-1">Kraken</div>
                 <div>
-                  <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
-                    <span>{{ item.trade.achg + ' ' + item.info.asset }}</span>
+                  <div class="wrap-ellipsis small-xs no-small-md ml-auto" style="width: 150px;">
+                    <price :value="item.trade.achg" :currency-info="item.info.assetInfo" />
                   </div>
+                </div>
+                <div class="text-muted small mb-1">
+                  @ <price :value="item.trade.price" :currency-info="item.info.currencyInfo" />
                 </div>
               </div>
               <div class="ml-2">
@@ -42,9 +36,14 @@
             </div>
           </div>
           <div class="col-1 text-center d-none d-md-block pt-2">
-              <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" size="2x"/>
-              <fa-icon v-else-if="item.trade.achg > 0" icon="arrow-left" :style="{ color: '#6a994e' }" size="2x"/>
-              <fa-icon v-else icon="arrow-right" variant="danger" :style="{ color: '#bc4749' }" size="2x"/>
+            <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" :style="{ 'font-size': '1.5em' }"/>
+            <fa-icon v-else-if="item.trade.buy" icon="arrow-left" :style="{ color: '#6a994e', 'font-size': '1.5em' }"/>
+            <fa-icon v-else icon="arrow-right" variant="danger" :style="{ color: '#bc4749', 'font-size': '1.5em' }"/>
+          </div>
+          <div class="col text-center mb-1 d-md-none" style="flex: 0 0 auto;">
+            <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" :style="{ 'font-size': '1.5em' }"/>
+            <fa-icon v-else-if="item.trade.buy" icon="arrow-up" :style="{ color: '#6a994e', 'font-size': '1.5em' }"/>
+            <fa-icon v-else icon="arrow-down" variant="danger" :style="{ color: '#bc4749', 'font-size': '1.5em' }"/>
           </div>
           <div class="col pl-lg-0 pr-lg-0">
             <div class="media align-items-center">
@@ -54,16 +53,20 @@
               <div class="media-body">
                 <div>
                   <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
-                    <span>{{ item.trade.price + ' ' + item.info.currency }}</span>
+                    <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" />
                   </div>
                 </div>
-                <div class="text-muted small text-uppercase mb-1">SUBTEXT</div>
+                <div class="small mb-1" :class="[ item.trade.normch < 0 ? 'text-danger' : 'text-success' ]">
+                  <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" add-sign />
+                </div>
               </div>
             </div>
           </div>
           <div class="col-12 col-sm-3 col-md-2 p-0 text-right text-nowrap">
-            DD
           </div>
+          <!-- <div class="col-12 col-sm-3 col-md-2 p-0 text-right text-nowrap" v-b-tooltip.bottom :title="item.trade.data">
+            Debug
+          </div> -->
         </b-list-group-item>
       </b-list-group>
     </b-container>
@@ -75,7 +78,8 @@
       aria-controls="orders"
       v-model="currentPage"
       :total-rows="filteredRows"
-      :per-page="perPage">
+      :per-page="perPage"
+      class="mt-2">
     </b-pagination>
   </div>
 </template>
@@ -84,6 +88,9 @@
 import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
 import Cryptoicon from './Cryptoicon.vue'
+import Price from './Price.vue'
+import TraderFilter from './TraderFilter.vue'
+
 const { mapGetters } = createNamespacedHelpers('events')
 
 export default {
@@ -92,78 +99,37 @@ export default {
     return {
       selectedFilter: [],
       currentPage: 1,
-      perPage: 10,
-      fields: [
-        {
-          key: 'time',
-          label: 'Time',
-          sortable: true,
-          formatter: value => {
-            return moment(value).format('L HH:mm:ss')
-          }
-        },
-        {
-          key: 'broker_icon',
-          label: ''
-        },
-        {
-          key: 'symbol',
-          label: 'Pair',
-          sortable: true,
-          sortByFormatted: true,
-          formatter: value => {
-            return this.info(value).title
-          }
-        },
-        {
-          key: 'icon',
-          label: ''
-        },
-        {
-          key: 'achg',
-          label: 'Size',
-          sortable: true
-        },
-        {
-          key: 'price',
-          label: 'Price',
-          sortable: true
-        },
-        {
-          key: 'gain',
-          label: 'P/L',
-          sortable: true
-        },
-        {
-          key: 'normch',
-          label: 'norm. P/L',
-          sortable: true
-        }
-      ]
+      perPage: 20
     }
   },
   computed: {
-    filterOptions () {
-      return this.infos.map(info => ({ text: info.title, value: info.symbol }))
-    },
-    rows () {
-      return this.trades.length
-    },
     filteredRows () {
       return this.filtered.length
     },
     filtered () {
-      var activeFilter = this.selectedFilter
-      return this.trades
-        .filter(trade => activeFilter.length === 0 || activeFilter.includes(trade.symbol))
+      if (this.selectedFilter.length > 0) {
+        return this.selectedFilter.flatMap(filter => this.trades(filter))
+      }
+      return this.tradesFlat
     },
-    sample () {
-      return [...this.filtered]
+    dataView () {
+      const result = [...this.filtered]
         .sort((a, b) => b.time - a.time)
-        .slice(0, 10)
+        .slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage)
         .map(trade => ({ trade, info: this.info(trade.symbol) }))
+        .reduce((acc, value) => {
+          const key = moment(value.trade.time).format('MM. DD. YYYY')
+          if (!acc[key]) {
+            acc[key] = []
+          }
+          acc[key].push(value)
+          return acc
+        }, {})
+
+      return Object.entries(result)
+        .map(([key, value]) => ({ key, trades: value }))
     },
-    ...mapGetters(['trades', 'infos', 'info'])
+    ...mapGetters(['trades', 'tradesFlat', 'info'])
   },
   methods: {
     formatTime (time) {
@@ -171,8 +137,9 @@ export default {
     }
   },
   components: {
-    Cryptoicon
+    Cryptoicon,
+    Price,
+    TraderFilter
   }
 }
 </script>
-    Cryptoicon

@@ -7,6 +7,7 @@ import {
 } from '@/store/actions/auth'
 import axios from 'axios'
 import router from '@/router'
+import Vue from 'vue'
 
 const state = {
   credentials: null,
@@ -29,7 +30,7 @@ const actions = {
     // axios.defaults.headers.common.Authorization = token
 
     try {
-      await axios.get('https://mmbot.matatko.cz/report.json', {
+      await axios.get(Vue.prototype.$serviceUrl + 'report.json', {
         auth: user
       })
       commit(AUTH_SUCCESS, user)
