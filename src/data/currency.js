@@ -17,15 +17,6 @@ export default {
     code: 'CAD',
     name_plural: 'Canadian dollars'
   },
-  AUDUSD: {
-    symbol: 'CA$',
-    name: 'Canadian Dollar',
-    symbol_native: '$',
-    decimal_digits: 2,
-    rounding: 0,
-    code: 'CAD',
-    name_plural: 'Canadian dollars'
-  },
   EUR: {
     symbol: '€',
     name: 'Euro',
@@ -81,6 +72,15 @@ export default {
     name_plural: 'Argentine pesos'
   },
   AUD: {
+    symbol: 'AU$',
+    name: 'Australian Dollar',
+    symbol_native: '$',
+    decimal_digits: 2,
+    rounding: 0,
+    code: 'AUD',
+    name_plural: 'Australian dollars'
+  },
+  AUDUSD: {
     symbol: 'AU$',
     name: 'Australian Dollar',
     symbol_native: '$',

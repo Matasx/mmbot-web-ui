@@ -1,8 +1,11 @@
 <template>
   <b-container>
     <h1>Dashboard</h1>
-    <b-card-group columns>
-      <card v-for="info in infos" :key="info.symbol" :info="info" />
+    <b-form-checkbox v-model="showDetails" switch>
+      Show details
+    </b-form-checkbox>
+    <b-card-group columns class="mt-2">
+      <card v-for="info in infos" :key="info.symbol" :info="info" :show-details="showDetails" />
     </b-card-group>
   </b-container>
 </template>
@@ -15,6 +18,11 @@ const { mapGetters } = createNamespacedHelpers('events')
 
 export default {
   name: 'Cards',
+  data () {
+    return {
+      showDetails: false
+    }
+  },
   computed: {
     ...mapGetters(['infos'])
   },

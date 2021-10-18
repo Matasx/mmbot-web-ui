@@ -16,6 +16,8 @@ export default {
       price: dao.data.price, // price
       gain: dao.data.gain, // P/L
       volume: dao.data.volume, // currency total
+      pl: dao.data.pl, // P/L from position
+      norm: dao.data.norm,
       data: JSON.stringify(dao.data, undefined, 2)
     }
   },

@@ -24,6 +24,8 @@ export default {
     return {
       symbol: dao.symbol,
       pos: dao.data.pos,
+      tt: dao.data.tt,
+      bt: dao.data.bt,
       data: dao.data
     }
   },

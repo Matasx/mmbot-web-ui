@@ -37,6 +37,7 @@ const getters = {
   errors: state => Object.values(state.data.errors),
   error: state => (symbol) => state.data.errors[symbol],
   orders: state => (symbol) => Object.values(state.data.orders[symbol]),
+  ordersMap: state => (symbol) => state.data.orders[symbol],
   misc: state => (symbol) => state.data.misc[symbol],
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,

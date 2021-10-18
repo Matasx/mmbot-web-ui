@@ -12,14 +12,19 @@ export default {
     addSign: {
       type: Boolean,
       default: false
+    },
+    addSymbol: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
     compressed () {
-      return format.autoFormat(this.value, this.addSign) + ' ' + this.currencyInfo.symbol
+      const result = format.autoFormat(this.value, this.addSign)
+      return this.addSymbol ? result + ' ' + this.currencyInfo.symbol : result
     },
     verbose () {
-      return this.value + ' ' + this.currencyInfo.name
+      return this.addSymbol ? this.value + ' ' + this.currencyInfo.name : this.value
     }
   }
 }
