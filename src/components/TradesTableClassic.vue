@@ -1,36 +1,28 @@
 <template>
   <div>
-    <b-form-group
-      v-slot="{ ariaDescribedby }">
-      <b-form-checkbox-group
-        v-model="selectedFilter"
-        :options="filterOptions"
-        :aria-describedby="ariaDescribedby"
-        switches
-        name="button-filter"
-      ></b-form-checkbox-group>
-    </b-form-group>
+    <trader-filter v-model="selectedFilter"/>
     <b-table
       id="orders"
       striped
       hover
+      responsive="lg"
       sort-by="time"
       sort-desc
       :per-page="perPage"
       :current-page="currentPage"
       :items="filtered"
       :fields="fields"
-      primary-key="pk">
+      primary-key="key">
       <template #cell(icon)="data">
-        <b-icon v-if="data.item.alert" icon="exclamation-circle-fill" variant="warning" font-scale="1.5"></b-icon>
-        <b-icon v-else-if="data.item.achg > 0" icon="plus-circle" variant="success" font-scale="1.5"></b-icon>
-        <b-icon v-else icon="dash-circle" variant="danger" font-scale="1.5"></b-icon>
+        <fa-icon v-if="data.item.alert" icon="exclamation-triangle"/>
+        <fa-icon v-else-if="data.item.buy" icon="arrow-right" :style="{ color: '#6a994e' }"/>
+        <fa-icon v-else icon="arrow-left" variant="danger" :style="{ color: '#bc4749' }"/>
       </template>
       <template #cell(broker_icon)="data">
-        <b-img width="25" :src="'https://www.mmbot.trade/live/' + info(data.item.symbol).brokerIcon" alt="Ex."></b-img>
+        <b-img width="25" :src="$serviceUrl + info(data.item.symbol).brokerIcon" alt="Ex."></b-img>
       </template>
       <template #cell(normch)="data">
-        <b v-bind:class="[ data.item.normch < 0 ? 'text-danger' : 'text-success' ]">{{ data.item.normch }}</b>
+        <b :class="[ data.item.normch < 0 ? 'text-danger' : 'text-success' ]">{{ data.item.normch }}</b>
       </template>
     </b-table>
     <b-pagination
@@ -49,6 +41,7 @@
 <script>
 import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
+import TraderFilter from './TraderFilter.vue'
 const { mapGetters } = createNamespacedHelpers('events')
 
 export default {
@@ -57,7 +50,7 @@ export default {
     return {
       selectedFilter: [],
       currentPage: 1,
-      perPage: 10,
+      perPage: 20,
       fields: [
         {
           key: 'time',
@@ -108,21 +101,19 @@ export default {
     }
   },
   computed: {
-    filterOptions () {
-      return this.infos.map(info => ({ text: info.title, value: info.symbol }))
-    },
-    rows () {
-      return this.trades.length
-    },
     filteredRows () {
       return this.filtered.length
     },
     filtered () {
-      var activeFilter = this.selectedFilter
-      return this.trades
-        .filter(trade => activeFilter.length === 0 || activeFilter.includes(trade.symbol))
+      if (this.selectedFilter.length > 0) {
+        return this.selectedFilter.flatMap(filter => this.trades(filter))
+      }
+      return this.tradesFlat
     },
-    ...mapGetters(['trades', 'infos', 'info'])
+    ...mapGetters(['trades', 'tradesFlat', 'info'])
+  },
+  components: {
+    TraderFilter
   }
 }
 </script>

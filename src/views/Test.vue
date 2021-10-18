@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container>
     <h1>Sample page</h1>
-  </div>
+  </b-container>
 </template>

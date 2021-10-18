@@ -1,0 +1,24 @@
+// Colors for data series and points.
+$colors: $gray-600 $success $danger #7798BF #aaeeee #ff0066 #eeaaee #55BF3B #DF5353 #7798BF #aaeeee;
+
+// Neutral colors
+$neutral-color-100: #404048;
+$neutral-color-80: #000;
+
+// Fonts
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$title-font-size: 20px;
+
+// Tooltip
+$tooltip-border: 0px;
+$tooltip-background: rgba(219,219,216,0.8);
+
+// Axes
+$xaxis-grid-line: 1px !default;
+
+// Title
+.highcharts-title, .highcharts-subtitle, .highcharts-yaxis .highcharts-axis-title {
+	text-transform: uppercase;
+}
+
+@import 'node_modules/highcharts/css/highcharts.scss';

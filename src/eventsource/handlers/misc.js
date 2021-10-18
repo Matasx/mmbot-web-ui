@@ -1,0 +1,38 @@
+// a: false
+// accum: 0
+// ba: 2.749548938
+// be: -0.0004317614455
+// bt: 0.008469025622
+// cur_norm_buy: -2.226137974e-8
+// cur_norm_sell: 0.00001579177931
+// ltp: 0.00316373421
+// mcp: 0.00316089593
+// mdmb: 1
+// mdms: 2.82
+// mh: 0.003861150157
+// ml: 0
+// ms: 0.00003121571301
+// mt: 1314
+// pos: 2.51347765
+// t: 0
+// tt: 12338171614
+import { EVENTS_MISC_ADD } from '@/store/actions/events'
+
+export default {
+  commitName: EVENTS_MISC_ADD,
+  map (dao) {
+    return {
+      symbol: dao.symbol,
+      pos: dao.data.pos,
+      tt: dao.data.tt,
+      bt: dao.data.bt,
+      data: dao.data
+    }
+  },
+  reset (store) {
+    store.misc = {}
+  },
+  add (store, dto) {
+    store.misc[dto.symbol] = dto
+  }
+}

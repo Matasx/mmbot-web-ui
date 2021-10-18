@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <b-container>
     <h1>Sign in</h1>
     <login-form></login-form>
-  </div>
+  </b-container>
 </template>
 
 <script>

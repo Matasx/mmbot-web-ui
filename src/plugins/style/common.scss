@@ -1,0 +1,55 @@
+.list-group-item+.list-group-item {
+  border-top-width: 0;
+}
+
+.plot-line-buy {
+  stroke: $danger !important;
+  stroke-dasharray: 4;
+}
+
+.plot-line-sell {
+  stroke: $success !important;
+  stroke-dasharray: 4;
+}
+
+.svg-text-danger {
+  fill: $danger;
+}
+
+.svg-text-success {
+  fill: $success;
+}
+
+.highcharts-axis-labels {
+  font-size: 1.2em !important;
+}
+
+.card-columns {
+  @include media-breakpoint-only(sm) {
+    column-count: 1;
+  }
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(lg) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 3;
+  }
+}
+
+// .highcharts-color-0 {
+//   fill: $primary !important;
+//   stroke: $primary !important;
+// }
+
+// .highcharts-color-1 {
+//   fill: $success !important;
+//   stroke: $success !important;
+// }
+
+// .highcharts-color-2 {
+//   fill: $danger !important;
+//   stroke: $danger !important;
+// }

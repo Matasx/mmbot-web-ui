@@ -1,24 +1,30 @@
-import { EVENTS_TRANSACTION } from '@/store/actions/events'
+import { EVENTS_TRANSACTION, EVENTS_LAST_EVENT_TIME_SET } from '@/store/actions/events'
 import store from '@/store'
 import tradeHandler from './handlers/trade'
 import infoHandler from './handlers/info'
 import versionHandler from './handlers/version'
 import errorHandler from './handlers/error'
+import orderHandler from './handlers/order'
+import miscHandler from './handlers/misc'
+import priceHandler from './handlers/price'
+import performanceHandler from './handlers/performance'
+import configHandler from './handlers/config'
+import Vue from 'vue'
 
-// -config
-// -performance
-// -price
-// -order
-// -misc
 const handlers = {
   trade: tradeHandler,
   info: infoHandler,
   version: versionHandler,
-  error: errorHandler
+  error: errorHandler,
+  order: orderHandler,
+  misc: miscHandler,
+  price: priceHandler,
+  performance: performanceHandler,
+  config: configHandler
 }
 
 export function setupStream () {
-  const source = new EventSource('https://www.mmbot.trade/live/data') // todo: baseUrl + auth
+  const source = new EventSource(Vue.prototype.$serviceUrl + 'data')
 
   let isTransaction = false
   let transaction = {}
@@ -28,19 +34,26 @@ export function setupStream () {
     Object.values(handlers).forEach(handler => handler.reset(transaction))
   }
 
-  source.addEventListener('message', event => {
+  source.onerror = () => {
+    source.close()
+    setTimeout(setupStream, 10000)
+  }
+
+  source.onmessage = event => {
     if (event.data.startsWith('{')) {
       const payload = JSON.parse(event.data)
 
       const handler = handlers[payload.type]
       if (!handler) {
         console.warn('Missing handler for message type \'' + payload.type + '\'')
+        if (payload.type === 'log') console.log(payload)
       } else {
         const mapped = handler.map(payload)
         if (isTransaction) {
           handler.add(transaction, mapped)
         } else {
           store.commit('events/' + handler.commitName, mapped)
+          store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
         }
       }
     } else {
@@ -54,6 +67,7 @@ export function setupStream () {
         isTransaction = false
         console.log('Commit transaction')
       }
+      store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
     }
-  }, false)
+  }
 }
