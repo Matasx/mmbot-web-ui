@@ -16,11 +16,15 @@ export default {
     addSymbol: {
       type: Boolean,
       default: true
+    },
+    allowMicro: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
     compressed () {
-      const result = format.autoFormat(this.value, this.addSign)
+      const result = format.autoFormat(this.value, this.addSign, this.allowMicro)
       return this.addSymbol ? result + ' ' + this.currencyInfo.symbol : result
     },
     verbose () {
