@@ -8,10 +8,8 @@
 
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item-dropdown text="Dashboard">
-              <b-dropdown-item to="/">Overview</b-dropdown-item>
-              <b-dropdown-item to="/cards">Cards</b-dropdown-item>
-            </b-nav-item-dropdown>
+            <b-nav-item to="/">Dashboard</b-nav-item>
+            <b-nav-item to="/charts">Charts</b-nav-item>
             <b-nav-item to="/">Traders</b-nav-item>
             <b-nav-item-dropdown text="Transactions">
               <b-dropdown-item to="/trades">Classic</b-dropdown-item>

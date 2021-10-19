@@ -13,9 +13,9 @@ const router = new Router({
       component: Dashboard
     },
     {
-      path: '/cards',
-      name: 'Cards',
-      component: () => import('@/views/Cards.vue')
+      path: '/charts',
+      name: 'Charts',
+      component: () => import('@/views/Charts.vue')
     },
     {
       path: '/trades',
