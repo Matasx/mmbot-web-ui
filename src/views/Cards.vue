@@ -13,18 +13,25 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Card from '@/components/Card.vue'
+import { SETTINGS_DASHBOARD_DETAILS_SET } from '@/store/actions/settings'
 
-const { mapGetters } = createNamespacedHelpers('events')
+const events = createNamespacedHelpers('events')
+const settings = createNamespacedHelpers('settings')
 
 export default {
   name: 'Cards',
-  data () {
-    return {
-      showDetails: false
+  computed: {
+    ...events.mapGetters(['infos']),
+    ...settings.mapGetters(['dashboardDetails']),
+    showDetails: {
+      get () { return this.dashboardDetails },
+      set (value) { this.setDetails(value) }
     }
   },
-  computed: {
-    ...mapGetters(['infos'])
+  methods: {
+    ...settings.mapMutations({
+      setDetails: SETTINGS_DASHBOARD_DETAILS_SET
+    })
   },
   components: {
     Card

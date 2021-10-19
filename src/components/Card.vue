@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body :border-variant="stats.avgh >= 0 ? 'success' : 'danger'">
+  <b-card no-body :border-variant="stats.avghpl >= 0 ? 'success' : 'danger'">
     <b-card-header>
       <div class="clearfix">
         <span class="float-left h5">
@@ -9,7 +9,7 @@
           <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin"/></span> <price :value="localMisc.pos" :currency-info="info.assetInfo" />
         </span>
       </div>
-      <order-slider class="mt-2" :info="info"/>
+      <order-slider :info="info"/>
     </b-card-header>
     <b-card-body v-if="showDetails">
       <b-card-text>
@@ -17,13 +17,13 @@
           <span class="float-left">Avg. P/L position:</span>
           <span class="float-right">
             <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
-            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avghpl_pp" :add-symbol="false" add-sign /> %</b-badge>
+            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avghpl_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
           </span>
         </div>
         <div class="clearfix">
           <span class="float-left">Avg. income norm:</span>
           <span class="float-right">
-            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign :allow-micro="false" />/y</b-badge>
+            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
             <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avgh_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
           </span>
         </div>
