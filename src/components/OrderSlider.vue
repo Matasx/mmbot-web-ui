@@ -2,24 +2,24 @@
   <div>
     <b-progress :max="totalSize">
       <b-progress-bar v-if="buyOrder" :value="buySize" variant="success" class="text-white">
-        <price :value="buyOrder.price - priceCurrent.price" :currency-info="info.assetInfo" add-sign/>
+        <price :value="buyOrder.price - priceCurrent.price" :currency-info="info.currencyInfo" add-sign/>
       </b-progress-bar>
       <b-progress-bar :value="priceSizeWithSlider" variant="info" class="text-white font-weight-bold">
-        <price :value="priceCurrent.price" :currency-info="info.assetInfo"/>
+        <price :value="priceCurrent.price" :currency-info="info.currencyInfo"/>
       </b-progress-bar>
       <b-progress-bar v-if="sellOrder" :value="sellSize" variant="danger" class="text-white">
-        <price :value="sellOrder.price - priceCurrent.price" :currency-info="info.assetInfo" add-sign/>
+        <price :value="sellOrder.price - priceCurrent.price" :currency-info="info.currencyInfo" add-sign/>
       </b-progress-bar>
     </b-progress>
     <b-progress class="mt-1" :max="totalSize">
       <b-progress-bar v-if="buyOrder" :value="buySize" variant="success" class="text-white">
-        <price :value="buyOrder.size" :add-symbol="false" add-sign/>
+        <price :value="buyOrder.size" :currency-info="info.assetInfo" add-sign/>
       </b-progress-bar>
       <b-progress-bar :value="priceLeftSize" variant="primary"></b-progress-bar>
       <b-progress-bar :value="sliderSize" variant="info"></b-progress-bar>
       <b-progress-bar :value="priceRightSize" variant="primary"></b-progress-bar>
       <b-progress-bar v-if="sellOrder" :value="sellSize" variant="danger" class="text-white">
-        <price :value="sellOrder.size" :add-symbol="false" add-sign/>
+        <price :value="sellOrder.size" :currency-info="info.assetInfo" add-sign/>
       </b-progress-bar>
     </b-progress>
   </div>

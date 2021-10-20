@@ -1,17 +1,24 @@
 import {
   SETTINGS_THEME_SET,
   SETTINGS_DASHBOARD_DETAILS_SET,
+  SETTINGS_DASHBOARD_SETTINGS_SET,
   LIGHT_SKIN
 } from '@/store/actions/settings'
 
 const state = {
   theme: LIGHT_SKIN,
-  dashboardDetails: false
+  dashboardDetails: false,
+  dashboardSettings: {
+    transactionCount: false,
+    avgPlPosition: true,
+    avgPlNorm: true
+  }
 }
 
 const getters = {
   theme: state => state.theme,
-  dashboardDetails: state => state.dashboardDetails
+  dashboardDetails: state => state.dashboardDetails,
+  dashboardSettings: state => state.dashboardSettings
 }
 
 const actions = {
@@ -20,6 +27,9 @@ const actions = {
 const mutations = {
   [SETTINGS_THEME_SET]: (state, theme) => {
     state.theme = theme
+  },
+  [SETTINGS_DASHBOARD_SETTINGS_SET]: (state, settings) => {
+    state.dashboardSettings = settings
   },
   [SETTINGS_DASHBOARD_DETAILS_SET]: (state, showDetails) => {
     state.dashboardDetails = showDetails

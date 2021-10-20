@@ -13,14 +13,14 @@
     </b-card-header>
     <b-card-body v-if="showDetails">
       <b-card-text>
-        <div class="clearfix">
+        <div v-if="dashboardSettings.avgPlPosition" class="clearfix">
           <span class="float-left">Avg. P/L position:</span>
           <span class="float-right">
             <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
             <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avghpl_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
           </span>
         </div>
-        <div class="clearfix">
+        <div v-if="dashboardSettings.avgPlNorm" class="clearfix">
           <span class="float-left">Avg. income norm:</span>
           <span class="float-right">
             <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
@@ -48,7 +48,8 @@ import Price from './Price.vue'
 import OrderSlider from './OrderSlider.vue'
 import BrokerName from './BrokerName.vue'
 
-const { mapGetters } = createNamespacedHelpers('events')
+const settings = createNamespacedHelpers('settings')
+const events = createNamespacedHelpers('events')
 
 // todo: still working view if price is uknown
 // todo: test when adding new trader
@@ -75,7 +76,8 @@ export default {
     BrokerName
   },
   computed: {
-    ...mapGetters(['misc', 'trades']),
+    ...events.mapGetters(['misc', 'trades']),
+    ...settings.mapGetters(['dashboardSettings']),
     localTrades () {
       return this.trades(this.info.symbol)
     },
