@@ -15,9 +15,12 @@
         </div>
       </b-card>
     </b-collapse>
+    <trader-filter v-if="dashboardSettings.traderFilter" v-model="filter"/>
     <b-card-group columns>
-      <card v-for="info in infos" :key="info.symbol" :info="info" :show-details="showDetails" />
+      <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" />
     </b-card-group>
+    <trades-table-modern v-if="dashboardSettings.trades && dashboardSettings.tradesModern" :trader-filter="filter"/>
+    <trades-table-classic v-if="dashboardSettings.trades && !dashboardSettings.tradesModern" :trader-filter="filter"/>
   </b-container>
 </template>
 
@@ -25,6 +28,9 @@
 import { createNamespacedHelpers } from 'vuex'
 import Card from '@/components/Card.vue'
 import DashboardSettings from '@/components/DashboardSettings.vue'
+import TradesTableModern from '@/components/TradesTableModern.vue'
+import TradesTableClassic from '@/components/TradesTableClassic.vue'
+import TraderFilter from '@/components/TraderFilter.vue'
 import { SETTINGS_DASHBOARD_DETAILS_SET } from '@/store/actions/settings'
 
 const events = createNamespacedHelpers('events')
@@ -32,12 +38,23 @@ const settings = createNamespacedHelpers('settings')
 
 export default {
   name: 'Cards',
+  data () {
+    return {
+      filter: []
+    }
+  },
   computed: {
     ...events.mapGetters(['infos']),
-    ...settings.mapGetters(['dashboardDetails']),
+    ...settings.mapGetters(['dashboardDetails', 'dashboardSettings']),
     showDetails: {
       get () { return this.dashboardDetails },
       set (value) { this.setDetails(value) }
+    },
+    filteredInfos () {
+      if (this.filter.length > 0) {
+        return this.infos.filter(info => this.filter.includes(info.symbol))
+      }
+      return this.infos
     }
   },
   methods: {
@@ -47,7 +64,10 @@ export default {
   },
   components: {
     Card,
-    DashboardSettings
+    DashboardSettings,
+    TradesTableModern,
+    TradesTableClassic,
+    TraderFilter
   }
 }
 </script>

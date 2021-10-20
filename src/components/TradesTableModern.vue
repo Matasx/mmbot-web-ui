@@ -1,6 +1,5 @@
 <template>
   <div>
-    <trader-filter v-model="selectedFilter"/>
     <b-container v-for="group in dataView" :key="group.key">
       <h5 class="mt-3">{{ group.key }}</h5>
       <b-list-group>
@@ -89,7 +88,6 @@ import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
 import Cryptoicon from './Cryptoicon.vue'
 import Price from './Price.vue'
-import TraderFilter from './TraderFilter.vue'
 
 const { mapGetters } = createNamespacedHelpers('events')
 
@@ -97,9 +95,14 @@ export default {
   name: 'TradesTableModern',
   data () {
     return {
-      selectedFilter: [],
       currentPage: 1,
       perPage: 20
+    }
+  },
+  props: {
+    traderFilter: {
+      type: Array,
+      default () { return [] }
     }
   },
   computed: {
@@ -107,8 +110,8 @@ export default {
       return this.filtered.length
     },
     filtered () {
-      if (this.selectedFilter.length > 0) {
-        return this.selectedFilter.flatMap(filter => this.trades(filter))
+      if (this.traderFilter.length > 0) {
+        return this.traderFilter.flatMap(filter => this.trades(filter))
       }
       return this.tradesFlat
     },
@@ -138,8 +141,7 @@ export default {
   },
   components: {
     Cryptoicon,
-    Price,
-    TraderFilter
+    Price
   }
 }
 </script>

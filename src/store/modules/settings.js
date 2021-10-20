@@ -9,9 +9,12 @@ const state = {
   theme: LIGHT_SKIN,
   dashboardDetails: false,
   dashboardSettings: {
+    traderFilter: true,
     transactionCount: false,
     avgPlPosition: true,
-    avgPlNorm: true
+    avgPlNorm: true,
+    trades: true,
+    tradesModern: true
   }
 }
 

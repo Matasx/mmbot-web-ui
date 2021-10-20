@@ -1,6 +1,5 @@
 <template>
   <div>
-    <trader-filter v-model="selectedFilter"/>
     <b-table
       id="orders"
       striped
@@ -41,14 +40,12 @@
 <script>
 import moment from 'moment'
 import { createNamespacedHelpers } from 'vuex'
-import TraderFilter from './TraderFilter.vue'
 const { mapGetters } = createNamespacedHelpers('events')
 
 export default {
   name: 'TradesTableClassic',
   data () {
     return {
-      selectedFilter: [],
       currentPage: 1,
       perPage: 20,
       fields: [
@@ -100,20 +97,23 @@ export default {
       ]
     }
   },
+  props: {
+    traderFilter: {
+      type: Array,
+      default () { return [] }
+    }
+  },
   computed: {
     filteredRows () {
       return this.filtered.length
     },
     filtered () {
-      if (this.selectedFilter.length > 0) {
-        return this.selectedFilter.flatMap(filter => this.trades(filter))
+      if (this.traderFilter.length > 0) {
+        return this.traderFilter.flatMap(filter => this.trades(filter))
       }
       return this.tradesFlat
     },
     ...mapGetters(['trades', 'tradesFlat', 'info'])
-  },
-  components: {
-    TraderFilter
   }
 }
 </script>
