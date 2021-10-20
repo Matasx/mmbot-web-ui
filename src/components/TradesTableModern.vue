@@ -124,7 +124,7 @@ export default {
         .slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
         .map(trade => ({ trade, info: this.info(trade.symbol) }))
         .reduce((acc, value) => {
-          const key = moment(value.trade.time).format('MM. DD. YYYY')
+          const key = moment(value.trade.time).format('DD.MM.YYYY')
           if (!acc[key]) {
             acc[key] = []
           }
