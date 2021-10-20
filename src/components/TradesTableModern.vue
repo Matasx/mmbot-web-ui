@@ -77,7 +77,7 @@
       aria-controls="orders"
       v-model="currentPage"
       :total-rows="filteredRows"
-      :per-page="perPage"
+      :per-page="pageSize"
       class="mt-2">
     </b-pagination>
   </div>
@@ -95,14 +95,17 @@ export default {
   name: 'TradesTableModern',
   data () {
     return {
-      currentPage: 1,
-      perPage: 20
+      currentPage: 1
     }
   },
   props: {
     traderFilter: {
       type: Array,
       default () { return [] }
+    },
+    pageSize: {
+      type: Number,
+      default: 20
     }
   },
   computed: {
@@ -118,7 +121,7 @@ export default {
     dataView () {
       const result = [...this.filtered]
         .sort((a, b) => b.time - a.time)
-        .slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage)
+        .slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
         .map(trade => ({ trade, info: this.info(trade.symbol) }))
         .reduce((acc, value) => {
           const key = moment(value.trade.time).format('MM. DD. YYYY')

@@ -14,7 +14,8 @@ const state = {
     avgPlPosition: true,
     avgPlNorm: true,
     trades: true,
-    tradesModern: true
+    tradesModern: true,
+    pageSize: 20
   }
 }
 

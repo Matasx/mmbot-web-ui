@@ -7,7 +7,7 @@
       responsive="lg"
       sort-by="time"
       sort-desc
-      :per-page="perPage"
+      :per-page="pageSize"
       :current-page="currentPage"
       :items="filtered"
       :fields="fields"
@@ -32,7 +32,7 @@
       aria-controls="orders"
       v-model="currentPage"
       :total-rows="filteredRows"
-      :per-page="perPage">
+      :per-page="pageSize">
     </b-pagination>
   </div>
 </template>
@@ -47,7 +47,6 @@ export default {
   data () {
     return {
       currentPage: 1,
-      perPage: 20,
       fields: [
         {
           key: 'time',
@@ -101,6 +100,10 @@ export default {
     traderFilter: {
       type: Array,
       default () { return [] }
+    },
+    pageSize: {
+      type: Number,
+      default: 20
     }
   },
   computed: {

@@ -8,6 +8,8 @@
     <h6 class="mt-2">Trades</h6>
     <b-form-checkbox v-model="local.trades" switch>Show</b-form-checkbox>
     <b-form-checkbox v-model="local.tradesModern" :disabled="!local.trades" switch>Style: {{ local.tradesModern ? 'modern' : 'classic' }}</b-form-checkbox>
+    <label for="page-size">Page size: {{ local.pageSize }}</label>
+    <b-form-input v-model="local.pageSize" :disabled="!local.trades" id="page-size" type="range" min="3" max="100"/>
   </div>
 </template>
 

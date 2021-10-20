@@ -15,12 +15,12 @@
         </div>
       </b-card>
     </b-collapse>
-    <trader-filter v-if="dashboardSettings.traderFilter" v-model="filter"/>
+    <trader-filter v-if="cfg.traderFilter" v-model="filter"/>
     <b-card-group columns>
       <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" />
     </b-card-group>
-    <trades-table-modern v-if="dashboardSettings.trades && dashboardSettings.tradesModern" :trader-filter="filter"/>
-    <trades-table-classic v-if="dashboardSettings.trades && !dashboardSettings.tradesModern" :trader-filter="filter"/>
+    <trades-table-modern v-if="cfg.trades && cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>
+    <trades-table-classic v-if="cfg.trades && !cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>
   </b-container>
 </template>
 
@@ -45,7 +45,10 @@ export default {
   },
   computed: {
     ...events.mapGetters(['infos']),
-    ...settings.mapGetters(['dashboardDetails', 'dashboardSettings']),
+    ...settings.mapGetters({
+      dashboardDetails: 'dashboardDetails',
+      cfg: 'dashboardSettings'
+    }),
     showDetails: {
       get () { return this.dashboardDetails },
       set (value) { this.setDetails(value) }
