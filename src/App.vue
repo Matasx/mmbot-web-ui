@@ -22,6 +22,7 @@
           <b-navbar-nav class="ml-auto">
             <connectivity-indicator/>
             <skin-toggle/>
+            <!-- <skin-picker/> -->
             <b-nav-item-dropdown v-if="isAuthenticated" right>
               <template #button-content>
                 {{ username }}
@@ -44,6 +45,7 @@
 
 <script>
 import SkinToggle from './components/SkinToggle.vue'
+// import SkinPicker from './components/SkinPicker.vue'
 import ConnectivityIndicator from './components/ConnectivityIndicator.vue'
 import { AUTH_LOGOUT } from './store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
@@ -51,7 +53,7 @@ const auth = createNamespacedHelpers('auth')
 const events = createNamespacedHelpers('events')
 
 export default {
-  components: { SkinToggle, ConnectivityIndicator },
+  components: { SkinToggle, ConnectivityIndicator }, // SkinPicker
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
     ...events.mapGetters(['backendVersion'])

@@ -16,15 +16,15 @@
         <div v-if="dashboardSettings.avgPlPosition" class="clearfix">
           <span class="float-left">Avg. P/L position:</span>
           <span class="float-right">
-            <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
-            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avghpl_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
+            <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
+            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avghpl_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.avgPlNorm" class="clearfix">
           <span class="float-left">Avg. income norm:</span>
           <span class="float-right">
-            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
-            <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill><price :value="stats.avgh_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
+            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
+            <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avgh_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
           </span>
         </div>
         <!-- 24h t: {{ stats.trades }}<br/>

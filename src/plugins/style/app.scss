@@ -7,10 +7,180 @@
   @import 'charts-dark.scss';
 }
 .light_skin {
-  @import 'curelean_variables.scss';
+  @import 'lumen_custom_variables.scss';
   @import 'node_modules/bootstrap/scss/bootstrap.scss';
-  @import 'curelean_bootswatch.scss';
+  @import 'lumen_custom_bootswatch.scss';
   @import 'node_modules/bootstrap-vue/src/index.scss';
   @import 'common.scss';
   @import 'charts-light.scss';
 }
+
+
+// .cosmo_skin {
+//   @import 'cosmo_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'cosmo_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// // .curelean_skin {
+// //   @import 'curelean_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'curelean_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// .cyborg_skin {
+//   @import 'cyborg_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'cyborg_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// // .darkly_skin {
+// //   @import 'darkly_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'darkly_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// .flatly_skin {
+//   @import 'flatly_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'flatly_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// // .journal_skin {
+// //   @import 'journal_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'journal_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// .litera_skin {
+//   @import 'litera_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'litera_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// .lumen_skin {
+//   @import 'lumen_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'lumen_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// // .lux_skin {
+// //   @import 'lux_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'lux_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .materia_skin {
+// //   @import 'materia_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'materia_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .minty_skin {
+// //   @import 'minty_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'minty_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// .pulse_skin {
+//   @import 'pulse_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'pulse_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// .sandstone_skin {
+//   @import 'sandstone_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'sandstone_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// .simplex_skin {
+//   @import 'simplex_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'simplex_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }
+// // .sketchy_skin {
+// //   @import 'sketchy_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'sketchy_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .slate_skin {
+// //   @import 'slate_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'slate_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .solar_skin {
+// //   @import 'solar_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'solar_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .spacelab_skin {
+// //   @import 'spacelab_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'spacelab_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .superhero_skin {
+// //   @import 'superhero_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'superhero_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// // .united_skin {
+// //   @import 'united_variables.scss';
+// //   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+// //   @import 'united_bootswatch.scss';
+// //   @import 'node_modules/bootstrap-vue/src/index.scss';
+// //   @import 'common.scss';
+// //   @import 'charts-light.scss';
+// // }
+// .yeti_skin {
+//   @import 'yeti_variables.scss';
+//   @import 'node_modules/bootstrap/scss/bootstrap.scss';
+//   @import 'yeti_bootswatch.scss';
+//   @import 'node_modules/bootstrap-vue/src/index.scss';
+//   @import 'common.scss';
+//   @import 'charts-light.scss';
+// }

@@ -23,6 +23,9 @@ export default {
       persistTheme: SETTINGS_THEME_SET
     }),
     applyTheme () {
+      if (this.theme !== LIGHT_SKIN && this.theme !== DARK_SKIN) {
+        this.persistTheme(LIGHT_SKIN)
+      }
       document.documentElement.className = this.theme
     },
     switchTheme () {
