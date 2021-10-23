@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-b-tooltip.top :title="info.brokerName">
     <b-img width="32" :src="$serviceUrl + info.brokerIcon" alt="Ex."></b-img> {{ info.title }}
   </span>
 </template>
