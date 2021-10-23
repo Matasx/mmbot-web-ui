@@ -8,8 +8,8 @@
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
             <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin" class="mr-1"/></span>
-            <price :value="localMisc.pos" :currency-info="info.assetInfo" class="mr-1"/>
-            <b-spinner v-if="achieve" small type="grow"/>
+            <price :value="localMisc.pos" :currency-info="info.assetInfo"/>
+            <b-spinner v-if="achieve" small type="grow" class="ml-1"/>
           </span>
         </span>
       </div>
