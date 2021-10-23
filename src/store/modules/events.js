@@ -30,7 +30,7 @@ const state = {
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => Object.values(state.data.trades[symbol]),
+  trades: state => (symbol) => Object.values(state.data.trades[symbol] ?? []),
   tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)),
   infos: state => Object.values(state.data.infos),
   info: state => (symbol) => state.data.infos[symbol],

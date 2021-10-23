@@ -59,13 +59,13 @@ export default {
       return this.ordersMap(this.info.symbol)[1]
     },
     buySize () {
-      return this.buyOrder ? this.orderSize : 0
+      return this.buyOrder && this.buyOrder.price ? this.orderSize : 0
     },
     sellOrder () {
       return this.ordersMap(this.info.symbol)[-1]
     },
     sellSize () {
-      return this.sellOrder ? this.orderSize : 0
+      return this.sellOrder && this.sellOrder.price ? this.orderSize : 0
     },
     priceCurrent () {
       return this.price(this.info.symbol)

@@ -38,6 +38,10 @@
         {{ buyOrder }} -->
       </b-card-text>
     </b-card-body>
+    <b-card-footer v-if="localError.error" footer-bg-variant="danger" footer-text-variant="white">
+      <b-badge variant="warning" class="mr-1">!</b-badge>
+      <em>{{ localError.error }}</em>
+    </b-card-footer>
   </b-card>
 </template>
 
@@ -76,8 +80,14 @@ export default {
     BrokerName
   },
   computed: {
-    ...events.mapGetters(['misc', 'trades']),
+    ...events.mapGetters(['misc', 'trades', 'error']),
     ...settings.mapGetters(['dashboardSettings']),
+    localError () {
+      return this.error(this.info.symbol) ?? {}
+    },
+    localMisc () {
+      return this.misc(this.info.symbol) ?? {}
+    },
     localTrades () {
       return this.trades(this.info.symbol)
     },
@@ -95,8 +105,6 @@ export default {
         .filter(trade => trade.time > dayFilter)
     },
     stats () {
-      if (!this.lastTrade) return null
-
       // const intervals = [
       //   ['h',3600],
       //   ['d',3600 * 24],
@@ -105,9 +113,14 @@ export default {
       //   ['y',365 * 3600 * 24]
       // ]
 
+      const lastTradeOrDefault = this.lastTrade ?? {
+        pl: 0,
+        norm: 0
+      }
+      const tt = this.localMisc.tt === 0 ? 1 : this.localMisc.tt
       const interval = 365 * 3600 * 24 * 1000
-      const avghpl = interval * this.lastTrade.pl / this.localMisc.tt
-      const avgh = interval * this.lastTrade.norm / this.localMisc.tt
+      const avghpl = interval * lastTradeOrDefault.pl / tt
+      const avgh = interval * lastTradeOrDefault.norm / tt
 
       return this.lastDayTrades
         .filter(trade => !trade.alert)
@@ -128,9 +141,6 @@ export default {
           avgh,
           avgh_pp: avgh / this.localMisc.bt * 100
         })
-    },
-    localMisc () {
-      return this.misc(this.info.symbol)
     }
   }
 }
