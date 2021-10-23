@@ -6,7 +6,11 @@
           <broker-name :info="info"/>
         </span>
         <span class="float-right text-info">
-          <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin"/></span> <price :value="localMisc.pos" :currency-info="info.assetInfo" />
+          <span v-if="localMisc.pos !== undefined">
+            <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin" class="mr-1"/></span>
+            <price :value="localMisc.pos" :currency-info="info.assetInfo" class="mr-1"/>
+            <b-spinner v-if="achieve" small type="grow"/>
+          </span>
         </span>
       </div>
       <order-slider :info="info"/>
@@ -88,6 +92,9 @@ export default {
     localMisc () {
       return this.misc(this.info.symbol) ?? {}
     },
+    achieve () {
+      return this.localMisc.a
+    },
     localTrades () {
       return this.trades(this.info.symbol)
     },
@@ -117,7 +124,8 @@ export default {
         pl: 0,
         norm: 0
       }
-      const tt = this.localMisc.tt === 0 ? 1 : this.localMisc.tt
+      const tt = this.localMisc.tt ? this.localMisc.tt : 1
+      const bt = this.localMisc.bt ? this.localMisc.bt : 1
       const interval = 365 * 3600 * 24 * 1000
       const avghpl = interval * lastTradeOrDefault.pl / tt
       const avgh = interval * lastTradeOrDefault.norm / tt
@@ -137,9 +145,9 @@ export default {
           volume: 0,
           achg: 0,
           avghpl,
-          avghpl_pp: avghpl / this.localMisc.bt * 100,
+          avghpl_pp: avghpl / bt * 100,
           avgh,
-          avgh_pp: avgh / this.localMisc.bt * 100
+          avgh_pp: avgh / bt * 100
         })
     }
   }

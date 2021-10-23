@@ -1,5 +1,9 @@
 export default {
   autoFormat (value, addSign = false, allowMicro = true) {
+    if (value === undefined) {
+      return 'N/A'
+    }
+
     var significantDigits = 0
     const abs = Math.abs(value)
     if (abs === 0) {

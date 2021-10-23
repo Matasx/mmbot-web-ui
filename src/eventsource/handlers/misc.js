@@ -27,6 +27,8 @@ export default {
       pos: dao.data.pos,
       tt: dao.data.tt,
       bt: dao.data.bt,
+      a: dao.data.a, // achieve (initial position set)
+      t: dao.data.t, // trading, order pending
       data: dao.data
     }
   },
