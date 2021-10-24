@@ -1,27 +1,37 @@
 <template>
   <div>
-    <b-progress :max="totalSize">
-      <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" variant="success" class="text-white" :animated="buyDetails.activeTrade">
-        <price v-if="buyDetails.showValue" :value="buyDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
-      </b-progress-bar>
-      <b-progress-bar v-if="priceCurrent" :value="priceSizeWithSlider" variant="info" class="text-white font-weight-bold">
-        <price :value="priceCurrent.price" :currency-info="info.currencyInfo"/>
-      </b-progress-bar>
-      <b-progress-bar v-if="sellDetails.uiSize" :value="sellDetails.uiSize" variant="danger" class="text-white" :animated="sellDetails.activeTrade">
-        <price v-if="sellDetails.showValue" :value="sellDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
-      </b-progress-bar>
-    </b-progress>
-    <b-progress class="mt-1" :max="totalSize">
-      <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" variant="success" class="text-white" :animated="buyDetails.activeTrade">
-        <price v-if="buyDetails.showValue" :value="buyDetails.order.size" :currency-info="info.assetInfo" add-sign/>
-      </b-progress-bar>
-      <b-progress-bar :value="priceLeftSize" variant="primary"></b-progress-bar>
-      <b-progress-bar :value="sliderSize" variant="info"></b-progress-bar>
-      <b-progress-bar :value="priceRightSize" variant="primary"></b-progress-bar>
-      <b-progress-bar v-if="sellDetails.uiSize" :value="sellDetails.uiSize" variant="danger" class="text-white" :animated="sellDetails.activeTrade">
-        <price v-if="sellDetails.showValue" :value="sellDetails.order.size" :currency-info="info.assetInfo" add-sign/>
-      </b-progress-bar>
-    </b-progress>
+    <b-form-row>
+      <b-col cols="auto" v-if="localError.buyError" class="text-danger" v-b-tooltip.top :title="localError.buyError">
+        <fa-icon icon="burn"/>
+      </b-col>
+      <b-col>
+        <b-progress :max="totalSize">
+          <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" :variant="buyVariant" class="text-white" :animated="buyDetails.activeTrade">
+            <price v-if="buyDetails.showValue" :value="buyDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
+          </b-progress-bar>
+          <b-progress-bar v-if="priceCurrent" :value="priceSizeWithSlider" variant="info" class="text-white font-weight-bold">
+            <price :value="priceCurrent.price" :currency-info="info.currencyInfo"/>
+          </b-progress-bar>
+          <b-progress-bar v-if="sellDetails.uiSize" :value="sellDetails.uiSize" :variant="sellVariant" class="text-white" :animated="sellDetails.activeTrade">
+            <price v-if="sellDetails.showValue" :value="sellDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
+          </b-progress-bar>
+        </b-progress>
+        <b-progress class="mt-1" :max="totalSize">
+          <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" :variant="buyVariant" class="text-white" :animated="buyDetails.activeTrade">
+            <price v-if="buyDetails.showValue" :value="buyDetails.order.size" :currency-info="info.assetInfo" add-sign/>
+          </b-progress-bar>
+          <b-progress-bar :value="priceLeftSize" variant="primary"></b-progress-bar>
+          <b-progress-bar :value="sliderSize" variant="info"></b-progress-bar>
+          <b-progress-bar :value="priceRightSize" variant="primary"></b-progress-bar>
+          <b-progress-bar v-if="sellDetails.uiSize" :value="sellDetails.uiSize" :variant="sellVariant" class="text-white" :animated="sellDetails.activeTrade">
+            <price v-if="sellDetails.showValue" :value="sellDetails.order.size" :currency-info="info.assetInfo" add-sign/>
+          </b-progress-bar>
+        </b-progress>
+      </b-col>
+      <b-col cols="auto" v-if="localError.sellError" class="text-danger"  v-b-tooltip.top :title="localError.sellError">
+        <fa-icon icon="burn"/>
+      </b-col>
+    </b-form-row>
   </div>
 </template>
 
@@ -66,9 +76,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['misc', 'ordersMap', 'price']),
+    ...mapGetters(['misc', 'ordersMap', 'price', 'error']),
+    localError () {
+      return this.error(this.info.symbol) ?? {}
+    },
     localMisc () {
       return this.misc(this.info.symbol)
+    },
+    buyVariant () {
+      return this.localError.buyError ? 'dark' : 'success'
+    },
+    sellVariant () {
+      return this.localError.sellError ? 'dark' : 'danger'
     },
     buyDetails () {
       return this.details(1) ?? this.details(2)

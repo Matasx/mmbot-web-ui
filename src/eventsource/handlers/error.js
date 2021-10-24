@@ -7,21 +7,15 @@ export default {
 
     const dto = {
       symbol: dao.symbol,
-      type: null,
       error: null,
       buyError: null,
       sellError: null
     }
 
     if (dao.data) {
-      if (dao.data.gen) {
-        dto.type = 'generic'
-        dto.error = dao.data.gen
-      } else if (dao.data.buy || dao.data.sell) {
-        dto.type = 'order'
-        dto.buyError = dao.data.buy
-        dto.sellError = dao.data.sell
-      }
+      dto.error = dao.data.gen
+      dto.buyError = dao.data.buy
+      dto.sellError = dao.data.sell
     }
 
     return dto
