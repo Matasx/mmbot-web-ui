@@ -19,9 +19,11 @@ export default {
     } else if (abs < 1000) {
       significantDigits = 2
     }
-
     const sign = (addSign && value > 0) ? '+' : ''
 
+    if (abs >= 1000000) {
+      return sign + (value * 0.000001).toFixed(2) + 'M'
+    }
     if (allowMicro && significantDigits > 6) {
       return sign + (value * 1000000).toFixed(significantDigits - 6) + 'μ'
     }

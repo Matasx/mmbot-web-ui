@@ -39,6 +39,16 @@
   }
 }
 
+.card-header,
+.card-body,
+.card-footer {
+  padding: 0.6rem 0.6rem;
+}
+
+.progress {
+  font-size: 0.9rem;
+}
+
 // .highcharts-color-0 {
 //   fill: $primary !important;
 //   stroke: $primary !important;

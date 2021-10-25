@@ -5,7 +5,7 @@
         <fa-icon icon="burn"/>
       </b-col>
       <b-col>
-        <b-progress :max="totalSize">
+        <b-progress :max="totalSize" height="1.25rem">
           <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" :variant="buyVariant" class="text-white" :animated="buyDetails.activeTrade">
             <price v-if="buyDetails.showValue" :value="buyDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
           </b-progress-bar>
@@ -16,7 +16,7 @@
             <price v-if="sellDetails.showValue" :value="sellDetails.priceDiff" :currency-info="info.currencyInfo" add-sign/>
           </b-progress-bar>
         </b-progress>
-        <b-progress class="mt-1" :max="totalSize">
+        <b-progress class="mt-1" :max="totalSize" height="1.25rem">
           <b-progress-bar v-if="buyDetails.uiSize" :value="buyDetails.uiSize" :variant="buyVariant" class="text-white" :animated="buyDetails.activeTrade">
             <price v-if="buyDetails.showValue" :value="buyDetails.order.size" :currency-info="info.assetInfo" add-sign/>
           </b-progress-bar>
