@@ -3,7 +3,7 @@
     <b-container v-for="group in dataView" :key="group.key">
       <h5 class="mt-3">{{ group.key }}</h5>
       <b-list-group>
-        <b-list-group-item class="row d-flex" v-for="item in group.trades" :key="item.trade.key">
+        <b-list-group-item :class="'row d-flex' + (item.trade.man ? ' opacity-3' : '')" v-for="item in group.trades" :key="item.trade.key">
           <div class="col-4 col-md-2 p-0">
             <div class="media align-items-center" v-b-tooltip.top :title="item.info.brokerName">
               <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex."></b-img>
@@ -61,7 +61,8 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-3 col-md-2 p-0 text-right text-nowrap">
+          <div class="col-auto text-right text-nowrap">
+            <span v-if="item.trade.man" v-b-tooltip.bottom title="Manual trade"><fa-icon icon="hand-paper"/></span>
           </div>
           <!-- <div class="col-12 col-sm-3 col-md-2 p-0 text-right text-nowrap" v-b-tooltip.bottom :title="item.trade.data">
             Debug

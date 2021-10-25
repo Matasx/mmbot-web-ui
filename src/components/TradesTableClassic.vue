@@ -11,6 +11,7 @@
       :current-page="currentPage"
       :items="filtered"
       :fields="fields"
+      :tbody-tr-class="rowClass"
       primary-key="key">
       <template #cell(icon)="data">
         <fa-icon v-if="data.item.alert" icon="exclamation-triangle"/>
@@ -117,6 +118,12 @@ export default {
       return this.tradesFlat
     },
     ...mapGetters(['trades', 'tradesFlat', 'info'])
+  },
+  methods: {
+    rowClass (item, type) {
+      if (!item || type !== 'row') return
+      if (item.man) return 'opacity-3'
+    }
   }
 }
 </script>

@@ -18,7 +18,8 @@ export default {
       volume: dao.data.volume, // currency total
       pl: dao.data.pl, // P/L from position
       norm: dao.data.norm,
-      data: JSON.stringify(dao.data, undefined, 2)
+      man: dao.data.man // Manual trade
+      // data: JSON.stringify(dao.data, undefined, 2)
     }
   },
   reset (store) {
