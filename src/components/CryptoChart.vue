@@ -70,6 +70,7 @@ export default {
           .map(trade => ({
             x: trade.time,
             y: trade[this.yValue],
+            type: trade.alert ? 'Alert' : (trade.buy ? 'Buy' : 'Sell'),
             colorIndex: trade.alert ? 0 : (trade.buy ? 1 : 2)
           }))
       }]
@@ -113,8 +114,12 @@ export default {
         tooltip: {
           shared: true,
           crosshairs: true,
-          pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-          valueSuffix: ' ' + this.info[this.yUnit].symbol
+          useHTML: true,
+          headerFormat: '<table><tr><th><b>{point.point.type}&nbsp;</b></th><th>{point.key}</th></tr>',
+          pointFormat: '<tr><td>{series.name} </td><td style="text-align: right"><b>{point.y}</b></td></tr>',
+          footerFormat: '</table>',
+          valueSuffix: ' ' + this.info[this.yUnit].symbol,
+          valueDecimals: 6
         },
         xAxis: {
           type: 'datetime',
