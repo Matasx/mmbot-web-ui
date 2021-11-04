@@ -16,7 +16,9 @@
               <b-dropdown-item to="/chart/norm">Normalized profit</b-dropdown-item>
               <b-dropdown-item to="/chart/trades">Trades</b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item to="/">Traders</b-nav-item>
+            <b-nav-item-dropdown v-if="Array.isArray(infos) && infos.length" text="Traders">
+              <b-dropdown-item v-for="info in infos" :key="info.symbol" :to="'/trader/' + info.symbol">{{ info.title }}</b-dropdown-item>
+            </b-nav-item-dropdown>
             <b-nav-item-dropdown text="Transactions">
               <b-dropdown-item to="/trades">Classic</b-dropdown-item>
               <b-dropdown-item to="/trades-modern">Modern</b-dropdown-item>
@@ -62,7 +64,7 @@ export default {
   components: { SkinToggle, ConnectivityIndicator }, // SkinPicker
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
-    ...events.mapGetters(['backendVersion'])
+    ...events.mapGetters(['backendVersion', 'infos'])
   },
   methods: {
     ...auth.mapActions({

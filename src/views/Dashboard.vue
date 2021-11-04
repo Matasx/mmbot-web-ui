@@ -37,7 +37,7 @@ const events = createNamespacedHelpers('events')
 const settings = createNamespacedHelpers('settings')
 
 export default {
-  name: 'Cards',
+  name: 'Dashboard',
   data () {
     return {
       filter: []

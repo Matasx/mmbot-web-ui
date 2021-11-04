@@ -11,6 +11,7 @@ import TradesTableClassic from '@/components/TradesTableClassic.vue'
 import TraderFilter from '@/components/TraderFilter.vue'
 
 export default {
+  name: 'Trades',
   data () {
     return {
       filter: []

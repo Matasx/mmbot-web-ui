@@ -24,7 +24,7 @@ import TraderFilter from '@/components/TraderFilter.vue'
 const { mapGetters } = createNamespacedHelpers('events')
 
 export default {
-  name: 'Home',
+  name: 'Chart',
   components: {
     CryptoChart,
     TraderFilter

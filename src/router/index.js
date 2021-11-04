@@ -14,8 +14,13 @@ const router = new Router({
     },
     {
       path: '/chart/:type',
-      name: 'Charts',
+      name: 'Chart',
       component: () => import('@/views/Chart.vue')
+    },
+    {
+      path: '/trader/:symbol',
+      name: 'Trader',
+      component: () => import('@/views/Trader.vue')
     },
     {
       path: '/trades',
