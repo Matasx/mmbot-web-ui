@@ -27,6 +27,7 @@ $yellow:  #ff851b !default;
 $green:   #28b62c !default;
 $teal:    #20c997 !default;
 $cyan:    #75caeb !default;
+$manual:  #f6f6f6 !default;
 
 $primary:       $blue !default;
 $secondary:     $gray-200 !default;
@@ -36,6 +37,10 @@ $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-700 !default;
+
+$theme-colors: (
+  "manual": $manual
+) !default;
 
 $yiq-contrasted-threshold: 200 !default;
 

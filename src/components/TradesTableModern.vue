@@ -3,7 +3,7 @@
     <b-container v-for="group in dataView" :key="group.key">
       <h5 class="mt-3">{{ group.key }}</h5>
       <b-list-group>
-        <b-list-group-item :class="'row d-flex' + (item.trade.man ? ' opacity-3' : '')" v-for="item in group.trades" :key="item.trade.key">
+        <b-list-group-item :class="'row d-flex' + tradeClass(item.trade)" v-for="item in group.trades" :key="item.trade.key">
           <div class="col-4 col-md-2 p-0">
             <div class="media align-items-center" v-b-tooltip.top :title="item.info.brokerName">
               <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex."></b-img>
@@ -141,6 +141,11 @@ export default {
   methods: {
     formatTime (time) {
       return moment(time).format('HH:mm:ss')
+    },
+    tradeClass (trade) {
+      if (trade.man) return ' bg-manual'
+      if (trade.alert) return ' opacity-3'
+      return ''
     }
   },
   components: {
