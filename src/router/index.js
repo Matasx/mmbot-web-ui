@@ -6,6 +6,7 @@ import store from '@/store'
 Vue.use(Router)
 
 const router = new Router({
+  base: location.pathname,
   routes: [
     {
       path: '/',

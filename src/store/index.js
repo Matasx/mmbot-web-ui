@@ -10,7 +10,8 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 const vuexLocal = new VuexPersistance({
-  storage: window.localStorage
+  storage: window.localStorage,
+  key: Vue.prototype.$storageKey
 })
 
 export default new Vuex.Store({
