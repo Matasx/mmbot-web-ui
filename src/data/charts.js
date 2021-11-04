@@ -3,6 +3,7 @@ export default {
     title: 'Trade price / Neutral price',
     yTitle: 'Price',
     value: 'price',
+    secondaryTitle: 'Neutral price',
     secondaryValue: 'p0'
   },
   profit: {
@@ -10,6 +11,7 @@ export default {
     yTitle: 'P&L',
     value: 'pl',
     unit: 'currencyInfo',
+    secondaryTitle: 'Realized P&L',
     secondaryValue: 'rpl'
   },
   position: {

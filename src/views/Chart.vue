@@ -8,6 +8,7 @@
       :y-value="settings.value"
       :y-unit="settings.unit"
       :y-value-secondary="settings.secondaryValue"
+      :y-title-secondary="settings.secondaryTitle"
       :chart-title="settings.title"
     />
   </b-container>

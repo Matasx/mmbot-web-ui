@@ -35,10 +35,8 @@ export default {
       type: String,
       default: 'assetInfo'
     },
-    yValueSecondary: {
-      type: String,
-      required: false
-    }
+    yValueSecondary: String,
+    yTitleSecondary: String
   },
   computed: {
     ...mapGetters(['trades', 'ordersExt']),
@@ -62,6 +60,7 @@ export default {
     tradeSeries () { // Selected time series
       const filterSymbol = this.info.symbol
       const series = [{
+        name: this.yTitle,
         marker: {
           enabled: true,
           radius: 3,
@@ -77,6 +76,7 @@ export default {
 
       if (this.yValueSecondary) {
         series.push({ // Secondary charts
+          name: this.yTitleSecondary,
           marker: {
             enabled: false
           },
@@ -111,7 +111,9 @@ export default {
           enabled: false
         },
         tooltip: {
-          pointFormat: '<b>{point.y}</b><br/>',
+          shared: true,
+          crosshairs: true,
+          pointFormat: '{series.name}: <b>{point.y}</b><br/>',
           valueSuffix: ' ' + this.info[this.yUnit].symbol
         },
         xAxis: {
