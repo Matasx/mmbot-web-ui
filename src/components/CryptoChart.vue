@@ -4,6 +4,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import format from '@/utils/format'
 
 const { mapGetters } = createNamespacedHelpers('events')
 
@@ -13,48 +14,87 @@ export default {
     info: {
       type: Object,
       required: true
+    },
+    chartTitleSymbol: {
+      type: Boolean,
+      default: true
+    },
+    chartTitle: {
+      type: String,
+      required: true
+    },
+    yTitle: {
+      type: String,
+      required: true
+    },
+    yValue: {
+      type: String,
+      required: true
+    },
+    yUnit: {
+      type: String,
+      default: 'assetInfo'
+    },
+    yValueSecondary: {
+      type: String,
+      required: false
     }
   },
   computed: {
-    ...mapGetters(['trades', 'orders']),
-    plotLines () {
+    ...mapGetters(['trades', 'ordersExt']),
+    plotLines () { // Active orders
       const info = this.info
       const filterSymbol = info.symbol
-      return this.orders(filterSymbol)
+      const yUnit = this.yUnit
+      return this.ordersExt(filterSymbol)
         .map(order => ({
           zIndex: 2,
           className: order.dir < 0 ? 'plot-line-buy' : 'plot-line-sell',
           label: {
             formatter () {
-              return this.options.value + ' ' + info.assetInfo.symbol
+              return format.autoFormat(this.options.value) + ' ' + info[yUnit].symbol
             },
             className: order.dir < 0 ? 'svg-text-danger' : 'svg-text-success'
           },
-          value: order.price
+          value: order[this.yValue]
         }))
     },
-    tradeSeries () {
+    tradeSeries () { // Selected time series
       const filterSymbol = this.info.symbol
-      return [{
-        name: this.info.title,
+      const series = [{
         marker: {
           enabled: true,
           radius: 3,
           symbol: 'diamond'
         },
-        data: [...this.trades(filterSymbol)]
-          .sort((a, b) => a.time - b.time)
+        data: this.trades(filterSymbol)
           .map(trade => ({
             x: trade.time,
-            y: trade.price,
+            y: trade[this.yValue],
             colorIndex: trade.alert ? 0 : (trade.buy ? 1 : 2)
           }))
       }]
+
+      if (this.yValueSecondary) {
+        series.push({ // Secondary charts
+          marker: {
+            enabled: false
+          },
+          colorIndex: 3,
+          data: this.trades(filterSymbol)
+            .map(trade => ({
+              x: trade.time,
+              y: trade[this.yValueSecondary]
+            }))
+        })
+      }
+
+      return series
     },
     chartOptions () {
       return {
         title: {
-          text: this.info.title + ' - Trades price'
+          text: (this.chartTitleSymbol ? (this.info.title + ' - ') : '') + this.chartTitle
         },
         chart: {
           panning: {
@@ -72,7 +112,7 @@ export default {
         },
         tooltip: {
           pointFormat: '<b>{point.y}</b><br/>',
-          valueSuffix: ' ' + this.info.assetInfo.symbol
+          valueSuffix: ' ' + this.info[this.yUnit].symbol
         },
         xAxis: {
           type: 'datetime',
@@ -82,10 +122,10 @@ export default {
         },
         yAxis: {
           title: {
-            text: 'Price'
+            text: this.yTitle
           },
           labels: {
-            format: '{value} ' + this.info.assetInfo.symbol
+            format: '{value} ' + this.info[this.yUnit].symbol
           },
           plotLines: this.plotLines
         },

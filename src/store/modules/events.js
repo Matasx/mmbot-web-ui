@@ -30,14 +30,48 @@ const state = {
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => Object.values(state.data.trades[symbol] ?? []),
+  trades: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => a.time - b.time),
+  tradesRev: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => b.time - a.time),
   tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)),
+  lastTrade: (_, getters) => (symbol) => {
+    const sorted = getters.tradesRev(symbol)
+    return sorted.length > 0 ? sorted[0] : null
+  },
   infos: state => Object.values(state.data.infos),
   info: state => (symbol) => state.data.infos[symbol],
   errors: state => Object.values(state.data.errors),
   error: state => (symbol) => state.data.errors[symbol],
-  orders: state => (symbol) => Object.values(state.data.orders[symbol] ?? {}),
+  orders: (_, getters) => (symbol) => Object.values(getters.ordersMap(symbol)),
   ordersMap: state => (symbol) => state.data.orders[symbol] ?? {},
+  ordersExt: (_, getters) => (symbol) => {
+    const misc = getters.misc(symbol)
+    const info = getters.info(symbol)
+    if (!info || !misc) return []
+
+    const last = getters.lastTrade(symbol) ?? {
+      pl: 0,
+      pos: 0,
+      norm: 0
+    }
+
+    // https://github.com/ondra-novak/mmbot/blob/31b94b1d5b09ab778048e86f93c5938faf3ec343/www/res/code.js#L802-L816
+    return getters.orders(symbol)
+      .map(o => {
+        const gain = ((info.inverted ? 1.0 / o.price : o.price) - (info.inverted ? 1.0 / last.price : last.price)) * (info.inverted ? -1 : 1) * last.pos
+        const norm = o.dir < 0 ? misc.curNormSell : misc.curNormBuy
+        return ({
+          dir: o.dir,
+          dirStr: o.dirStr,
+          symbol: o.symbol,
+          price: o.price,
+          size: o.size,
+          pl: last.pl + gain,
+          pos: last.pos + o.size,
+          norm: last.norm + norm,
+          achg: o.size
+        })
+      })
+  },
   misc: state => (symbol) => state.data.misc[symbol],
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,

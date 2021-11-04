@@ -29,7 +29,9 @@ export default {
       bt: dao.data.bt,
       a: dao.data.a, // achieve (initial position set)
       t: dao.data.t, // trading, order pending
-      data: dao.data
+      curNormBuy: dao.data.cur_norm_buy,
+      curNormSell: dao.data.cur_norm_sell
+      // data: dao.data
     }
   },
   reset (store) {

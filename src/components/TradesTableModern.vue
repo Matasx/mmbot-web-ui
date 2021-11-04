@@ -61,8 +61,8 @@
               </div>
             </div>
           </div>
-          <div class="col-auto text-right text-nowrap">
-            <span v-if="item.trade.man" v-b-tooltip.bottom title="Manual trade"><fa-icon icon="hand-paper"/></span>
+          <div class="col-auto text-right text-nowrap" style="min-width: 45px;">
+            <span v-if="item.trade.man" v-b-tooltip.top title="Manual trade"><fa-icon icon="hand-paper"/></span>
           </div>
           <!-- <div class="col-12 col-sm-3 col-md-2 p-0 text-right text-nowrap" v-b-tooltip.bottom :title="item.trade.data">
             Debug

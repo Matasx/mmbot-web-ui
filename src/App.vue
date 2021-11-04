@@ -9,7 +9,13 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item to="/">Dashboard</b-nav-item>
-            <b-nav-item to="/charts">Charts</b-nav-item>
+            <b-nav-item-dropdown text="Charts">
+              <b-dropdown-item to="/chart/price">Price</b-dropdown-item>
+              <b-dropdown-item to="/chart/profit">P&amp;L</b-dropdown-item>
+              <b-dropdown-item to="/chart/position">Position</b-dropdown-item>
+              <b-dropdown-item to="/chart/norm">Normalized profit</b-dropdown-item>
+              <b-dropdown-item to="/chart/trades">Trades</b-dropdown-item>
+            </b-nav-item-dropdown>
             <b-nav-item to="/">Traders</b-nav-item>
             <b-nav-item-dropdown text="Transactions">
               <b-dropdown-item to="/trades">Classic</b-dropdown-item>

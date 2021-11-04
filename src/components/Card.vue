@@ -59,13 +59,9 @@ import BrokerName from './BrokerName.vue'
 const settings = createNamespacedHelpers('settings')
 const events = createNamespacedHelpers('events')
 
-// todo: still working view if price is uknown
-// todo: test when adding new trader
-// todo: alerts
 // todo: detail layout
 // todo: pick interval
 // todo: auto refresh 24hr stats (may not be needed)
-// todo: better responsive behavior
 export default {
   name: 'Card',
   props: {
@@ -84,7 +80,7 @@ export default {
     BrokerName
   },
   computed: {
-    ...events.mapGetters(['misc', 'trades', 'error']),
+    ...events.mapGetters(['misc', 'tradesRev', 'lastTrade', 'error']),
     ...settings.mapGetters(['dashboardSettings']),
     localError () {
       return this.error(this.info.symbol) ?? {}
@@ -95,20 +91,10 @@ export default {
     achieve () {
       return this.localMisc.a
     },
-    localTrades () {
-      return this.trades(this.info.symbol)
-    },
-    orderedTrades () {
-      return [...this.localTrades]
-        .sort((a, b) => b.time - a.time)
-    },
-    lastTrade () {
-      return this.orderedTrades.length > 0 ? this.orderedTrades[0] : null
-    },
     lastDayTrades () {
       // todo: refresh hourly or so ...
       const dayFilter = moment().subtract(1, 'days')
-      return this.localTrades
+      return this.tradesRev(this.info.symbol)
         .filter(trade => trade.time > dayFilter)
     },
     stats () {
@@ -120,7 +106,7 @@ export default {
       //   ['y',365 * 3600 * 24]
       // ]
 
-      const lastTradeOrDefault = this.lastTrade ?? {
+      const lastTradeOrDefault = this.lastTrade(this.info.symbol) ?? {
         pl: 0,
         norm: 0
       }

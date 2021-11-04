@@ -21,7 +21,8 @@ export default {
         name: currencyCurrency ? currencyCurrency.name : dao.data.currency,
         symbol: currencyCurrency ? currencyCurrency.symbol : dao.data.currency
       },
-      title: dao.data.title // readable name
+      title: dao.data.title, // readable name
+      inverted: dao.data.inverted
     }
   },
   reset (store) {
