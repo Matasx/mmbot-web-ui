@@ -109,17 +109,17 @@ export default {
         title: {
           text: (this.chartTitleSymbol ? (this.info.title + ' - ') : '') + this.chartTitle
         },
-        chart: {
-          panning: {
-            enabled: true,
-            type: 'x'
-          }
-          // zoomType: 'x'
-        },
-        mapNavigation: {
-          enabled: true
-          // enableMouseWheelZoom: true
-        },
+        // chart: {
+        //   panning: {
+        //     enabled: true,
+        //     type: 'x'
+        //   },
+        //   zoomType: 'x'
+        // },
+        // mapNavigation: {
+        //   enabled: true
+        //   // enableMouseWheelZoom: true
+        // },
         legend: {
           enabled: false
         },

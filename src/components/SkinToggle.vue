@@ -32,6 +32,11 @@ export default {
       this.persistTheme(this.isLightTheme ? DARK_SKIN : LIGHT_SKIN)
       this.applyTheme()
     }
+  },
+  watch: {
+    theme () {
+      this.applyTheme()
+    }
   }
 }
 </script>
