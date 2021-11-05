@@ -32,7 +32,11 @@ const getters = {
   backendVersion: state => state.data.backendVersion,
   trades: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => a.time - b.time),
   tradesRev: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => b.time - a.time),
-  tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)),
+  tradesFlat: state => [...Object.values(state.data.trades).flatMap(list => Object.values(list))].sort((a, b) => a.time - b.time),
+  firstTradeGlobal: (_, getters) => {
+    const sorted = getters.tradesFlat
+    return sorted.length > 0 ? sorted[0] : null
+  },
   lastTrade: (_, getters) => (symbol) => {
     const sorted = getters.tradesRev(symbol)
     return sorted.length > 0 ? sorted[0] : null
