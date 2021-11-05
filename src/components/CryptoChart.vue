@@ -52,7 +52,8 @@ export default {
             formatter () {
               return format.autoFormat(this.options.value) + ' ' + info[yUnit].symbol
             },
-            className: order.dir < 0 ? 'svg-text-danger' : 'svg-text-success'
+            className: order.dir < 0 ? 'svg-text-danger' : 'svg-text-success',
+            y: order.dir < 0 ? -4 : 13
           },
           value: order[this.yValue]
         }))
