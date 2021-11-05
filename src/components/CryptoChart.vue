@@ -40,11 +40,19 @@ export default {
   },
   computed: {
     ...mapGetters(['trades', 'ordersExt']),
+    softMax () {
+      return Math.max(...this.orderValues)
+    },
+    softMin () {
+      return Math.min(...this.orderValues)
+    },
+    orderValues () {
+      return this.ordersExt(this.info.symbol).map(o => o[this.yValue])
+    },
     plotLines () { // Active orders
       const info = this.info
-      const filterSymbol = info.symbol
       const yUnit = this.yUnit
-      return this.ordersExt(filterSymbol)
+      return this.ordersExt(info.symbol)
         .map(order => ({
           zIndex: 2,
           className: order.dir < 0 ? 'plot-line-buy' : 'plot-line-sell',
@@ -135,7 +143,9 @@ export default {
           labels: {
             format: '{value} ' + this.info[this.yUnit].symbol
           },
-          plotLines: this.plotLines
+          plotLines: this.plotLines,
+          softMin: this.softMin,
+          softMax: this.softMax
         },
         series: this.tradeSeries
       }
