@@ -39,12 +39,15 @@ export default {
     yTitleSecondary: String
   },
   computed: {
-    ...mapGetters(['trades', 'ordersExt']),
-    softMax () {
+    ...mapGetters(['trades', 'ordersExt', 'firstTradeGlobal']),
+    orderMin () {
+      return Math.min(...this.orderValues)
+    },
+    orderMax () {
       return Math.max(...this.orderValues)
     },
-    softMin () {
-      return Math.min(...this.orderValues)
+    timeMin () {
+      return (this.firstTradeGlobal ?? {}).time
     },
     orderValues () {
       return this.ordersExt(this.info.symbol).map(o => o[this.yValue])
@@ -134,7 +137,8 @@ export default {
           type: 'datetime',
           title: {
             text: 'Time'
-          }
+          },
+          softMin: this.timeMin
         },
         yAxis: {
           title: {
@@ -144,8 +148,8 @@ export default {
             format: '{value} ' + this.info[this.yUnit].symbol
           },
           plotLines: this.plotLines,
-          softMin: this.softMin,
-          softMax: this.softMax
+          softMin: this.orderMin,
+          softMax: this.orderMax
         },
         series: this.tradeSeries
       }
