@@ -7,6 +7,7 @@
     </div>
     <b-modal id="modal-export" hide-footer title="Copy the following value:">
       <b-textarea ref="area" v-model="exportString" @click="$refs.area.select()" readonly rows="10" />
+      <b-button class="mt-3" variant="info" block @click="doExport()">Copy to clipboard</b-button>
     </b-modal>
     <b-modal id="modal-import" hide-footer title="Paste the settings value:">
       <b-textarea ref="area" v-model="settingsInput" rows="10" />
@@ -54,6 +55,15 @@ export default {
     ...mapMutations({
       setData: SETTINGS_DATA_SET
     }),
+    doExport () {
+      navigator.clipboard.writeText(this.exportString)
+      this.$bvModal.hide('modal-export')
+      this.$bvToast.toast('Settings were saved to clipboard!', {
+        title: 'Export success',
+        autoHideDelay: 5000,
+        variant: 'success'
+      })
+    },
     doImport () {
       this.importString(this.settingsInput)
       this.$bvModal.hide('modal-import')
