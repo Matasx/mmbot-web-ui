@@ -19,17 +19,15 @@
     <b-card-group columns>
       <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" show-link />
     </b-card-group>
-    <trades-table-modern v-if="cfg.trades && cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>
-    <trades-table-classic v-if="cfg.trades && !cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>
+    <trades-table :settings="cfg.tradesSettings" :trader-filter="filter" />
   </b-container>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import Card from '@/components/Card.vue'
-import DashboardSettings from '@/components/DashboardSettings.vue'
-import TradesTableModern from '@/components/TradesTableModern.vue'
-import TradesTableClassic from '@/components/TradesTableClassic.vue'
+import DashboardSettings from '@/components/settings/DashboardSettings.vue'
+import TradesTable from '@/components/TradesTable.vue'
 import TraderFilter from '@/components/TraderFilter.vue'
 import { SETTINGS_DASHBOARD_DETAILS_SET } from '@/store/actions/settings'
 
@@ -68,8 +66,7 @@ export default {
   components: {
     Card,
     DashboardSettings,
-    TradesTableModern,
-    TradesTableClassic,
+    TradesTable,
     TraderFilter
   }
 }

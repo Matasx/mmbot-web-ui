@@ -4,6 +4,7 @@ import {
   SETTINGS_DASHBOARD_DETAILS_SET,
   SETTINGS_DASHBOARD_SETTINGS_SET,
   SETTINGS_GLOBAL_SETTINGS_SET,
+  SETTINGS_TRADER_SETTINGS_SET,
   LIGHT_SKIN
 } from '@/store/actions/settings'
 
@@ -16,9 +17,18 @@ const state = {
       transactionCount: false,
       avgPlPosition: true,
       avgPlNorm: true,
-      trades: true,
-      tradesModern: true,
-      pageSize: 20
+      tradesSettings: {
+        show: true,
+        modern: true,
+        pageSize: 20
+      }
+    },
+    traderSettings: {
+      tradesSettings: {
+        show: true,
+        modern: true,
+        pageSize: 20
+      }
     },
     globalSettings: {
       formatOmicron: true,
@@ -33,7 +43,8 @@ const getters = {
   theme: state => state.data.theme,
   dashboardDetails: state => state.data.dashboardDetails,
   dashboardSettings: state => state.data.dashboardSettings,
-  globalSettings: state => state.data.globalSettings
+  globalSettings: state => state.data.globalSettings,
+  traderSettings: state => state.data.traderSettings
 }
 
 const actions = {
@@ -54,6 +65,9 @@ const mutations = {
   },
   [SETTINGS_GLOBAL_SETTINGS_SET]: (state, settings) => {
     state.data.globalSettings = settings
+  },
+  [SETTINGS_TRADER_SETTINGS_SET]: (state, settings) => {
+    state.data.traderSettings = settings
   }
 }
 

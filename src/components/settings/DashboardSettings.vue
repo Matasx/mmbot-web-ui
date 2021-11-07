@@ -6,20 +6,19 @@
     <b-form-checkbox v-model="local.avgPlPosition" switch>Avg. P/L position</b-form-checkbox>
     <b-form-checkbox v-model="local.avgPlNorm" switch>Avg. income norm</b-form-checkbox>
     <h6 class="mt-2">Trades</h6>
-    <b-form-checkbox v-model="local.trades" switch>Show</b-form-checkbox>
-    <b-form-checkbox v-model="local.tradesModern" :disabled="!local.trades" switch>Style: {{ local.tradesModern ? 'modern' : 'classic' }}</b-form-checkbox>
-    <label for="page-size">Page size: {{ local.pageSize }}</label>
-    <b-form-input v-model="local.pageSize" :disabled="!local.trades" id="page-size" type="range" min="3" max="100" number/>
+    <trades-settings v-model="local.tradesSettings"/>
   </div>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
 import { SETTINGS_DASHBOARD_SETTINGS_SET } from '@/store/actions/settings'
+import TradesSettings from '@/components/settings/TradesSettings.vue'
 
 const { mapGetters, mapMutations } = createNamespacedHelpers('settings')
 
 export default {
+  components: { TradesSettings },
   name: 'DashboardSettings',
   data () {
     return {

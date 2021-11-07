@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SettingsExporter from '@/components/SettingsExporter.vue'
+import SettingsExporter from '@/components/settings/SettingsExporter.vue'
 
 export default {
   name: 'Settings',

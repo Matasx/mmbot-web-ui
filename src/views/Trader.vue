@@ -1,6 +1,17 @@
 <template>
   <b-container>
     <h1>{{ localInfo.title }}</h1>
+    <b-button-toolbar class="mb-2">
+      <b-button v-b-toggle.settings-collapse class="mx-1" size="sm" variant="link"><fa-icon icon="sliders-h"/></b-button>
+    </b-button-toolbar>
+    <b-collapse id="settings-collapse" class="mb-2">
+      <b-card title="Display settings">
+        <trader-settings/>
+        <div>
+          <b-button v-b-toggle.settings-collapse size="sm" class="mt-2" variant="danger">Close</b-button>
+        </div>
+      </b-card>
+    </b-collapse>
     <card style="max-width: 500px" class="mb-3" :info="localInfo" show-details />
     <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-4"
       :info="localInfo"
@@ -12,18 +23,20 @@
       :chart-title="settings.title"
       :chart-title-symbol="false"
     />
-    <trades-table-modern :trader-filter="filter" />
+    <trades-table :settings="traderSettings.tradesSettings" :trader-filter="filter" />
   </b-container>
 </template>
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import TraderSettings from '@/components/settings/TraderSettings.vue'
 import chartVariants from '@/data/charts'
 import Card from '@/components/Card.vue'
 import CryptoChart from '@/components/CryptoChart.vue'
-import TradesTableModern from '@/components/TradesTableModern.vue'
+import TradesTable from '@/components/TradesTable.vue'
 
-const { mapGetters } = createNamespacedHelpers('events')
+const events = createNamespacedHelpers('events')
+const settings = createNamespacedHelpers('settings')
 
 export default {
   name: 'Trader',
@@ -35,10 +48,12 @@ export default {
   components: {
     Card,
     CryptoChart,
-    TradesTableModern
+    TradesTable,
+    TraderSettings
   },
   computed: {
-    ...mapGetters(['info']),
+    ...events.mapGetters(['info']),
+    ...settings.mapGetters(['traderSettings']),
     localInfo () {
       return this.info(this.symbol)
     },
