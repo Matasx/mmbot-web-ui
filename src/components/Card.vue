@@ -5,12 +5,12 @@
         <span class="float-left h5">
           <broker-name :info="info"/>
           <router-link v-if="showLink" :to="'/trader/' + info.symbol">
-            <fa-icon icon="external-link-alt" size="xs" />
+            <fa-icon icon="external-link-alt" size="xs" class="mb-1" />
           </router-link>
         </span>
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
-            <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin" class="mr-1"/></span>
+            <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin" class="mr-1 mb-1"/></span>
             <price :value="localMisc.pos" :currency-info="info.assetInfo"/>
             <b-spinner v-if="achieve" small type="grow" class="ml-1"/>
           </span>
