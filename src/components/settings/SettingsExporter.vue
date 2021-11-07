@@ -22,11 +22,13 @@ const passphrase = '123'
 
 function merge (data, newData) {
   Object.keys(newData).forEach(k => {
-    const current = data[k]
-    if (current) {
+    if (Object.hasOwn(data, k)) {
+      const current = data[k]
       if (typeof current === 'object') {
+        console.log('merge: ' + k)
         merge(current, newData[k])
       } else {
+        console.log('set: ' + k + '=' + newData[k])
         data[k] = newData[k]
       }
     }
@@ -71,7 +73,7 @@ export default {
         const parsed = JSON.parse(decrypted)
         const current = JSON.parse(JSON.stringify(this.data))
         merge(current, parsed)
-
+        console.log(current)
         this.setData(current)
 
         this.$bvToast.toast('Settings were imported!', {
