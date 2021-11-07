@@ -3,6 +3,7 @@ export default {
     title: 'Trade price / Neutral price',
     yTitle: 'Price',
     value: 'price',
+    unit: 'currencyInfo',
     secondaryTitle: 'Neutral price',
     secondaryValue: 'p0'
   },
