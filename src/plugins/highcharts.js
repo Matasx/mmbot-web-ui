@@ -11,7 +11,8 @@ Highcharts.setOptions({
   },
   tooltip: {
     dateTimeLabelFormats: {
-      millisecond: '%m/%d/%Y %H:%M:%S'
+      millisecond: '%m/%d/%Y %H:%M:%S',
+      second: '%m/%d/%Y %H:%M:%S'
     }
   },
   xAxis: {

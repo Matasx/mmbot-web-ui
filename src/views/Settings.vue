@@ -58,7 +58,7 @@ export default {
     doExport () {
       navigator.clipboard.writeText(this.exportString)
       this.$bvModal.hide('modal-export')
-      this.$bvToast.toast('Settings were saved to clipboard!', {
+      this.$bvToast.toast('Settings were copied to clipboard!', {
         title: 'Export success',
         autoHideDelay: 5000,
         variant: 'success'

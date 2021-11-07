@@ -21,7 +21,8 @@ export default {
       norm: dao.data.norm,
       man: dao.data.man, // Manual trade
       p0: dao.data.p0, // Neutral price
-      pos: dao.data.pos // Position
+      pos: dao.data.pos, // Position
+      dp0: dao.data.price - dao.data.p0 // Netral price distance to price
       // data: JSON.stringify(dao.data, undefined, 2)
     }
   },

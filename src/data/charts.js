@@ -6,6 +6,12 @@ export default {
     secondaryTitle: 'Neutral price',
     secondaryValue: 'p0'
   },
+  neutraldist: {
+    title: 'Distance to neutral price',
+    yTitle: 'Price dist.',
+    value: 'dp0',
+    unit: 'currencyInfo'
+  },
   profit: {
     title: 'P&L from position / realized P&L',
     yTitle: 'P&L',

@@ -11,6 +11,7 @@
             <b-nav-item to="/">Dashboard</b-nav-item>
             <b-nav-item-dropdown text="Charts">
               <b-dropdown-item to="/chart/price">Price</b-dropdown-item>
+              <b-dropdown-item to="/chart/neutraldist">Distance to neutral price</b-dropdown-item>
               <b-dropdown-item to="/chart/profit">P&amp;L</b-dropdown-item>
               <b-dropdown-item to="/chart/position">Position</b-dropdown-item>
               <b-dropdown-item to="/chart/norm">Normalized profit</b-dropdown-item>

@@ -55,7 +55,8 @@ const getters = {
     const last = getters.lastTrade(symbol) ?? {
       pl: 0,
       pos: 0,
-      norm: 0
+      norm: 0,
+      p0: 0
     }
 
     // https://github.com/ondra-novak/mmbot/blob/31b94b1d5b09ab778048e86f93c5938faf3ec343/www/res/code.js#L802-L816
@@ -72,7 +73,8 @@ const getters = {
           pl: last.pl + gain,
           pos: last.pos + o.size,
           norm: last.norm + norm,
-          achg: o.size
+          achg: o.size,
+          dp0: o.price - last.p0
         })
       })
   },
