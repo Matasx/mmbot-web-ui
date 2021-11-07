@@ -17,7 +17,7 @@
     </b-collapse>
     <trader-filter v-if="cfg.traderFilter" v-model="filter"/>
     <b-card-group columns>
-      <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" />
+      <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" show-link />
     </b-card-group>
     <trades-table-modern v-if="cfg.trades && cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>
     <trades-table-classic v-if="cfg.trades && !cfg.tradesModern" :trader-filter="filter" :page-size="cfg.pageSize"/>

@@ -4,6 +4,9 @@
       <div class="clearfix">
         <span class="float-left h5">
           <broker-name :info="info"/>
+          <router-link v-if="showLink" :to="'/trader/' + info.symbol">
+            <fa-icon icon="external-link-alt" size="xs" />
+          </router-link>
         </span>
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
@@ -70,6 +73,10 @@ export default {
       required: true
     },
     showDetails: {
+      type: Boolean,
+      default: false
+    },
+    showLink: {
       type: Boolean,
       default: false
     }
