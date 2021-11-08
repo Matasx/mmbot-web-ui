@@ -24,11 +24,11 @@ function merge (data, newData) {
   Object.keys(newData).forEach(k => {
     if (Object.hasOwn(data, k)) {
       const current = data[k]
-      if (typeof current === 'object') {
-        console.log('merge: ' + k)
+      if (typeof current === 'object' && !Array.isArray(current)) {
+        // console.log('merge: ' + k)
         merge(current, newData[k])
       } else {
-        console.log('set: ' + k + '=' + newData[k])
+        // console.log('set: ' + k + '=' + newData[k])
         data[k] = newData[k]
       }
     }

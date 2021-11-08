@@ -24,6 +24,10 @@ const state = {
       }
     },
     traderSettings: {
+      chartSettings: {
+        showAll: true,
+        filter: []
+      },
       tradesSettings: {
         show: true,
         modern: true,

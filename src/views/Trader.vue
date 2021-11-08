@@ -61,7 +61,11 @@ export default {
       return [this.symbol]
     },
     charts () {
-      return Object.entries(chartVariants)
+      const cfg = this.traderSettings.chartSettings
+      if (cfg.showAll) {
+        return Object.entries(chartVariants)
+      }
+      return cfg.filter.map(key => ([key, chartVariants[key]])).filter(([_, value]) => value)
     }
   },
   watch: {
