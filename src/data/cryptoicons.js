@@ -37,17 +37,20 @@ export default {
   ADA: {
     symbol: 'ADA',
     name: 'Cardano',
-    color: '#0d1e30'
+    color: '#0d1e30',
+    image: 'i_ada'
   },
   ADD: {
     symbol: 'ADD',
     name: 'ADD Token',
-    color: '#fec807'
+    color: '#fec807',
+    image: 'i_add'
   },
   ADX: {
     symbol: 'ADX',
     name: 'AdEx',
-    color: '#1b75bc'
+    color: '#1b75bc',
+    image: 'i_adx'
   },
   AE: {
     symbol: 'AE',

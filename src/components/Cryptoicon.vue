@@ -1,5 +1,5 @@
 <template>
-  <b-img v-if="entry" width="32" :src="'/crypto/' + entry.symbol.toLowerCase() + '.png'" :alt="entry.name" v-b-tooltip.top :title="entry.name"></b-img>
+  <b-img v-if="entry" width="32" :src="getSrc(entry)" :alt="entry.name" v-b-tooltip.top :title="entry.name"></b-img>
   <b-img v-else width="32" src="/crypto/unknown.png" :alt="symbol" v-b-tooltip.top :title="symbol"></b-img>
 </template>
 
@@ -14,6 +14,11 @@ export default {
   computed: {
     entry () {
       return manifest[this.symbol.toUpperCase()]
+    }
+  },
+  methods: {
+    getSrc (entry) {
+      return '/crypto/' + (entry.symbol.image ?? entry.symbol.toLowerCase()) + '.png'
     }
   }
 }

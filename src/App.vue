@@ -2,7 +2,7 @@
   <body>
     <header>
       <b-navbar toggleable="lg" type="dark" variant="primary">
-        <b-navbar-brand to="/" id="brand">MM Bot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
+        <b-navbar-brand to="/" id="brand">MMBot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
