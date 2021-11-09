@@ -36,7 +36,7 @@ export function setupStream () {
 
   source.onerror = () => {
     source.close()
-    setTimeout(setupStream, 10000)
+    setTimeout(setupStream, 5000)
   }
 
   source.onmessage = event => {

@@ -70,7 +70,10 @@ export default {
       if (cfg.showAll) {
         return Object.entries(chartVariants)
       }
-      return cfg.filter.map(key => ([key, chartVariants[key]])).filter(([_, value]) => value)
+      return cfg.filter
+        .map(key => ([key, chartVariants[key]]))
+        .filter(([_, value]) => value)
+        .sort(([_, a], [__, b]) => a.order - b.order)
     }
   },
   watch: {

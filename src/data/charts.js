@@ -1,5 +1,6 @@
 export default {
   price: {
+    order: 1,
     title: 'Trade price / Neutral price',
     yTitle: 'Price',
     value: 'price',
@@ -8,12 +9,14 @@ export default {
     secondaryValue: 'p0'
   },
   neutraldist: {
+    order: 2,
     title: 'Distance to neutral price',
     yTitle: 'Price dist.',
     value: 'dp0',
     unit: 'currencyInfo'
   },
   profit: {
+    order: 3,
     title: 'P&L from position / realized P&L',
     yTitle: 'P&L',
     value: 'pl',
@@ -22,17 +25,20 @@ export default {
     secondaryValue: 'rpl'
   },
   position: {
+    order: 4,
     title: 'Position',
     yTitle: 'Asset',
     value: 'pos'
   },
   norm: {
+    order: 5,
     title: 'Normalized profit',
     yTitle: 'P&L',
     value: 'norm',
     unit: 'currencyInfo'
   },
   trades: {
+    order: 6,
     title: 'Trades',
     yTitle: 'Size',
     value: 'achg'
