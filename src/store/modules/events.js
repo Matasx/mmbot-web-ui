@@ -61,6 +61,7 @@ const getters = {
 
     // https://github.com/ondra-novak/mmbot/blob/31b94b1d5b09ab778048e86f93c5938faf3ec343/www/res/code.js#L802-L816
     return getters.orders(symbol)
+      .filter(o => o.price)
       .map(o => {
         const gain = ((info.inverted ? 1.0 / o.price : o.price) - (info.inverted ? 1.0 / last.price : last.price)) * (info.inverted ? -1 : 1) * last.pos
         const norm = o.dir < 0 ? misc.curNormSell : misc.curNormBuy
