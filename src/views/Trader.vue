@@ -23,6 +23,7 @@
         :y-title-secondary="settings.secondaryTitle"
         :chart-title="settings.title"
         :chart-title-symbol="false"
+        :flip-order-titles="settings.flipOrderTitles"
       />
       <trades-table :settings="traderSettings.tradesSettings" :trader-filter="filter" />
     </div>

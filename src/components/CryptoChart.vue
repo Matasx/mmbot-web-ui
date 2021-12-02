@@ -36,10 +36,22 @@ export default {
       default: 'assetInfo'
     },
     yValueSecondary: String,
-    yTitleSecondary: String
+    yTitleSecondary: String,
+    flipOrderTitles: {
+      type: Boolean,
+      require: false,
+      default: false
+    }
+  },
+  methods: {
+    orderTitleOffset (isBuy) {
+      const buy = this.flipOrderTitles ? 13 : -4
+      const sell = this.flipOrderTitles ? -4 : 13
+      return isBuy ? buy : sell
+    }
   },
   computed: {
-    ...mapGetters(['trades', 'ordersExt', 'firstTradeGlobal']),
+    ...mapGetters(['trades', 'ordersExt', 'firstTradeGlobal', 'lastTradeGlobal']),
     orderMin () {
       return Math.min(...this.orderValues)
     },
@@ -48,6 +60,9 @@ export default {
     },
     timeMin () {
       return (this.firstTradeGlobal ?? {}).time
+    },
+    timeMax () {
+      return (this.lastTradeGlobal ?? {}).time
     },
     orderValues () {
       return this.ordersExt(this.info.symbol).map(o => o[this.yValue])
@@ -64,7 +79,7 @@ export default {
               return format.autoFormat(this.options.value) + ' ' + info[yUnit].symbol
             },
             className: order.dir < 0 ? 'svg-text-danger' : 'svg-text-success',
-            y: order.dir < 0 ? -4 : 13
+            y: this.orderTitleOffset(order.dir < 0)
           },
           value: order[this.yValue]
         }))
@@ -138,7 +153,8 @@ export default {
           title: {
             text: 'Time'
           },
-          softMin: this.timeMin
+          softMin: this.timeMin,
+          softMax: this.timeMax
         },
         yAxis: {
           title: {
@@ -149,7 +165,9 @@ export default {
           },
           plotLines: this.plotLines,
           softMin: this.orderMin,
-          softMax: this.orderMax
+          softMax: this.orderMax,
+          startOnTick: false,
+          endOnTick: false
         },
         series: this.tradeSeries
       }

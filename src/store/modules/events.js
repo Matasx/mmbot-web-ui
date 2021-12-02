@@ -37,6 +37,10 @@ const getters = {
     const sorted = getters.tradesFlat
     return sorted.length > 0 ? sorted[0] : null
   },
+  lastTradeGlobal: (_, getters) => {
+    const sorted = getters.tradesFlat
+    return sorted.length > 0 ? sorted[sorted.length - 1] : null
+  },
   lastTrade: (_, getters) => (symbol) => {
     const sorted = getters.tradesRev(symbol)
     return sorted.length > 0 ? sorted[0] : null

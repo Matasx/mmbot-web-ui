@@ -10,6 +10,7 @@
       :y-value-secondary="settings.secondaryValue"
       :y-title-secondary="settings.secondaryTitle"
       :chart-title="settings.title"
+      :flip-order-titles="settings.flipOrderTitles"
     />
   </b-container>
 </template>

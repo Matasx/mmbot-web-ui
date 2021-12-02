@@ -28,7 +28,8 @@ export default {
     order: 4,
     title: 'Position',
     yTitle: 'Asset',
-    value: 'pos'
+    value: 'pos',
+    flipOrderTitles: true
   },
   norm: {
     order: 5,
@@ -41,6 +42,7 @@ export default {
     order: 6,
     title: 'Trades',
     yTitle: 'Size',
-    value: 'achg'
+    value: 'achg',
+    flipOrderTitles: true
   }
 }
