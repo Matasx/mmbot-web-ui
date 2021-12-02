@@ -75,7 +75,7 @@ export default {
           label: ''
         },
         {
-          key: 'achg',
+          key: 'aachg',
           label: 'Size',
           sortable: true
         },

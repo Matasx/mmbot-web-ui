@@ -22,7 +22,7 @@
               <div class="media-body">
                 <div>
                   <div class="wrap-ellipsis small-xs no-small-md ml-auto" style="width: 150px;">
-                    <price :value="item.trade.achg" :currency-info="item.info.assetInfo" />
+                    <price :value="item.trade.aachg" :currency-info="item.info.assetInfo" />
                   </div>
                 </div>
                 <div class="text-muted small mb-1">

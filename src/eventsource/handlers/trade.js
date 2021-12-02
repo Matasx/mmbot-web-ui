@@ -13,6 +13,7 @@ export default {
       time: dao.data.time,
       normch: dao.data.normch, // Normalized P/L
       achg: dao.data.achg, // Size
+      aachg: Math.abs(dao.data.achg),
       price: dao.data.price, // Price
       gain: dao.data.gain, // P/L
       volume: dao.data.volume, // currency total
