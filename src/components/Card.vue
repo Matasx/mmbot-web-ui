@@ -3,15 +3,12 @@
     <b-card-header>
       <div class="clearfix">
         <span class="float-left h5">
-          <broker-name :info="info"/>
-          <router-link v-if="showLink" :to="'/trader/' + info.symbol">
-            <fa-icon icon="external-link-alt" size="xs" class="mb-1" />
-          </router-link>
+          <broker-name :info="info" :navigation="showLink"/>
         </span>
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
-            <span v-b-tooltip.top title="Position"><fa-icon icon="map-pin" class="mr-1 mb-1"/></span>
-            <price :value="localMisc.pos" :currency-info="info.assetInfo"/>
+            <fa-icon icon="map-pin" class="mr-1 mb-1"/>
+            <price :value="localMisc.pos" :currency-info="info.assetInfo" title="Position"/>
             <b-spinner v-if="achieve" small type="grow" class="ml-1"/>
           </span>
         </span>
@@ -23,15 +20,15 @@
         <div v-if="dashboardSettings.avgPlPosition" class="clearfix">
           <span class="float-left">Avg. P/L position:</span>
           <span class="float-right">
-            <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
-            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avghpl_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
+            <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-badge>
+            <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.avgPlNorm" class="clearfix">
           <span class="float-left">Avg. income norm:</span>
           <span class="float-right">
-            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign />/y</b-badge>
-            <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avgh_pp" :add-symbol="false" add-sign :allow-micro="false" /> %</b-badge>
+            <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-badge>
+            <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
           </span>
         </div>
         <!-- 24h t: {{ stats.trades }}<br/>
@@ -89,6 +86,12 @@ export default {
   computed: {
     ...events.mapGetters(['misc', 'tradesRev', 'lastTrade', 'error']),
     ...settings.mapGetters(['dashboardSettings']),
+    percentageInfo () {
+      return {
+        symbol: '%',
+        name: '%'
+      }
+    },
     localError () {
       return this.error(this.info.symbol) ?? {}
     },

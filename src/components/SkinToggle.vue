@@ -1,5 +1,6 @@
 <template>
-  <b-nav-item @click="switchTheme()">{{ isLightTheme ? '🌙' : '💡' }}</b-nav-item>
+  <b-nav-item @click="switchTheme()" v-if="isLightTheme" v-b-tooltip.bottom title="Switch to dark mode">🌙</b-nav-item>
+  <b-nav-item @click="switchTheme()" v-else v-b-tooltip.bottom title="Switch to light mode">💡</b-nav-item>
 </template>
 
 <script>

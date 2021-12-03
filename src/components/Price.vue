@@ -1,5 +1,5 @@
 <template>
-  <span v-b-tooltip.top :title="verbose">{{ compressed }}</span>
+  <span v-b-tooltip.top.html="fullTitle">{{ compressed }}</span>
 </template>
 
 <script>
@@ -9,6 +9,10 @@ export default {
   props: {
     value: Number,
     currencyInfo: Object,
+    title: {
+      type: String,
+      default: null
+    },
     addSign: {
       type: Boolean,
       default: false
@@ -20,9 +24,17 @@ export default {
     allowMicro: {
       type: Boolean,
       default: true
+    },
+    compressTitle: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    fullTitle () {
+      const value = this.compressTitle ? this.compressed : this.verbose
+      return this.title ? this.title + ':<br />' + value : value
+    },
     compressed () {
       const result = format.autoFormat(this.value, this.addSign, this.allowMicro)
       return this.addSymbol ? result + ' ' + this.currencyInfo.symbol : result

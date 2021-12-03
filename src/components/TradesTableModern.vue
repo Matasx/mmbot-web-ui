@@ -5,10 +5,12 @@
       <b-list-group>
         <b-list-group-item :class="'row d-flex' + tradeClass(item.trade)" v-for="item in group.trades" :key="item.trade.key">
           <div class="col-4 col-md-2 p-0">
-            <div class="media align-items-center" v-b-tooltip.top :title="item.info.brokerName">
-              <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex."></b-img>
+            <div class="media align-items-center">
+              <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex." v-b-tooltip.top="item.info.brokerName"></b-img>
               <div class="media-body small-xs no-small-md">
-                <div class="text-muted small text-uppercase">{{ item.info.title }}</div>
+                <router-link :to="'/trader/' + item.info.symbol" class="text-muted small text-uppercase">
+                  {{ item.info.title }}
+                </router-link>
                 <div>
                   <span>
                     <span class="text-uppercase">{{ formatTime(item.trade.time) }}</span>
@@ -22,11 +24,11 @@
               <div class="media-body">
                 <div>
                   <div class="wrap-ellipsis small-xs no-small-md ml-auto" style="width: 150px;">
-                    <price :value="item.trade.aachg" :currency-info="item.info.assetInfo" />
+                    <price :value="item.trade.aachg" :currency-info="item.info.assetInfo" title="Asset" />
                   </div>
                 </div>
                 <div class="text-muted small mb-1">
-                  @ <price :value="item.trade.price" :currency-info="item.info.currencyInfo" />
+                  @ <price :value="item.trade.price" :currency-info="item.info.currencyInfo" title="Price" />
                 </div>
               </div>
               <div class="ml-2">
@@ -35,9 +37,9 @@
             </div>
           </div>
           <div class="col-1 text-center d-none d-md-block pt-2">
-            <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" :style="{ 'font-size': '1.5em' }"/>
-            <fa-icon v-else-if="item.trade.buy" icon="arrow-left" :style="{ color: '#6a994e', 'font-size': '1.5em' }"/>
-            <fa-icon v-else icon="arrow-right" variant="danger" :style="{ color: '#bc4749', 'font-size': '1.5em' }"/>
+            <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" :style="{ 'font-size': '1.5em' }" v-b-tooltip.top="'Alert'"/>
+            <fa-icon v-else-if="item.trade.buy" icon="arrow-left" :style="{ color: '#6a994e', 'font-size': '1.5em' }" v-b-tooltip.top="'Buy'"/>
+            <fa-icon v-else icon="arrow-right" variant="danger" :style="{ color: '#bc4749', 'font-size': '1.5em' }" v-b-tooltip.top="'Sell'"/>
           </div>
           <div class="col text-center mb-1 d-md-none" style="flex: 0 0 auto;">
             <fa-icon v-if="item.trade.alert" icon="exclamation-triangle" :style="{ 'font-size': '1.5em' }"/>
@@ -52,11 +54,11 @@
               <div class="media-body">
                 <div>
                   <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
-                    <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" />
+                    <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" title="Currency" />
                   </div>
                 </div>
                 <div class="small mb-1" :class="[ item.trade.normch < 0 ? 'text-danger' : 'text-success' ]">
-                  <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" add-sign />
+                  <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign />
                 </div>
               </div>
             </div>
