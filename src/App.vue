@@ -29,7 +29,7 @@
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <b-nav-item to="/settings"><fa-icon icon="sliders-h"/></b-nav-item>
+            <b-nav-item to="/settings" v-b-tooltip.bottom title="Global settings"><fa-icon icon="sliders-h"/></b-nav-item>
             <connectivity-indicator/>
             <skin-toggle/>
             <!-- <skin-picker/> -->
