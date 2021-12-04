@@ -45,8 +45,9 @@
         </b-collapse>
       </b-navbar>
       <b-popover target="brand" triggers="hover" placement="bottom" variant="secondary">
-        <template #title>Server version</template>
-        {{ backendVersion }}
+        <template #title>Version</template>
+        <b>Client:</b> {{ frontendVersion }}<br />
+        <b>Server:</b> {{ backendVersion }}
       </b-popover>
     </header>
     <router-view/>
@@ -54,11 +55,12 @@
 </template>
 
 <script>
-import SkinToggle from './components/SkinToggle.vue'
+import SkinToggle from '@/components/SkinToggle.vue'
 // import SkinPicker from './components/SkinPicker.vue'
-import ConnectivityIndicator from './components/ConnectivityIndicator.vue'
-import { AUTH_LOGOUT } from './store/actions/auth'
+import ConnectivityIndicator from '@/components/ConnectivityIndicator.vue'
+import { AUTH_LOGOUT } from '@/store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
+import ClientVersion from '@/version'
 const auth = createNamespacedHelpers('auth')
 const events = createNamespacedHelpers('events')
 
@@ -66,7 +68,10 @@ export default {
   components: { SkinToggle, ConnectivityIndicator }, // SkinPicker
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
-    ...events.mapGetters(['backendVersion', 'infos'])
+    ...events.mapGetters(['backendVersion', 'infos']),
+    frontendVersion () {
+      return ClientVersion
+    }
   },
   methods: {
     ...auth.mapActions({

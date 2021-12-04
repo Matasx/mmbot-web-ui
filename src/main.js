@@ -1,25 +1,19 @@
-import '@/settings'
-import 'mutationobserver-shim'
-import 'es6-promise/auto'
+import axios from 'axios'
 import Vue from 'vue'
-import '@/plugins/bootstrap-vue'
-import '@/plugins/vuex'
-import '@/plugins/fontAwesome'
-import '@/plugins/highcharts'
-import '@/plugins/cryptojs'
-import App from '@/App.vue'
-import router from '@/router'
-import store from '@/store'
-import { setupStream } from '@/eventsource'
-import '@/registerServiceWorker'
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-  created () {
-    setupStream()
+start()
+
+async function start () {
+  try {
+    const config = (await axios.get('config.json')).data
+    Vue.prototype.$serviceUrl = config.url
+    Vue.prototype.$storageKey = config.storage
+
+    await import('@/boot')
+  } catch (e) {
+    console.error('Cannot load application!')
+    console.error(e)
   }
-}).$mount('#app')
+}

@@ -33,7 +33,7 @@ export default {
   computed: {
     fullTitle () {
       const value = this.compressTitle ? this.compressed : this.verbose
-      return this.title ? this.title + ':<br />' + value : value
+      return this.title ? '<b>' + this.title + ':</b><br />' + value : value
     },
     compressed () {
       const result = format.autoFormat(this.value, this.addSign, this.allowMicro)

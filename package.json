@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "genversion src/version.js && vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "genversion": "^3.0.2",
     "sass": "^1.42.1",
     "sass-loader": "^10.2.0",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
