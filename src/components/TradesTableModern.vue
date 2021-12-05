@@ -52,14 +52,10 @@
                 <cryptoicon :symbol="item.info.currency"/>
               </div>
               <div class="media-body">
-                <div>
-                  <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
-                    <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" title="Currency" />
-                  </div>
+                <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
+                  <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" title="Currency" />
                 </div>
-                <div class="small mb-1" :class="[ item.trade.normch < 0 ? 'text-danger' : 'text-success' ]">
-                  <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign />
-                </div>
+                <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign colored class="small mb-1" />
               </div>
             </div>
           </div>
