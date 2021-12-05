@@ -13,16 +13,19 @@
       :fields="fields"
       :tbody-tr-class="rowClass"
       primary-key="key">
+      <template #cell(time)="data">
+        <span class="text-nowrap">{{ data.value }}</span>
+      </template>
+      <template #cell(symbol)="data">
+        <span :set="itemInfo = info(data.item.symbol)" class="text-nowrap">
+          <b-img width="25" :src="$serviceUrl + itemInfo.brokerIcon" alt="Ex." v-b-tooltip.top="itemInfo.brokerName" class="mr-1"></b-img>
+          <router-link :to="'/trader/' + itemInfo.symbol">{{ itemInfo.title }}</router-link>
+        </span>
+      </template>
       <template #cell(icon)="data">
         <fa-icon v-if="data.item.alert" icon="exclamation-triangle" v-b-tooltip.top="'Alert'" />
         <fa-icon v-else-if="data.item.buy" icon="arrow-left" variant="danger" :style="{ color: '#6a994e' }" v-b-tooltip.top="'Buy'"/>
         <fa-icon v-else icon="arrow-right" :style="{ color: '#bc4749' }" v-b-tooltip.top="'Sell'"/>
-      </template>
-      <template #cell(symbol)="data">
-        <span :set="itemInfo = info(data.item.symbol)">
-          <b-img width="25" :src="$serviceUrl + itemInfo.brokerIcon" alt="Ex." v-b-tooltip.top="itemInfo.brokerName" class="mr-1"></b-img>
-          <router-link :to="'/trader/' + itemInfo.symbol">{{ itemInfo.title }}</router-link>
-        </span>
       </template>
       <template #cell(aachg)="data">
         <price v-if="!data.item.alert" :value="data.value" :currency-info="info(data.item.symbol).assetInfo" :add-symbol="false" title="Asset" />
