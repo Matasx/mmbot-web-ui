@@ -38,13 +38,10 @@
 
   .nav-link {
     padding: 1rem;
-    border-left: 1px solid rgba(255, 255, 255, .1);
-    border-right: 1px solid rgba(0, 0, 0, .2);
 
     &:hover,
     &:focus {
       @include btn-shadow-inverse($gray-800);
-      border-left: 1px solid rgba(0, 0, 0, .2);
     }
   }
 
