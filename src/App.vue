@@ -32,26 +32,24 @@
     <div id="wrapper" :class="{ toggled: sidebar }">
       <div id="sidebar-wrapper">
         <b-nav vertical class="navbar-dark sidebar-nav">
-          <b-navbar-nav>
-            <b-nav-item to="/">Dashboard</b-nav-item>
-            <nav-collapse title="Charts" id="charts">
-              <b-nav-item to="/chart/price">Price</b-nav-item>
-              <b-nav-item to="/chart/neutraldist">Distance to neutral price</b-nav-item>
-              <b-nav-item to="/chart/profit">P&amp;L</b-nav-item>
-              <b-nav-item to="/chart/position">Position</b-nav-item>
-              <b-nav-item to="/chart/norm">Normalized profit</b-nav-item>
-              <b-nav-item to="/chart/trades">Trades</b-nav-item>
-            </nav-collapse>
-            <nav-collapse v-if="Array.isArray(infos) && infos.length" title="Traders" id="traders">
-              <b-nav-item v-for="info in infos" :key="info.symbol" :to="'/trader/' + info.symbol">{{ info.title }}</b-nav-item>
-            </nav-collapse>
-            <nav-collapse title="Transactions" id="transactions">
-              <b-nav-item to="/trades">Classic</b-nav-item>
-              <b-nav-item to="/trades-modern">Modern</b-nav-item>
-            </nav-collapse>
-            <b-nav-item to="/">Wallets</b-nav-item>
-            <b-nav-item to="/test">Test</b-nav-item>
-          </b-navbar-nav>
+          <b-nav-item to="/">Dashboard</b-nav-item>
+          <nav-collapse title="Charts" id="charts">
+            <b-nav-item to="/chart/price">Price</b-nav-item>
+            <b-nav-item to="/chart/neutraldist">Distance to neutral price</b-nav-item>
+            <b-nav-item to="/chart/profit">P&amp;L</b-nav-item>
+            <b-nav-item to="/chart/position">Position</b-nav-item>
+            <b-nav-item to="/chart/norm">Normalized profit</b-nav-item>
+            <b-nav-item to="/chart/trades">Trades</b-nav-item>
+          </nav-collapse>
+          <nav-collapse v-if="Array.isArray(infos) && infos.length" title="Traders" id="traders">
+            <b-nav-item v-for="info in infos" :key="info.symbol" :to="'/trader/' + info.symbol">{{ info.title }}</b-nav-item>
+          </nav-collapse>
+          <nav-collapse title="Transactions" id="transactions">
+            <b-nav-item to="/trades">Classic</b-nav-item>
+            <b-nav-item to="/trades-modern">Modern</b-nav-item>
+          </nav-collapse>
+          <b-nav-item to="/">Wallets</b-nav-item>
+          <b-nav-item to="/test">Test</b-nav-item>
         </b-nav>
       </div>
       <div id="page-content-wrapper">
