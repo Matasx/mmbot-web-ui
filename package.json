@@ -3,9 +3,9 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "genversion src/version.js && vue-cli-service serve",
     "build": "genversion src/version.js && vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "genversion src/version.js && vue-cli-service lint"
   },
   "dependencies": {
     "@babel/polyfill": "^7.11.5",

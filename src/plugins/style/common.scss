@@ -79,6 +79,13 @@
   opacity:1!important;
 }
 
+.nav-item {
+  .router-link-exact-active {
+    color: $white !important;
+    text-decoration: underline;
+  }
+}
+
 // .highcharts-color-0 {
 //   fill: $primary !important;
 //   stroke: $primary !important;
