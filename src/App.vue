@@ -1,9 +1,9 @@
 <template>
   <body>
-    <header style="margin-bottom: 4rem !important;">
+    <header style="margin-bottom: 58px !important;">
       <b-navbar :toggleable="false" type="dark" variant="primary" fixed="top">
         <b-navbar-brand to="/" id="brand">MMBot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
-        <b-button size="sm" v-b-toggle.menu-sidebar class="ml-2" variant="primary">
+        <b-button size="sm" @click="toggleSidebar" class="ml-2" variant="primary">
           <span class="navbar-toggler-icon"></span>
         </b-button>
 
@@ -23,40 +23,41 @@
         </b-navbar-nav>
       </b-navbar>
 
-      <b-sidebar id="menu-sidebar" title="Menu" bg-variant="primary" text-variant="light" backdrop shadow="lg">
-        <div class="px-3 py-2">
-          <b-nav vertical class="navbar-dark">
-            <b-navbar-nav>
-              <b-nav-item to="/">Dashboard</b-nav-item>
-              <nav-collapse title="Charts" id="charts">
-                <b-nav-item to="/chart/price">Price</b-nav-item>
-                <b-nav-item to="/chart/neutraldist">Distance to neutral price</b-nav-item>
-                <b-nav-item to="/chart/profit">P&amp;L</b-nav-item>
-                <b-nav-item to="/chart/position">Position</b-nav-item>
-                <b-nav-item to="/chart/norm">Normalized profit</b-nav-item>
-                <b-nav-item to="/chart/trades">Trades</b-nav-item>
-              </nav-collapse>
-              <nav-collapse v-if="Array.isArray(infos) && infos.length" title="Traders" id="traders">
-                <b-nav-item v-for="info in infos" :key="info.symbol" :to="'/trader/' + info.symbol">{{ info.title }}</b-nav-item>
-              </nav-collapse>
-              <nav-collapse title="Transactions" id="transactions">
-                <b-nav-item to="/trades">Classic</b-nav-item>
-                <b-nav-item to="/trades-modern">Modern</b-nav-item>
-              </nav-collapse>
-              <b-nav-item to="/">Wallets</b-nav-item>
-              <b-nav-item to="/test">Test</b-nav-item>
-            </b-navbar-nav>
-          </b-nav>
-        </div>
-      </b-sidebar>
-
       <b-popover target="brand" triggers="hover" placement="bottom" variant="secondary">
         <template #title>Version</template>
         <b>Client:</b> {{ frontendVersion }}<br />
         <b>Server:</b> {{ backendVersion }}
       </b-popover>
     </header>
-    <router-view/>
+    <div id="wrapper" :class="{ toggled: sidebar }">
+      <div id="sidebar-wrapper">
+        <b-nav vertical class="navbar-dark sidebar-nav">
+          <b-navbar-nav>
+            <b-nav-item to="/">Dashboard</b-nav-item>
+            <nav-collapse title="Charts" id="charts">
+              <b-nav-item to="/chart/price">Price</b-nav-item>
+              <b-nav-item to="/chart/neutraldist">Distance to neutral price</b-nav-item>
+              <b-nav-item to="/chart/profit">P&amp;L</b-nav-item>
+              <b-nav-item to="/chart/position">Position</b-nav-item>
+              <b-nav-item to="/chart/norm">Normalized profit</b-nav-item>
+              <b-nav-item to="/chart/trades">Trades</b-nav-item>
+            </nav-collapse>
+            <nav-collapse v-if="Array.isArray(infos) && infos.length" title="Traders" id="traders">
+              <b-nav-item v-for="info in infos" :key="info.symbol" :to="'/trader/' + info.symbol">{{ info.title }}</b-nav-item>
+            </nav-collapse>
+            <nav-collapse title="Transactions" id="transactions">
+              <b-nav-item to="/trades">Classic</b-nav-item>
+              <b-nav-item to="/trades-modern">Modern</b-nav-item>
+            </nav-collapse>
+            <b-nav-item to="/">Wallets</b-nav-item>
+            <b-nav-item to="/test">Test</b-nav-item>
+          </b-navbar-nav>
+        </b-nav>
+      </div>
+      <div id="page-content-wrapper">
+        <router-view/>
+      </div>
+    </div>
   </body>
 </template>
 
@@ -68,11 +69,18 @@ import NavCollapse from '@/components/NavCollapse'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
 import ClientVersion from '@/version'
+import Highcharts from 'highcharts'
+
 const auth = createNamespacedHelpers('auth')
 const events = createNamespacedHelpers('events')
 
 export default {
   components: { SkinToggle, ConnectivityIndicator, NavCollapse }, // SkinPicker
+  data () {
+    return {
+      sidebar: window.innerWidth >= 1100
+    }
+  },
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
     ...events.mapGetters(['backendVersion', 'infos']),
@@ -83,7 +91,16 @@ export default {
   methods: {
     ...auth.mapActions({
       authLogout: AUTH_LOGOUT
-    })
+    }),
+    toggleSidebar () {
+      this.sidebar = !this.sidebar
+      setTimeout(this.reflowCharts, 600)
+    },
+    reflowCharts () {
+      Highcharts.charts
+        .filter(x => x)
+        .forEach(x => x.reflow())
+    }
   }
 }
 </script>
