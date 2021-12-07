@@ -5,6 +5,7 @@ import {
   SETTINGS_DASHBOARD_SETTINGS_SET,
   SETTINGS_GLOBAL_SETTINGS_SET,
   SETTINGS_TRADER_SETTINGS_SET,
+  SETTINGS_MENU_TOGGLE_SET,
   LIGHT_SKIN
 } from '@/store/actions/settings'
 
@@ -38,7 +39,8 @@ const state = {
       formatOmicron: true,
       formatMillion: true,
       formatAutoElipsis: false
-    }
+    },
+    menuToggle: { }
   }
 }
 
@@ -48,7 +50,8 @@ const getters = {
   dashboardDetails: state => state.data.dashboardDetails,
   dashboardSettings: state => state.data.dashboardSettings,
   globalSettings: state => state.data.globalSettings,
-  traderSettings: state => state.data.traderSettings
+  traderSettings: state => state.data.traderSettings,
+  menuToggle: state => id => !!state.data.menuToggle[id]
 }
 
 const actions = {
@@ -72,6 +75,9 @@ const mutations = {
   },
   [SETTINGS_TRADER_SETTINGS_SET]: (state, settings) => {
     state.data.traderSettings = settings
+  },
+  [SETTINGS_MENU_TOGGLE_SET]: (state, toggle) => {
+    state.data.menuToggle[toggle.id] = toggle.state
   }
 }
 

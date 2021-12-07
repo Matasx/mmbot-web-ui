@@ -73,7 +73,7 @@ export default {
         const parsed = JSON.parse(decrypted)
         const current = JSON.parse(JSON.stringify(this.data))
         merge(current, parsed)
-        console.log(current)
+        // console.log(current)
         this.setData(current)
 
         this.$bvToast.toast('Settings were imported!', {

@@ -14,16 +14,28 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+import { SETTINGS_MENU_TOGGLE_SET } from '@/store/actions/settings'
+
+const { mapGetters, mapMutations } = createNamespacedHelpers('settings')
+
 export default {
   name: 'NavCollapse',
   props: {
     title: String,
     id: String
   },
-  data () {
-    return {
-      toggle: false
+  computed: {
+    ...mapGetters(['menuToggle']),
+    toggle: {
+      get () { return this.menuToggle(this.id) },
+      set (value) { this.setMenuToggle({ id: this.id, state: value }) }
     }
+  },
+  methods: {
+    ...mapMutations({
+      setMenuToggle: SETTINGS_MENU_TOGGLE_SET
+    })
   }
 }
 </script>

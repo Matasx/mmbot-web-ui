@@ -46,7 +46,7 @@ export function setupStream () {
       const handler = handlers[payload.type]
       if (!handler) {
         console.warn('Missing handler for message type \'' + payload.type + '\'')
-        if (payload.type === 'log') console.log(payload)
+        console.debug('Payload: ' + JSON.stringify(payload))
       } else {
         const mapped = handler.map(payload)
         if (isTransaction) {
@@ -58,14 +58,14 @@ export function setupStream () {
       }
     } else {
       if (event.data === '"refresh"') {
-        console.log('Begin transaction')
+        console.debug('Begin transaction')
         resetTransaction()
         isTransaction = true
       } else if (event.data === '"end_refresh"') {
         store.commit('events/' + EVENTS_TRANSACTION, transaction)
         resetTransaction()
         isTransaction = false
-        console.log('Commit transaction')
+        console.debug('Commit transaction')
       }
       store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
     }
