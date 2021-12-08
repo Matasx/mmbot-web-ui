@@ -2,10 +2,12 @@
   <body>
     <header style="margin-bottom: 58px !important;">
       <b-navbar :toggleable="false" type="dark" variant="primary" fixed="top">
+        <b-navbar-nav>
+          <b-nav-item @click="toggleSidebar">
+            <span class="navbar-toggler-icon"></span>
+          </b-nav-item>
+        </b-navbar-nav>
         <b-navbar-brand to="/" id="brand">MMBot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
-        <b-button size="sm" @click="toggleSidebar" class="ml-2" variant="primary">
-          <span class="navbar-toggler-icon"></span>
-        </b-button>
 
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/settings" v-b-tooltip.bottom title="Global settings"><fa-icon icon="sliders-h"/></b-nav-item>

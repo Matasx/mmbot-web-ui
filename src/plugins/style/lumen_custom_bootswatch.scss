@@ -16,6 +16,14 @@
 
 // Navbar ======================================================================
 
+.navbar {
+  box-shadow: 0 0 0.75rem $black;
+
+  &-brand {
+    padding-left: 1rem;
+  }
+}
+
 .bg-primary {
   border-color: darken($primary, 5%);
 }

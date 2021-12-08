@@ -107,7 +107,7 @@ body {
 }
 
 #sidebar-wrapper {
-  z-index: 1000;
+  z-index: 1040;
   position: fixed;
   left: $sidebarWidth;
   width: 0;
@@ -115,8 +115,9 @@ body {
   margin-left: -$sidebarWidth;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #000;
-  box-shadow: 2px 0 15px $black;
+  background: $primary;
+  box-shadow: 0 0 0.75rem $black;
+  clip-path: inset(0px -1rem 0px 0px);
   -webkit-transition: width 0.5s ease;
   -moz-transition: width 0.5s ease;
   -o-transition: width 0.5s ease;
@@ -131,6 +132,7 @@ body {
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 15px;
   position: relative;
   margin-left: 0;
 }
@@ -143,7 +145,6 @@ body {
 /* Sidebar Styles */
 
 .sidebar-nav {
-  position: absolute;
   top: 0;
   width: $sidebarWidth;
   margin: 0;
