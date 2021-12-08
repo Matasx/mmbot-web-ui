@@ -1,16 +1,16 @@
 <template>
-  <b-nav-text>
-    <span v-b-toggle:id="id" class="ml-1">
+  <div class="sidebar-section">
+    <span v-b-toggle:id="id" class="title">
       <fa-icon v-if="toggle" icon="caret-up" class="mb-1"/>
       <fa-icon v-else icon="caret-down" class="mb-1"/>
       {{ title }}
     </span>
     <b-collapse :id="id" v-model="toggle" class="ml-3">
-      <b-navbar-nav>
+      <ul>
         <slot/>
-      </b-navbar-nav>
+      </ul>
     </b-collapse>
-  </b-nav-text>
+  </div>
 </template>
 
 <script>
