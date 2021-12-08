@@ -1,6 +1,6 @@
 <template>
   <body>
-    <header style="margin-bottom: 58px !important;">
+    <header>
       <b-navbar :toggleable="false" type="dark" variant="primary" fixed="top">
         <b-navbar-nav>
           <b-nav-item @click="toggleSidebar">
