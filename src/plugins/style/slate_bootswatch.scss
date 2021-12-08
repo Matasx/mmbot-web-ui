@@ -39,11 +39,6 @@
 
   .nav-link {
     padding: 1rem;
-
-    &:hover,
-    &:focus {
-      @include btn-shadow-inverse($gray-800);
-    }
   }
 
   &-brand {
@@ -61,14 +56,6 @@
 
   &.bg-light {
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
-
-    .nav-link {
-      &:hover,
-      &:focus {
-        @include btn-shadow-inverse($gray-600);
-        border-left: 1px solid rgba(0, 0, 0, .2);
-      }
-    }
   }
 }
 

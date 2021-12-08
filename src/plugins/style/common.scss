@@ -104,6 +104,7 @@ body {
   z-index: 1040;
   position: fixed;
   left: -$sidebarWidth - 20px;
+  visibility: hidden;
   width: $sidebarWidth;
   height: calc(100% - 58px);
   line-height: 18px;
@@ -112,10 +113,10 @@ body {
   background: $primary;
   box-shadow: 0 0 0.75rem $black;
   clip-path: inset(0px -1rem 0px 0px);
-  -webkit-transition: left 0.5s ease;
-  -moz-transition: left 0.5s ease;
-  -o-transition: left 0.5s ease;
-  transition: left 0.5s ease;
+  -webkit-transition: left 0.5s ease, visibility 0.5s;
+  -moz-transition: left 0.5s ease, visibility 0.5s;
+  -o-transition: left 0.5s ease, visibility 0.5s;
+  transition: left 0.5s ease, visibility 0.5s;
 
   ul {
     margin-bottom: 0;
@@ -142,6 +143,7 @@ body {
 
 #wrapper.toggled #sidebar-wrapper {
   left: 0;
+  visibility: visible;
 }
 
 #page-content-wrapper {
