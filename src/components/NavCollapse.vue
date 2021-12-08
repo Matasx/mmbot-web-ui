@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar-section">
-    <span v-b-toggle:id="id" class="title">
+    <span v-b-toggle:id="id" class="title nav-link">
       <fa-icon v-if="toggle" icon="caret-up" class="mb-1"/>
       <fa-icon v-else icon="caret-down" class="mb-1"/>
       {{ title }}
     </span>
-    <b-collapse :id="id" v-model="toggle" class="ml-3">
+    <b-collapse :id="id" v-model="toggle">
       <ul>
         <slot/>
       </ul>
