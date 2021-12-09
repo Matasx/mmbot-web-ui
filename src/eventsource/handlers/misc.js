@@ -21,23 +21,23 @@ import { EVENTS_MISC_ADD } from '@/store/actions/events'
 
 export default {
   commitName: EVENTS_MISC_ADD,
-  map (dao) {
+  map (dto) {
     return {
-      symbol: dao.symbol,
-      pos: dao.data.pos,
-      tt: dao.data.tt,
-      bt: dao.data.bt,
-      a: dao.data.a, // achieve (initial position set)
-      t: dao.data.t, // trading, order pending
-      curNormBuy: dao.data.cur_norm_buy,
-      curNormSell: dao.data.cur_norm_sell
+      symbol: dto.symbol,
+      pos: dto.data.pos,
+      tt: dto.data.tt,
+      bt: dto.data.bt,
+      a: dto.data.a, // achieve (initial position set)
+      t: dto.data.t, // trading, order pending
+      curNormBuy: dto.data.cur_norm_buy,
+      curNormSell: dto.data.cur_norm_sell
       // data: dao.data
     }
   },
   reset (store) {
     store.misc = {}
   },
-  add (store, dto) {
-    store.misc[dto.symbol] = dto
+  add (store, dao) {
+    store.misc[dao.symbol] = dao
   }
 }

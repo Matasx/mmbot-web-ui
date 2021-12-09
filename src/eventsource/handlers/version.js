@@ -2,13 +2,13 @@ import { EVENTS_VERSION_SET } from '@/store/actions/events'
 
 export default {
   commitName: EVENTS_VERSION_SET,
-  map (dao) {
-    return dao.data
+  map (dto) {
+    return dto.data
   },
   reset (store) {
     store.backendVersion = 'unknown'
   },
-  add (store, dto) {
-    store.backendVersion = dto
+  add (store, dao) {
+    store.backendVersion = dao
   }
 }

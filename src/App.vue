@@ -12,6 +12,7 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/settings" v-b-tooltip.bottom title="Global settings"><fa-icon icon="sliders-h"/></b-nav-item>
           <connectivity-indicator/>
+          <b-nav-item v-b-modal.modal-log v-b-tooltip.bottom title="Log"><fa-icon icon="bug"/></b-nav-item>
           <skin-toggle/>
           <!-- <skin-picker/> -->
           <b-nav-item-dropdown v-if="isAuthenticated" right>
@@ -24,6 +25,12 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-navbar>
+
+      <b-modal id="modal-log" title="Logs" scrollable ok-only size="xl">
+        <span v-for="log in logs.slice().reverse()" :key="log">
+          {{ log }}<br/>
+        </span>
+      </b-modal>
 
       <b-popover target="brand" triggers="hover" placement="bottom" variant="secondary">
         <template #title>Version</template>
@@ -83,7 +90,7 @@ export default {
   },
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
-    ...events.mapGetters(['backendVersion', 'infos']),
+    ...events.mapGetters(['backendVersion', 'infos', 'logs']),
     frontendVersion () {
       return ClientVersion
     }

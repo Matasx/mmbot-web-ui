@@ -9,6 +9,7 @@ import miscHandler from './handlers/misc'
 import priceHandler from './handlers/price'
 import performanceHandler from './handlers/performance'
 import configHandler from './handlers/config'
+import logHandler from './handlers/log'
 import Vue from 'vue'
 
 const handlers = {
@@ -20,7 +21,8 @@ const handlers = {
   misc: miscHandler,
   price: priceHandler,
   performance: performanceHandler,
-  config: configHandler
+  config: configHandler,
+  log: logHandler
 }
 
 export function setupStream () {

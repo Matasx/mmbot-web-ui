@@ -2,16 +2,16 @@ import { EVENTS_PRICE_ADD } from '@/store/actions/events'
 
 export default {
   commitName: EVENTS_PRICE_ADD,
-  map (dao) {
+  map (dto) {
     return {
-      symbol: dao.symbol,
-      price: dao.data
+      symbol: dto.symbol,
+      price: dto.data
     }
   },
   reset (store) {
     store.price = {}
   },
-  add (store, dto) {
-    store.price[dto.symbol] = dto
+  add (store, dao) {
+    store.price[dao.symbol] = dao
   }
 }

@@ -2,28 +2,28 @@ import { EVENTS_ERROR_ADD } from '@/store/actions/events'
 
 export default {
   commitName: EVENTS_ERROR_ADD,
-  map (dao) {
-    dao.pk = dao.symbol
+  map (dto) {
+    dto.pk = dto.symbol
 
-    const dto = {
-      symbol: dao.symbol,
+    const dao = {
+      symbol: dto.symbol,
       error: null,
       buyError: null,
       sellError: null
     }
 
-    if (dao.data) {
-      dto.error = dao.data.gen
-      dto.buyError = dao.data.buy
-      dto.sellError = dao.data.sell
+    if (dto.data) {
+      dao.error = dto.data.gen
+      dao.buyError = dto.data.buy
+      dao.sellError = dto.data.sell
     }
 
-    return dto
+    return dao
   },
   reset (store) {
     store.errors = {}
   },
-  add (store, dto) {
-    store.errors[dto.symbol] = dto
+  add (store, dao) {
+    store.errors[dao.symbol] = dao
   }
 }

@@ -7,6 +7,7 @@ import {
   EVENTS_ORDER_ADD,
   EVENTS_MISC_ADD,
   EVENTS_PRICE_ADD,
+  EVENTS_LOG_ADD,
   EVENTS_PERFORMANCE_SET,
   EVENTS_CONFIG_SET,
   EVENTS_LAST_EVENT_TIME_SET
@@ -23,7 +24,8 @@ const state = {
     misc: {},
     performance: {},
     config: {},
-    price: {}
+    price: {},
+    logs: []
   },
   lastEventTime: 0
 }
@@ -87,7 +89,8 @@ const getters = {
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,
   config: state => state.data.config,
-  lastEventTime: state => state.lastEventTime
+  lastEventTime: state => state.lastEventTime,
+  logs: state => state.data.logs
 }
 
 const setNested = function (collection, key1, key2, value) {
@@ -122,6 +125,9 @@ const mutations = {
   },
   [EVENTS_PRICE_ADD]: (state, price) => {
     Vue.set(state.data.price, price.symbol, price)
+  },
+  [EVENTS_LOG_ADD]: (state, log) => {
+    state.data.logs.push(log)
   },
   [EVENTS_PERFORMANCE_SET]: (state, performance) => {
     state.data.performance = performance

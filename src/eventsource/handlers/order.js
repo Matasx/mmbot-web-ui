@@ -3,19 +3,19 @@ import common from './common'
 
 export default {
   commitName: EVENTS_ORDER_ADD,
-  map (dao) {
+  map (dto) {
     return {
-      dir: dao.dir, // -2, -1, 1, 2
-      dirStr: dao.dir.toString(),
-      symbol: dao.symbol,
-      price: dao.data.price,
-      size: dao.data.size
+      dir: dto.dir, // -2, -1, 1, 2
+      dirStr: dto.dir.toString(),
+      symbol: dto.symbol,
+      price: dto.data.price,
+      size: dto.data.size
     }
   },
   reset (store) {
     store.orders = {}
   },
-  add (store, dto) {
-    common.addNested(store.orders, dto.symbol, dto.dirStr, dto)
+  add (store, dao) {
+    common.addNested(store.orders, dao.symbol, dao.dirStr, dao)
   }
 }

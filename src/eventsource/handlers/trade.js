@@ -3,34 +3,34 @@ import common from './common'
 
 export default {
   commitName: EVENTS_TRADE_ADD,
-  map (dao) {
+  map (dto) {
     return {
-      key: dao.symbol + '' + JSON.stringify(dao.data.id),
-      symbol: dao.symbol,
-      alert: dao.data.achg === 0, // && JSON.stringify(dao.data.id).startsWith('"ALERT'),
-      buy: dao.data.achg > 0,
-      id: dao.data.id, // Rransaction id
-      time: dao.data.time,
-      normch: dao.data.normch, // Normalized P/L
-      achg: dao.data.achg, // Size
-      aachg: Math.abs(dao.data.achg),
-      price: dao.data.price, // Price
-      gain: dao.data.gain, // P/L
-      volume: dao.data.volume, // currency total
-      pl: dao.data.pl, // P/L from position
-      rpl: dao.data.rpl, // Realized P/L
-      norm: dao.data.norm,
-      man: dao.data.man, // Manual trade
-      p0: dao.data.p0, // Neutral price
-      pos: dao.data.pos, // Position
-      dp0: dao.data.price - dao.data.p0 // Netral price distance to price
+      key: dto.symbol + '' + JSON.stringify(dto.data.id),
+      symbol: dto.symbol,
+      alert: dto.data.achg === 0, // && JSON.stringify(dao.data.id).startsWith('"ALERT'),
+      buy: dto.data.achg > 0,
+      id: dto.data.id, // Rransaction id
+      time: dto.data.time,
+      normch: dto.data.normch, // Normalized P/L
+      achg: dto.data.achg, // Size
+      aachg: Math.abs(dto.data.achg),
+      price: dto.data.price, // Price
+      gain: dto.data.gain, // P/L
+      volume: dto.data.volume, // currency total
+      pl: dto.data.pl, // P/L from position
+      rpl: dto.data.rpl, // Realized P/L
+      norm: dto.data.norm,
+      man: dto.data.man, // Manual trade
+      p0: dto.data.p0, // Neutral price
+      pos: dto.data.pos, // Position
+      dp0: dto.data.price - dto.data.p0 // Netral price distance to price
       // data: JSON.stringify(dao.data, undefined, 2)
     }
   },
   reset (store) {
     store.trades = {}
   },
-  add (store, dto) {
-    common.addNested(store.trades, dto.symbol, dto.id, dto)
+  add (store, dao) {
+    common.addNested(store.trades, dao.symbol, dao.id, dao)
   }
 }
