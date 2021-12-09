@@ -43,7 +43,7 @@
       </b-card-text>
     </b-card-body>
     <b-card-footer v-if="localError.error" footer-text-variant="danger">
-      <fa-icon icon="burn" class="mr-1"/>
+      <fa-icon icon="burn" class="mr-2 mb-1"/>
       <em>{{ localError.error }}</em>
     </b-card-footer>
   </b-card>

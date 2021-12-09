@@ -19,12 +19,15 @@ import {
   faCommentDollar,
   faDizzy,
   faCaretDown,
-  faCaretUp
+  faCaretUp,
+  faMoon,
+  faSun,
+  faBars
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faKey, faPowerOff, faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExclamationTriangle)
 library.add(faWifi, faSyncAlt, faMapPin, faSlidersH, faBurn, faHandPaper, faExternalLinkAlt, faCommentDollar)
-library.add(faDizzy, faCaretDown, faCaretUp)
+library.add(faDizzy, faCaretDown, faCaretUp, faMoon, faSun, faBars)
 
 Vue.component('fa-icon', FontAwesomeIcon)

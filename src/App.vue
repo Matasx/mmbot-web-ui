@@ -4,7 +4,7 @@
       <b-navbar :toggleable="false" type="dark" variant="primary" fixed="top">
         <b-navbar-nav>
           <b-nav-item @click="toggleSidebar">
-            <span class="navbar-toggler-icon"></span>
+            <fa-icon icon="bars" size="lg"/>
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-brand to="/" id="brand">MMBot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
