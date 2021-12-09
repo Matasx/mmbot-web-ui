@@ -30,6 +30,7 @@
         <span v-for="log in logs.slice().reverse()" :key="log">
           {{ log }}<br/>
         </span>
+        <i v-if="!logs.length">No log entries.</i>
       </b-modal>
 
       <b-popover target="brand" triggers="hover" placement="bottom" variant="secondary">
