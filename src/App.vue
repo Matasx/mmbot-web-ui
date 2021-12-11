@@ -27,7 +27,7 @@
       </b-navbar>
 
       <b-modal id="modal-log" title="Logs" scrollable ok-only size="xl">
-        <span v-for="log in logs.slice().reverse()" :key="log">
+        <span v-for="log in logs.slice().reverse()" :key="log" class="log-entry">
           {{ log }}<br/>
         </span>
         <i v-if="!logs.length">No log entries.</i>
