@@ -18,6 +18,10 @@
   background-clip: content-box;
 }
 
+*::-webkit-scrollbar-thumb:hover {
+  background-color: lighten($scroll, 15%);
+}
+
 .list-group-item+.list-group-item {
   border-top-width: 0;
 }
