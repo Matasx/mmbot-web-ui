@@ -9,7 +9,7 @@
           <span v-if="localMisc.pos !== undefined">
             <fa-icon icon="map-pin" class="mr-1 mb-1"/>
             <price :value="localMisc.pos" :currency-info="info.assetInfo" title="Position"/>
-            <b-spinner v-if="achieve" small type="grow" class="ml-1"/>
+            <b-spinner v-if="achieve" small type="grow" class="ml-1 mb-1"/>
           </span>
         </span>
       </div>

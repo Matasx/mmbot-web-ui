@@ -60,19 +60,27 @@ export default {
     }
   },
   methods: {
-    details (dir) {
+    details (dir, order) {
       const m = this.localMisc
-      const o = this.ordersMap(this.info.symbol)[dir]
       const p = this.priceCurrent
       const a = m && !!m.t && ((dir > 0 && m.t > 0) || (dir < 0 && m.t < 0))
-      const v = o && o.price && p
+      const v = order && order.price && p
       return {
-        order: o,
-        uiSize: v || a ? this.orderSize : 0,
+        order: order,
+        uiSize: this.hasAnyValidOrder || this.hasAnyActiveOrder || v || a ? this.orderSize : 0,
         showValue: v,
-        priceDiff: v ? o.price - p.price : 0,
+        priceDiff: v ? order.price - p.price : 0,
         activeTrade: a
       }
+    },
+    order (dir) {
+      return this.ordersMap(this.info.symbol)[dir]
+    },
+    anyOrder (dirs) {
+      if (dirs.length === 0) return undefined
+      const orders = dirs.map(dir => this.ordersMap(this.info.symbol)[dir])
+      const found = orders.find(o => o && o.price)
+      return found ?? orders[0]
     }
   },
   computed: {
@@ -83,6 +91,14 @@ export default {
     localMisc () {
       return this.misc(this.info.symbol)
     },
+    hasAnyValidOrder () {
+      const o = this.anyOrder([-2, -1, 1, 2])
+      return o && o.price
+    },
+    hasAnyActiveOrder () {
+      const m = this.localMisc
+      return m && m.t
+    },
     buyVariant () {
       return this.localError.buyError ? 'dark' : 'success'
     },
@@ -90,10 +106,10 @@ export default {
       return this.localError.sellError ? 'dark' : 'danger'
     },
     buyDetails () {
-      return this.details(1) ?? this.details(2)
+      return this.details(1, this.anyOrder([1, 2]))
     },
     sellDetails () {
-      return this.details(-1) ?? this.details(-2)
+      return this.details(-1, this.anyOrder([-1, -2]))
     },
     priceCurrent () {
       return this.price(this.info.symbol)
