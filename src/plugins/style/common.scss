@@ -22,6 +22,11 @@
   background-color: lighten($scroll, 15%);
 }
 
+.fa-middle {
+  display: inline;
+  vertical-align: middle;
+}
+
 .list-group-item+.list-group-item {
   border-top-width: 0;
 }

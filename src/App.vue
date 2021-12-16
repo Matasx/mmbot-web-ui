@@ -7,7 +7,7 @@
             <fa-icon icon="bars" size="lg"/>
           </b-nav-item>
         </b-navbar-nav>
-        <b-navbar-brand to="/" id="brand">MMBot <fa-icon icon="comment-dollar" class="mb-2" /></b-navbar-brand>
+        <b-navbar-brand to="/" id="brand"><span class="fa-middle">MMBot</span><fa-icon icon="comment-dollar" class="fa-middle ml-1" /></b-navbar-brand>
 
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/settings" v-b-tooltip.bottom title="Global settings"><fa-icon icon="sliders-h"/></b-nav-item>
