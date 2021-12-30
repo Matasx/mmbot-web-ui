@@ -55,7 +55,8 @@
                 <div class="wrap-ellipsis small-xs no-small-md" style="width: 150px;">
                   <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" title="Currency" />
                 </div>
-                <price :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign colored class="small mb-1" />
+                <price v-if="globalSettings.pnlType === 0" :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign colored class="small mb-1" />
+                <price v-else-if="globalSettings.pnlType === 2" :value="item.trade.gain" :currency-info="item.info.currencyInfo" title="Equity change" add-sign colored class="small mb-1" />
               </div>
             </div>
           </div>
@@ -88,7 +89,8 @@ import { createNamespacedHelpers } from 'vuex'
 import Cryptoicon from './Cryptoicon.vue'
 import Price from './Price.vue'
 
-const { mapGetters } = createNamespacedHelpers('events')
+const { mapGetters: mapEventGetters } = createNamespacedHelpers('events')
+const { mapGetters: mapSettingsGetters } = createNamespacedHelpers('settings')
 
 export default {
   name: 'TradesTableModern',
@@ -134,7 +136,8 @@ export default {
       return Object.entries(result)
         .map(([key, value]) => ({ key, trades: value }))
     },
-    ...mapGetters(['trades', 'tradesFlat', 'info'])
+    ...mapEventGetters(['trades', 'tradesFlat', 'info']),
+    ...mapSettingsGetters(['globalSettings'])
   },
   methods: {
     formatTime (time) {

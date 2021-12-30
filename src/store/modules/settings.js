@@ -38,6 +38,7 @@ const state = {
       }
     },
     globalSettings: {
+      pnlType: 0,
       formatOmicron: true,
       formatMillion: true,
       formatAutoElipsis: false

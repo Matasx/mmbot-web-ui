@@ -31,7 +31,7 @@ export default {
       options: [
         { text: 'Normalized profit', value: 0 },
         { text: 'ACB', value: 1, disabled: true },
-        { text: 'Equity change', value: 2, disabled: true }
+        { text: 'Equity change', value: 2 }
       ]
     }
   }
