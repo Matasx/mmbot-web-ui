@@ -32,7 +32,7 @@ export default {
       curNormBuy: dto.data.cur_norm_buy,
       curNormSell: dto.data.cur_norm_sell,
       rpnl: dto.data.rpnl,
-      upln: dto.data.upnl,
+      upnl: dto.data.upnl,
       en: dto.data.en // enabled
       // data: dao.data
     }
