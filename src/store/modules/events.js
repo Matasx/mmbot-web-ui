@@ -2,6 +2,7 @@ import {
   EVENTS_TRANSACTION,
   EVENTS_VERSION_SET,
   EVENTS_TRADE_ADD,
+  EVENTS_TRADE_RECALCULATE,
   EVENTS_INFO_ADD,
   EVENTS_ERROR_ADD,
   EVENTS_ORDER_ADD,
@@ -32,10 +33,10 @@ const state = {
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => a.time - b.time),
-  tradesRev: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => b.time - a.time),
-  tradesFlat: state => [...Object.values(state.data.trades).flatMap(list => Object.values(list))].sort((a, b) => a.time - b.time),
-  enabledTradesFlat: (state, getters) => [...Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list))].sort((a, b) => a.time - b.time),
+  trades: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => a.time - b.time),
+  tradesRev: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => b.time - a.time),
+  tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
+  enabledTradesFlat: (state, getters) => Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
   firstTradeGlobal: (_, getters) => {
     const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[0] : null
@@ -106,8 +107,42 @@ const setNested = function (collection, key1, key2, value) {
   }
 }
 
+const updateDiffAll = function (trades) {
+  let lastTrade
+  Object.values(trades).sort((a, b) => a.time - b.time).forEach(trade => {
+    updateDiff(lastTrade, trade)
+    lastTrade = trade
+  })
+}
+
+const updateDiff = function (l, r) {
+  if (l === undefined) return
+  r.plDiff = safeDiff(r.pl, l.pl)
+  r.rplDiff = safeDiff(r.rpl, l.rpl)
+}
+
+const safeDiff = function (a, b) {
+  if (a === undefined) return b
+  if (b === undefined) return a
+  return a - b
+}
+
+const actions = {
+  addTrade ({ commit, getters }, trade) {
+    const lastTrade = getters.lastTrade(trade.symbol)
+    if (lastTrade && lastTrade.time < trade.time) {
+      updateDiff(lastTrade, trade)
+      commit(EVENTS_TRADE_ADD, trade)
+    } else {
+      commit(EVENTS_TRADE_ADD, trade)
+      commit(EVENTS_TRADE_RECALCULATE, trade.symbol)
+    }
+  }
+}
+
 const mutations = {
   [EVENTS_TRANSACTION]: (state, data) => {
+    Object.values(data.trades).forEach(trades => updateDiffAll(trades))
     state.data = data
   },
   [EVENTS_VERSION_SET]: (state, version) => {
@@ -115,6 +150,9 @@ const mutations = {
   },
   [EVENTS_TRADE_ADD]: (state, trade) => {
     setNested(state.data.trades, trade.symbol, trade.id, trade)
+  },
+  [EVENTS_TRADE_RECALCULATE]: (state, symbol) => {
+    updateDiffAll(state.data.trades[symbol])
   },
   [EVENTS_INFO_ADD]: (state, info) => {
     Vue.set(state.data.infos, info.symbol, info)
@@ -149,5 +187,6 @@ export default {
   namespaced: true,
   state,
   getters,
+  actions,
   mutations
 }

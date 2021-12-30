@@ -56,7 +56,8 @@
                   <price :value="item.trade.volume" :currency-info="item.info.currencyInfo" title="Currency" />
                 </div>
                 <price v-if="globalSettings.pnlType === 0" :value="item.trade.normch" :currency-info="item.info.currencyInfo" title="Normalized profit" add-sign colored class="small mb-1" />
-                <price v-else-if="globalSettings.pnlType === 2" :value="item.trade.gain" :currency-info="item.info.currencyInfo" title="Equity change" add-sign colored class="small mb-1" />
+                <price v-else-if="globalSettings.pnlType === 1" :value="item.trade.rplDiff" :currency-info="item.info.currencyInfo" title="ACB" add-sign colored class="small mb-1" />
+                <price v-else-if="globalSettings.pnlType === 2" :value="item.trade.plDiff" :currency-info="item.info.currencyInfo" title="Equity change" add-sign colored class="small mb-1" />
               </div>
             </div>
           </div>

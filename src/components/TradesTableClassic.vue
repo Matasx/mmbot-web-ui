@@ -33,7 +33,7 @@
       <template #cell(price)="data">
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" :add-symbol="false" title="Price" />
       </template>
-      <template #cell(gain)="data">
+      <template #cell(plDiff)="data">
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
       </template>
       <template #cell(normch)="data">
@@ -98,7 +98,7 @@ export default {
           sortable: true
         },
         {
-          key: 'gain',
+          key: 'plDiff',
           label: 'P/L',
           sortable: true
         },

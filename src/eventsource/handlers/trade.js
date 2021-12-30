@@ -1,8 +1,7 @@
-import { EVENTS_TRADE_ADD } from '@/store/actions/events'
 import common from './common'
 
 export default {
-  commitName: EVENTS_TRADE_ADD,
+  dispatchName: 'addTrade',
   map (dto) {
     return {
       key: dto.symbol + '' + JSON.stringify(dto.data.id),
@@ -23,7 +22,9 @@ export default {
       man: dto.data.man, // Manual trade
       p0: dto.data.p0, // Neutral price
       pos: dto.data.pos, // Position
-      dp0: dto.data.price - dto.data.p0 // Netral price distance to price
+      dp0: dto.data.price - dto.data.p0, // Netral price distance to price
+      plDiff: 0,
+      rplDiff: 0
       // data: JSON.stringify(dao.data, undefined, 2)
     }
   },

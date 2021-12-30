@@ -54,7 +54,11 @@ export function setupStream () {
         if (isTransaction) {
           handler.add(transaction, mapped)
         } else {
-          store.commit('events/' + handler.commitName, mapped)
+          if (handler.commitName) {
+            store.commit('events/' + handler.commitName, mapped)
+          } else {
+            store.dispatch('events/' + handler.dispatchName, mapped)
+          }
           store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
         }
       }
