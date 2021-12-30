@@ -17,7 +17,7 @@ export default {
   },
   profit: {
     order: 3,
-    title: 'P&L from position / realized P&L',
+    title: 'Equity change / realized P&L',
     yTitle: 'P&L',
     value: 'pl',
     unit: 'currencyInfo',

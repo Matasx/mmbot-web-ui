@@ -4,6 +4,7 @@
       <div class="clearfix">
         <span class="float-left h5">
           <broker-name :info="info" :navigation="showLink"/>
+          <rating :rating="stats.rating" class="ml-1 mb-1"/>
         </span>
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
@@ -67,6 +68,7 @@ import { createNamespacedHelpers } from 'vuex'
 import Price from './Price.vue'
 import OrderSlider from './OrderSlider.vue'
 import BrokerName from './BrokerName.vue'
+import Rating from './Rating.vue'
 
 const settings = createNamespacedHelpers('settings')
 const events = createNamespacedHelpers('events')
@@ -93,10 +95,11 @@ export default {
   components: {
     Price,
     OrderSlider,
-    BrokerName
+    BrokerName,
+    Rating
   },
   computed: {
-    ...events.mapGetters(['misc', 'tradesRev', 'lastTrade', 'error']),
+    ...events.mapGetters(['misc', 'tradesRev', 'firstTrade', 'lastTrade', 'error']),
     ...settings.mapGetters(['dashboardSettings']),
     percentageInfo () {
       return {
@@ -128,6 +131,10 @@ export default {
       //   ['y',365 * 3600 * 24]
       // ]
 
+      const firstTradeOrDefault = this.firstTrade(this.info.symbol) ?? {
+        pl: 0,
+        norm: 0
+      }
       const lastTradeOrDefault = this.lastTrade(this.info.symbol) ?? {
         pl: 0,
         norm: 0
@@ -137,6 +144,8 @@ export default {
       const interval = 365 * 3600 * 24 * 1000
       const avghpl = interval * lastTradeOrDefault.pl / tt
       const avgh = interval * lastTradeOrDefault.norm / tt
+      const pldiff = lastTradeOrDefault.pl - firstTradeOrDefault.pl
+      const normdiff = this.tradesRev(this.info.symbol).reduce((acc, trade) => acc + trade.normch, 0)
 
       return this.lastDayTrades
         .filter(trade => !trade.alert)
@@ -155,8 +164,22 @@ export default {
           avghpl,
           avghpl_pp: avghpl / bt * 100,
           avgh,
-          avgh_pp: avgh / bt * 100
+          avgh_pp: avgh / bt * 100,
+          rating: this.rating(pldiff, normdiff)
         })
+    }
+  },
+  methods: {
+    rating (pldiff, normdiff) {
+      if (pldiff > 0) {
+        if (normdiff > pldiff) return 'A'
+        else if (normdiff > 0 && normdiff < pldiff) return 'B'
+        return 'C'
+      } else if (normdiff > 0) {
+        if (normdiff > -pldiff) return 'B'
+        return 'D'
+      }
+      return 'E'
     }
   }
 }

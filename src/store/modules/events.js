@@ -44,6 +44,10 @@ const getters = {
     const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[sorted.length - 1] : null
   },
+  firstTrade: (_, getters) => (symbol) => {
+    const sorted = getters.trades(symbol)
+    return sorted.length > 0 ? sorted[0] : null
+  },
   lastTrade: (_, getters) => (symbol) => {
     const sorted = getters.tradesRev(symbol)
     return sorted.length > 0 ? sorted[0] : null
