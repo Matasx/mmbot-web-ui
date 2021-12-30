@@ -35,12 +35,13 @@ const getters = {
   trades: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => a.time - b.time),
   tradesRev: state => (symbol) => [...Object.values(state.data.trades[symbol] ?? [])].sort((a, b) => b.time - a.time),
   tradesFlat: state => [...Object.values(state.data.trades).flatMap(list => Object.values(list))].sort((a, b) => a.time - b.time),
+  enabledTradesFlat: (state, getters) => [...Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list))].sort((a, b) => a.time - b.time),
   firstTradeGlobal: (_, getters) => {
-    const sorted = getters.tradesFlat
+    const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[0] : null
   },
   lastTradeGlobal: (_, getters) => {
-    const sorted = getters.tradesFlat
+    const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[sorted.length - 1] : null
   },
   lastTrade: (_, getters) => (symbol) => {

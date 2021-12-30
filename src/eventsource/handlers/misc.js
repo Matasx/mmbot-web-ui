@@ -30,7 +30,10 @@ export default {
       a: dto.data.a, // achieve (initial position set)
       t: dto.data.t, // trading, order pending
       curNormBuy: dto.data.cur_norm_buy,
-      curNormSell: dto.data.cur_norm_sell
+      curNormSell: dto.data.cur_norm_sell,
+      rpnl: dto.data.rpnl,
+      upln: dto.data.upnl,
+      en: dto.data.en // enabled
       // data: dao.data
     }
   },

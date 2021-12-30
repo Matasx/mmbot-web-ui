@@ -51,17 +51,22 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['trades', 'ordersExt', 'firstTradeGlobal', 'lastTradeGlobal']),
+    ...mapGetters(['trades', 'misc', 'ordersExt', 'firstTradeGlobal', 'lastTradeGlobal']),
     orderMin () {
       return Math.min(...this.orderValues)
     },
     orderMax () {
       return Math.max(...this.orderValues)
     },
+    enabled () {
+      return this.misc(this.info.symbol).en
+    },
     timeMin () {
+      if (!this.enabled) return null
       return (this.firstTradeGlobal ?? {}).time
     },
     timeMax () {
+      if (!this.enabled) return null
       return (this.lastTradeGlobal ?? {}).time
     },
     orderValues () {
