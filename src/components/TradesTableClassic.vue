@@ -34,7 +34,7 @@
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" :add-symbol="false" title="Price" />
       </template>
       <template #cell(gain)="data">
-        <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Profit or loss from position" :add-symbol="false" colored />
+        <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
       </template>
       <template #cell(normch)="data">
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Normalized profit" :add-symbol="false" add-sign colored />
