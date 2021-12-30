@@ -17,13 +17,13 @@
     </b-card-header>
     <b-card-body v-if="showDetails">
       <b-card-text>
-        <div v-if="localMisc.rpnl" class="clearfix">
+        <div v-if="dashboardSettings.rpnl" class="clearfix">
           <span class="float-left">Realized P/L:</span>
           <span class="float-right">
             <b-badge :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
           </span>
         </div>
-        <div v-if="localMisc.upnl" class="clearfix">
+        <div v-if="dashboardSettings.upnl" class="clearfix">
           <span class="float-left">Unrealized P/L:</span>
           <span class="float-right">
             <b-badge :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
