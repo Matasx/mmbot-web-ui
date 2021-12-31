@@ -1,6 +1,6 @@
 <template>
-  <span v-if="colored" v-b-tooltip.top.html="fullTitle" :class="[ value < 0 ? 'text-danger' : 'text-success' ]">{{ compressed }}</span>
-  <span v-else v-b-tooltip.top.html="fullTitle">{{ compressed }}</span>
+  <span :hidden="hidden" v-if="colored" v-b-tooltip.top.html="fullTitle" :class="[ value < 0 ? 'text-danger' : 'text-success' ]">{{ compressed }}</span>
+  <span :hidden="hidden" v-else v-b-tooltip.top.html="fullTitle">{{ compressed }}</span>
 </template>
 
 <script>
@@ -33,6 +33,10 @@ export default {
     colored: {
       type: Boolean,
       default: false
+    },
+    hideZero: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -46,6 +50,9 @@ export default {
     },
     verbose () {
       return this.value + ' ' + (this.addSymbol ? this.currencyInfo.name : this.currencyInfo.symbol)
+    },
+    hidden () {
+      return this.hideZero && this.value === 0
     }
   }
 }

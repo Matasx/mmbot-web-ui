@@ -34,7 +34,8 @@
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" :add-symbol="false" title="Price" />
       </template>
       <template #cell(plDiff)="data">
-        <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
+        <price v-if="globalSettings.pnlType === 1" :value="data.item.rplDiff" :currency-info="info(data.item.symbol).currencyInfo" title="ACB" hide-zero :add-symbol="false" colored />
+        <price v-else :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
       </template>
       <template #cell(normch)="data">
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Normalized profit" :add-symbol="false" add-sign colored />
@@ -57,7 +58,8 @@
 import moment from 'moment'
 import Price from './Price.vue'
 import { createNamespacedHelpers } from 'vuex'
-const { mapGetters } = createNamespacedHelpers('events')
+const { mapGetters: mapEventGetters } = createNamespacedHelpers('events')
+const { mapGetters: mapSettingsGetters } = createNamespacedHelpers('settings')
 
 export default {
   name: 'TradesTableClassic',
@@ -130,7 +132,8 @@ export default {
       }
       return this.tradesFlat
     },
-    ...mapGetters(['trades', 'tradesFlat', 'info'])
+    ...mapEventGetters(['trades', 'tradesFlat', 'info']),
+    ...mapSettingsGetters(['globalSettings'])
   },
   methods: {
     rowClass (item, type) {

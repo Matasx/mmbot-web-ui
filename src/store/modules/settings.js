@@ -16,6 +16,7 @@ const state = {
     dashboardSettings: { // todo: card options as subclass
       traderFilter: true,
       transactionCount: false,
+      openPrice: true,
       rpnl: true,
       upnl: true,
       avgPlPosition: true,

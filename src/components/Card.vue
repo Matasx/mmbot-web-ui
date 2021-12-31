@@ -18,6 +18,12 @@
     </b-card-header>
     <b-card-body v-if="showDetails">
       <b-card-text>
+        <div v-if="dashboardSettings.openPrice" class="clearfix">
+          <span class="float-left">Open price:</span>
+          <span class="float-right">
+            <b-badge variant="info" pill class="text-white"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-badge>
+          </span>
+        </div>
         <div v-if="dashboardSettings.rpnl" class="clearfix">
           <span class="float-left">Realized P/L:</span>
           <span class="float-right">
