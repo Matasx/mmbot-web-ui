@@ -28,6 +28,7 @@ $green:   #62c462 !default;
 $teal:    #20c997 !default;
 $cyan:    #5bc0de !default;
 $manual:  #272b30 !default;
+$win:     #dde111 !default;
 
 $primary:       $gray-800 !default;
 $secondary:     $gray-600 !default;
@@ -40,7 +41,8 @@ $dark:          $gray-900 !default;
 $scroll:        $secondary;
 
 $theme-colors: (
-  "manual": $manual
+  "manual": $manual,
+  "win": $win
 ) !default;
 
 $yiq-contrasted-threshold:  170 !default;

@@ -1,9 +1,5 @@
 <template>
-  <fa-icon v-if="rating === 'A'" v-b-tooltip.top.html="ratingTooltip" icon="grin-stars" class="text-success"/>
-  <fa-icon v-else-if="rating === 'B'" v-b-tooltip.top.html="ratingTooltip" icon="smile-beam" class="text-success"/>
-  <fa-icon v-else-if="rating === 'C'" v-b-tooltip.top.html="ratingTooltip" icon="meh" class="text-info"/>
-  <fa-icon v-else-if="rating === 'D'" v-b-tooltip.top.html="ratingTooltip" icon="meh-rolling-eyes" class="text-warning"/>
-  <fa-icon v-else v-b-tooltip.top.html="ratingTooltip" icon="sad-cry" class="text-danger"/>
+  <fa-icon v-b-tooltip.top.html="ratingTooltip" :icon="currentRating.icon" :class="currentRating.class"/>
 </template>
 
 <script>
@@ -12,7 +8,36 @@ export default {
   props: {
     rating: String
   },
+  data () {
+    return {
+      ratings: {
+        A: {
+          icon: 'grin-stars',
+          class: 'text-win'
+        },
+        B: {
+          icon: 'grin-beam',
+          class: 'text-success'
+        },
+        C: {
+          icon: 'meh',
+          class: 'text-info'
+        },
+        D: {
+          icon: 'frown-open',
+          class: 'text-warning'
+        },
+        E: {
+          icon: 'sad-cry',
+          class: 'text-danger'
+        }
+      }
+    }
+  },
   computed: {
+    currentRating () {
+      return this.ratings[this.rating] ?? this.ratings.E
+    },
     ratingTooltip () {
       return '<b>Rating:</b> ' + this.rating
     }
