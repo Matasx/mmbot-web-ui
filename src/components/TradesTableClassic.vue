@@ -34,8 +34,10 @@
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" :add-symbol="false" title="Price" />
       </template>
       <template #cell(plDiff)="data">
-        <price v-if="globalSettings.pnlType === 1" :value="data.item.rplDiff" :currency-info="info(data.item.symbol).currencyInfo" title="ACB" hide-zero :add-symbol="false" colored />
-        <price v-else :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
+        <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Equity change" :add-symbol="false" colored />
+      </template>
+      <template #cell(rplDiff)="data">
+        <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="ACB" hide-zero :add-symbol="false" colored />
       </template>
       <template #cell(normch)="data">
         <price :value="data.value" :currency-info="info(data.item.symbol).currencyInfo" title="Normalized profit" :add-symbol="false" add-sign colored />
@@ -66,8 +68,22 @@ export default {
   components: { Price },
   data () {
     return {
-      currentPage: 1,
-      fields: [
+      currentPage: 1
+    }
+  },
+  props: {
+    traderFilter: {
+      type: Array,
+      default () { return [] }
+    },
+    pageSize: {
+      type: Number,
+      default: 20
+    }
+  },
+  computed: {
+    fields () {
+      return [
         {
           key: 'time',
           label: 'Time',
@@ -100,7 +116,7 @@ export default {
           sortable: true
         },
         {
-          key: 'plDiff',
+          key: this.globalSettings.pnlType === 1 ? 'rplDiff' : 'plDiff',
           label: 'P/L',
           sortable: true
         },
@@ -110,19 +126,7 @@ export default {
           sortable: true
         }
       ]
-    }
-  },
-  props: {
-    traderFilter: {
-      type: Array,
-      default () { return [] }
     },
-    pageSize: {
-      type: Number,
-      default: 20
-    }
-  },
-  computed: {
     filteredRows () {
       return this.filtered.length
     },
