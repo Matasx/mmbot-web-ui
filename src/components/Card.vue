@@ -22,7 +22,7 @@
           <span class="float-left">Open price:</span>
           <span class="float-right">
             <b-badge variant="info" pill class="mr-1 text-white"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-badge>
-            <b-badge :variant="openPriceDiff >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="openPriceDiff" :currency-info="info.currencyInfo" add-sign title="Difference to current price" /></b-badge>
+            <b-badge :variant="openPriceDiff < 0 ? 'success' : 'danger'" pill class="text-white"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.rpnl" class="clearfix">
@@ -124,7 +124,8 @@ export default {
       return this.price(this.info.symbol)
     },
     openPriceDiff () {
-      return this.priceCurrent.price - this.localMisc.op
+      if (this.priceCurrent.price === 0) return 0
+      return (this.localMisc.op - this.priceCurrent.price) / this.priceCurrent.price * 100
     },
     achieve () {
       return this.localMisc.a
