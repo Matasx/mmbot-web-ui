@@ -21,7 +21,8 @@
         <div v-if="dashboardSettings.openPrice" class="clearfix">
           <span class="float-left">Open price:</span>
           <span class="float-right">
-            <b-badge variant="info" pill class="text-white"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-badge>
+            <b-badge variant="info" pill class="mr-1 text-white"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-badge>
+            <b-badge :variant="openPriceDiff >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="openPriceDiff" :currency-info="info.currencyInfo" add-sign title="Difference to current price" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.rpnl" class="clearfix">
@@ -105,7 +106,7 @@ export default {
     Rating
   },
   computed: {
-    ...events.mapGetters(['misc', 'tradesRev', 'firstTrade', 'lastTrade', 'error']),
+    ...events.mapGetters(['misc', 'price', 'tradesRev', 'firstTrade', 'lastTrade', 'error']),
     ...settings.mapGetters(['dashboardSettings']),
     percentageInfo () {
       return {
@@ -118,6 +119,12 @@ export default {
     },
     localMisc () {
       return this.misc(this.info.symbol) ?? {}
+    },
+    priceCurrent () {
+      return this.price(this.info.symbol)
+    },
+    openPriceDiff () {
+      return this.priceCurrent.price - this.localMisc.op
     },
     achieve () {
       return this.localMisc.a
