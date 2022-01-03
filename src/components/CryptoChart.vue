@@ -21,7 +21,7 @@ export default {
     },
     chartType: {
       type: String,
-      default: undefined
+      default: 'line'
     },
     chartTitleSymbol: {
       type: Boolean,
