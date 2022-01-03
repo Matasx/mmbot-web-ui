@@ -16,6 +16,8 @@
       <card style="max-width: 500px" class="mb-3" :info="localInfo" show-details />
       <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-4"
         :info="localInfo"
+        :source-name="settings.sourceName"
+        :chart-type="settings.type"
         :y-title="settings.yTitle"
         :y-value="settings.value"
         :y-unit="settings.unit"

@@ -15,6 +15,14 @@ export default {
       type: Object,
       required: true
     },
+    sourceName: {
+      type: String,
+      default: 'trades'
+    },
+    chartType: {
+      type: String,
+      default: undefined
+    },
     chartTitleSymbol: {
       type: Boolean,
       default: true
@@ -51,7 +59,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['trades', 'misc', 'ordersExt', 'firstTradeGlobal', 'lastTradeGlobal']),
+    ...mapGetters(['trades', 'dailyAggregations', 'misc', 'ordersExt', 'firstTradeGlobal', 'lastTradeGlobal']),
+    source () {
+      return this[this.sourceName ?? 'trades'](this.info.symbol)
+    },
     orderMin () {
       return Math.min(...this.orderValues)
     },
@@ -90,7 +101,6 @@ export default {
         }))
     },
     tradeSeries () { // Selected time series
-      const filterSymbol = this.info.symbol
       const series = [{
         name: this.yTitle,
         marker: {
@@ -98,12 +108,12 @@ export default {
           radius: 3,
           symbol: 'diamond'
         },
-        data: this.trades(filterSymbol)
+        data: this.source
           .map(trade => ({
             x: trade.time,
             y: trade[this.yValue],
-            type: trade.alert ? 'Alert' : (trade.buy ? 'Buy' : 'Sell'),
-            colorIndex: trade.alert ? 0 : (trade.buy ? 1 : 2)
+            type: trade.agg ? 'Aggregation' : (trade.alert ? 'Alert' : (trade.buy ? 'Buy' : 'Sell')),
+            colorIndex: trade.agg ? (trade[this.yValue] >= 0 ? 1 : 2) : (trade.alert ? 0 : (trade.buy ? 1 : 2))
           }))
       }]
 
@@ -114,7 +124,7 @@ export default {
             enabled: false
           },
           colorIndex: 3,
-          data: this.trades(filterSymbol)
+          data: this.source
             .map(trade => ({
               x: trade.time,
               y: trade[this.yValueSecondary]
@@ -128,6 +138,9 @@ export default {
       return {
         title: {
           text: (this.chartTitleSymbol ? (this.info.title + ' - ') : '') + this.chartTitle
+        },
+        chart: {
+          type: this.chartType
         },
         // chart: {
         //   panning: {

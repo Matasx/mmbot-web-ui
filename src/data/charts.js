@@ -24,22 +24,31 @@ export default {
     secondaryTitle: 'Realized P&L',
     secondaryValue: 'rpl'
   },
-  position: {
+  dailyProfit: {
     order: 4,
+    sourceName: 'dailyAggregations',
+    type: 'column',
+    title: 'Daily realized P&L',
+    yTitle: 'P&L',
+    value: 'rplDiff',
+    unit: 'currencyInfo'
+  },
+  position: {
+    order: 5,
     title: 'Position',
     yTitle: 'Asset',
     value: 'pos',
     flipOrderTitles: true
   },
   norm: {
-    order: 5,
+    order: 6,
     title: 'Normalized profit',
     yTitle: 'P&L',
     value: 'norm',
     unit: 'currencyInfo'
   },
   trades: {
-    order: 6,
+    order: 7,
     title: 'Trades',
     yTitle: 'Size',
     value: 'achg',

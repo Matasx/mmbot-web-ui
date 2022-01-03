@@ -4,6 +4,8 @@
     <trader-filter v-model="filter"/>
     <crypto-chart v-for="info in filteredInfos" :key="info.symbol" class="pb-4"
       :info="info"
+      :source-name="settings.sourceName"
+      :chart-type="settings.type"
       :y-title="settings.yTitle"
       :y-value="settings.value"
       :y-unit="settings.unit"

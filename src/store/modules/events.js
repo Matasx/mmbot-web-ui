@@ -14,6 +14,7 @@ import {
   EVENTS_LAST_EVENT_TIME_SET
 } from '@/store/actions/events'
 import Vue from 'vue'
+import moment from 'moment'
 
 const state = {
   data: {
@@ -36,6 +37,13 @@ const getters = {
   trades: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => a.time - b.time),
   tradesRev: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => b.time - a.time),
   tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
+  dailyAggregations: state => (symbol) => {
+    const groups = Object.entries(groupBy(Object.values(state.data.trades[symbol]), t => moment(t.time).startOf('day').valueOf()))
+    return groups.map(([_, list]) => {
+      const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
+      return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
+    })
+  },
   enabledTradesFlat: (state, getters) => Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
   firstTradeGlobal: (_, getters) => {
     const sorted = getters.enabledTradesFlat
@@ -97,6 +105,14 @@ const getters = {
   config: state => state.data.config,
   lastEventTime: state => state.lastEventTime,
   logs: state => state.data.logs
+}
+
+const groupBy = function (xs, selector) {
+  return xs.reduce((rv, x) => {
+    const key = selector(x);
+    (rv[key] = rv[key] || []).push(x)
+    return rv
+  }, {})
 }
 
 const setNested = function (collection, key1, key2, value) {
