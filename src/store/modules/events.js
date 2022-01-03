@@ -42,7 +42,7 @@ const getters = {
     return groups.map(([_, list]) => {
       const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
       return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
-    })
+    }).sort((a, b) => a.time - b.time)
   },
   enabledTradesFlat: (state, getters) => Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
   firstTradeGlobal: (_, getters) => {
