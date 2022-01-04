@@ -172,6 +172,11 @@ export default {
     name: 'Cube',
     color: '#fab431'
   },
+  AVAX: {
+    symbol: 'AVAX',
+    name: 'Avalanche',
+    color: '#ffffff'
+  },
   AYWA: {
     symbol: 'AYWA',
     name: 'Aywa',
