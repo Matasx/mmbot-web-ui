@@ -34,17 +34,17 @@ const state = {
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => a.time - b.time),
-  tradesRev: state => (symbol) => Object.values(state.data.trades[symbol]).sort((a, b) => b.time - a.time),
-  tradesFlat: state => Object.values(state.data.trades).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
+  trades: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => a.time - b.time),
+  tradesRev: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => b.time - a.time),
+  tradesFlat: state => Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
   dailyAggregations: state => (symbol) => {
-    const groups = Object.entries(groupBy(Object.values(state.data.trades[symbol]), t => moment(t.time).startOf('day').valueOf()))
+    const groups = Object.entries(groupBy(Object.values(state.data.trades[symbol] ?? {}), t => moment(t.time).startOf('day').valueOf()))
     return groups.map(([_, list]) => {
       const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
       return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
     }).sort((a, b) => a.time - b.time)
   },
-  enabledTradesFlat: (state, getters) => Object.entries(state.data.trades).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
+  enabledTradesFlat: (state, getters) => Object.entries(state.data.trades ?? {}).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
   firstTradeGlobal: (_, getters) => {
     const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[0] : null

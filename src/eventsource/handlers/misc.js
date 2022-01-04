@@ -34,7 +34,7 @@ export default {
       rpnl: dto.data.rpnl,
       upnl: dto.data.upnl,
       en: dto.data.en, // enabled
-      op: dto.data.op // open price
+      op: dto.data.op === '∞' ? Number.NaN : dto.data.op // open price
       // data: dao.data
     }
   },
