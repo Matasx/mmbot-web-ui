@@ -1007,6 +1007,11 @@ export default {
     name: 'HOTTO',
     color: '#2a3069'
   },
+  HTR: {
+    symbol: 'HTR',
+    name: 'Hathor',
+    color: '#ffffff'
+  },
   HTML: {
     symbol: 'HTML',
     name: 'HTMLCOIN',
