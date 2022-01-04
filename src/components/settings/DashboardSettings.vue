@@ -3,7 +3,7 @@
     <h6>Trader filter</h6>
     <b-form-checkbox v-model="local.traderFilter" switch>Show</b-form-checkbox>
     <h6 class="mt-2">Card details</h6>
-    <b-form-checkbox v-model="local.openPrice" switch>Open price</b-form-checkbox>
+    <b-form-checkbox v-model="local.openPrice" switch>Enter price</b-form-checkbox>
     <b-form-checkbox v-model="local.rpnl" switch>Realized P/L</b-form-checkbox>
     <b-form-checkbox v-model="local.upnl" switch>Unrealized P/L</b-form-checkbox>
     <b-form-checkbox v-model="local.avgPlPosition" switch>Avg. P/L position</b-form-checkbox>
