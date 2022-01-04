@@ -1,6 +1,6 @@
 <template>
   <b-img v-if="entry" width="32" :src="getSrc(entry)" :alt="entry.name" v-b-tooltip.top :title="entry.name"></b-img>
-  <b-img v-else width="32" src="/crypto/unknown.png" :alt="symbol" v-b-tooltip.top :title="symbol"></b-img>
+  <b-img v-else width="32" src="crypto/unknown.png" :alt="symbol" v-b-tooltip.top :title="symbol"></b-img>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getSrc (entry) {
-      return '/crypto/' + (entry.symbol.image ?? entry.symbol.toLowerCase()) + '.png'
+      return 'crypto/' + (entry.symbol.image ?? entry.symbol.toLowerCase()) + '.png'
     }
   }
 }
