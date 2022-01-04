@@ -582,6 +582,11 @@ export default {
     name: 'DeezNuts',
     color: '#939393'
   },
+  DERO: {
+    symbol: 'DERO',
+    name: 'Dero',
+    color: '#ffffff'
+  },
   DENT: {
     symbol: 'DENT',
     name: 'Dent',
