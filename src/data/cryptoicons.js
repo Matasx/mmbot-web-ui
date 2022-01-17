@@ -2007,6 +2007,11 @@ export default {
     name: 'Tierion',
     color: '#ff4081'
   },
+  TOKO: {
+    symbol: 'TOKO',
+    name: 'Tokoin',
+    color: '#ffffff'
+  },
   TOMO: {
     symbol: 'TOMO',
     name: 'TomoChain',
@@ -2111,6 +2116,11 @@ export default {
     symbol: 'VIVO',
     name: 'VIVO',
     color: '#408af1'
+  },
+  VRA: {
+    symbol: 'VRA',
+    name: 'Verasity',
+    color: '#ffffff'
   },
   VRC: {
     symbol: 'VRC',
