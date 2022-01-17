@@ -23,7 +23,7 @@
         </span>
       </template>
       <template #cell(icon)="data">
-        <fa-icon v-if="data.item.alert" icon="exclamation-triangle" v-b-tooltip.top="'Alert'" />
+        <fa-icon v-if="data.item.alert" icon="exclamation-triangle" v-b-tooltip.top.html="alertText(data)" />
         <fa-icon v-else-if="data.item.buy" icon="arrow-left" variant="danger" :style="{ color: '#6a994e' }" v-b-tooltip.top="'Buy'"/>
         <fa-icon v-else icon="arrow-right" :style="{ color: '#bc4749' }" v-b-tooltip.top="'Sell'"/>
       </template>
@@ -60,6 +60,8 @@
 import moment from 'moment'
 import Price from './Price.vue'
 import { createNamespacedHelpers } from 'vuex'
+import alerts from '@/data/alerts'
+
 const { mapGetters: mapEventGetters } = createNamespacedHelpers('events')
 const { mapGetters: mapSettingsGetters } = createNamespacedHelpers('settings')
 
@@ -143,6 +145,10 @@ export default {
     rowClass (item, type) {
       if (!item || type !== 'row') return
       if (item.man) return 'opacity-3'
+    },
+    alertText (data) {
+      if (!data.item.alertObj) return 'Alert'
+      return '<b>Alert:</b><br/>' + alerts.lookup(data.item.alertObj.reason)[0]
     }
   }
 }
