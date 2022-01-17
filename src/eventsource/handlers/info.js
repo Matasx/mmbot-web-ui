@@ -22,7 +22,8 @@ export default {
         symbol: currencyCurrency ? currencyCurrency.symbol : dto.data.currency
       },
       title: dto.data.title, // readable name
-      inverted: dto.data.inverted
+      inverted: dto.data.inverted,
+      order: dto.data.order
     }
   },
   reset (store) {

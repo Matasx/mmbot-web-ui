@@ -61,7 +61,7 @@ const getters = {
     const sorted = getters.tradesRev(symbol)
     return sorted.length > 0 ? sorted[0] : null
   },
-  infos: state => Object.values(state.data.infos),
+  infos: state => Object.values(state.data.infos).sort((a, b) => a.order === b.order ? a.title.localeCompare(b.title) : a.order - b.order),
   info: state => (symbol) => state.data.infos[symbol],
   errors: state => Object.values(state.data.errors),
   error: state => (symbol) => state.data.errors[symbol],
