@@ -2,23 +2,27 @@
   <b-container>
     <h1>Trades</h1>
     <trader-filter v-model="filter"/>
-    <trades-table-modern :trader-filter="filter"/>
+    <trades-table :settings="settings" :trader-filter="filter" />
   </b-container>
 </template>
 
 <script>
-import TradesTableModern from '@/components/TradesTableModern.vue'
+import TradesTable from '@/components/TradesTable.vue'
 import TraderFilter from '@/components/TraderFilter.vue'
 
 export default {
   name: 'TradesModern',
   data () {
     return {
-      filter: []
+      filter: [],
+      settings: {
+        show: true,
+        modern: true
+      }
     }
   },
   components: {
-    TradesTableModern,
+    TradesTable,
     TraderFilter
   }
 }

@@ -78,6 +78,10 @@ export default {
       type: Array,
       default () { return [] }
     },
+    typeFilter: {
+      type: Array,
+      default () { return [] }
+    },
     pageSize: {
       type: Number,
       default: 20
@@ -133,10 +137,16 @@ export default {
       return this.filtered.length
     },
     filtered () {
+      let prefiltered
       if (this.traderFilter.length > 0) {
-        return this.traderFilter.flatMap(filter => this.trades(filter))
+        prefiltered = this.traderFilter.flatMap(filter => this.trades(filter))
       }
-      return this.tradesFlat
+      prefiltered = this.tradesFlat
+
+      const alert = this.typeFilter.includes('alert')
+      const buy = this.typeFilter.includes('buy')
+      const sell = this.typeFilter.includes('sell')
+      return prefiltered.filter(t => (buy && t.buy) || (sell && !t.buy) || (alert && t.alert))
     },
     ...mapEventGetters(['trades', 'tradesFlat', 'info']),
     ...mapSettingsGetters(['globalSettings'])

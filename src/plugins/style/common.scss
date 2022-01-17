@@ -48,6 +48,12 @@
   font-size: 1.2em !important;
 }
 
+.bv-no-focus-ring {
+  .focus {
+    box-shadow: none;
+  }
+}
+
 .card-columns {
   @include media-breakpoint-only(sm) {
     column-count: 1;
