@@ -140,8 +140,9 @@ export default {
       let prefiltered
       if (this.traderFilter.length > 0) {
         prefiltered = this.traderFilter.flatMap(filter => this.trades(filter))
+      } else {
+        prefiltered = this.tradesFlat
       }
-      prefiltered = this.tradesFlat
 
       const alert = this.typeFilter.includes('alert')
       const buy = this.typeFilter.includes('buy')
