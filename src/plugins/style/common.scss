@@ -177,10 +177,17 @@ body {
     margin: 0 10px 0 10px;
   }
 
-  li a:hover, li a:active, li a:focus, li .router-link-exact-active {
+  li a:active, li .router-link-exact-active {
     text-decoration: none;
     color: $white !important;
     background: $navbar2;
+    border-radius: 0.25rem;
+  }
+
+  li a:hover, li a:focus {
+    text-decoration: none;
+    color: $white !important;
+    background: lighten($navbar2, 5%);
     border-radius: 0.25rem;
   }
 }
