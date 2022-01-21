@@ -154,7 +154,7 @@ body {
   line-height: 22px;
   overflow-y: auto;
   overflow-x: hidden;
-  background: $primary;
+  background: $navbar;
   box-shadow: 0 0 0.75rem $black;
   clip-path: inset(0px -1rem 0px 0px);
   -webkit-transition: left 0.5s ease, visibility 0.5s;
@@ -180,7 +180,7 @@ body {
   li a:hover, li a:active, li a:focus, li .router-link-exact-active {
     text-decoration: none;
     color: $white !important;
-    background: rgba(255, 255, 255, 0.2);
+    background: $navbar2;
     border-radius: 0.25rem;
   }
 }

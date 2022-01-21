@@ -1,7 +1,7 @@
 <template>
   <body>
     <header>
-      <b-navbar :toggleable="false" type="dark" variant="primary" fixed="top">
+      <b-navbar :toggleable="false" type="dark" variant="navbar" fixed="top">
         <b-navbar-nav>
           <b-nav-item @click="toggleSidebar">
             <fa-icon icon="bars" size="lg"/>
