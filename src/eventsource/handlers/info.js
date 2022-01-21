@@ -23,7 +23,8 @@ export default {
       },
       title: dto.data.title, // readable name
       inverted: dto.data.inverted,
-      order: dto.data.order
+      order: dto.data.order,
+      emulated: dto.data.emulated
     }
   },
   reset (store) {

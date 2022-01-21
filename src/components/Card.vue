@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body :border-variant="stats.avghpl >= 0 ? 'success' : 'danger'">
+  <b-card no-body :border-variant="info.emulated ? 'info' : (stats.avghpl >= 0 ? 'success' : 'danger')">
     <b-card-header>
       <div class="clearfix">
         <span class="float-left h5">
@@ -8,8 +8,8 @@
         </span>
         <span class="float-right text-info">
           <span v-if="localMisc.pos !== undefined">
-            <fa-icon icon="map-pin" class="mr-1 mb-1"/>
-            <price :value="localMisc.pos" :currency-info="info.assetInfo" title="Position"/>
+            <fa-icon :icon="info.emulated ? 'vial' : 'map-pin'" class="mr-1 mb-1"/>
+            <price :value="localMisc.pos" :currency-info="info.assetInfo" :title="info.emulated ? 'Virtual position (trainer)' : 'Position'"/>
             <b-spinner v-if="achieve" small type="grow" class="ml-1 mb-1"/>
           </span>
         </span>

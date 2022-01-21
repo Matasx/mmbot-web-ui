@@ -6,7 +6,9 @@
         <b-list-group-item :class="'row d-flex' + tradeClass(item.trade)" v-for="item in group.trades" :key="item.trade.key">
           <div class="col-4 col-md-2 p-0">
             <div class="media align-items-center">
-              <b-img class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex." v-b-tooltip.top="item.info.brokerName"></b-img>
+              <!-- Temporary fix for trainer - remove icon -->
+              <b-img v-if="!item.info.emulated" class="mr-3" width="32" :src="$serviceUrl + item.info.brokerIcon" alt="Ex." v-b-tooltip.top="item.info.brokerName"></b-img>
+              <p v-else style="width: 48px"></p>
               <div class="media-body small-xs no-small-md">
                 <router-link :to="'/trader/' + item.info.symbol" class="text-muted small text-uppercase">
                   {{ item.info.title }}
