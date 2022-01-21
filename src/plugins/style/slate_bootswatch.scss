@@ -21,6 +21,7 @@
   text-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
   box-shadow: 0 0 0.4rem $black;
   height: 58px;
+  border-bottom: 1px solid darken($navbar, 10%);
 
   .container {
     padding: 0;
