@@ -54,6 +54,7 @@ export function setupStream () {
         if (isTransaction) {
           handler.add(transaction, mapped)
         } else {
+          console.debug('new data: ' + payload.type)
           if (handler.commitName) {
             store.commit('events/' + handler.commitName, mapped)
           } else {

@@ -11,7 +11,9 @@ import {
   EVENTS_LOG_ADD,
   EVENTS_PERFORMANCE_SET,
   EVENTS_CONFIG_SET,
-  EVENTS_LAST_EVENT_TIME_SET
+  EVENTS_LAST_EVENT_TIME_SET,
+  EVENTS_FIRST_TRADE_SET,
+  EVENTS_LAST_TRADE_SET
 } from '@/store/actions/events'
 import Vue from 'vue'
 import moment from 'moment'
@@ -29,22 +31,36 @@ const state = {
     price: {},
     logs: []
   },
+  computed: {
+    tradesAsc: {},
+    tradesDesc: {},
+    firstTradeGlobal: null,
+    lastTradeGlobal: null,
+    enabled: {}
+  },
   lastEventTime: 0
 }
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => a.time - b.time),
-  tradesRev: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => b.time - a.time),
-  tradesFlat: state => Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
+  trades: state => (symbol) => state.computed.tradesDesc[symbol] ?? [],
+  tradesRev: state => (symbol) => state.computed.tradesAsc[symbol] ?? [],
+  tradesFlat: state => {
+    console.debug('compute: tradesFlat')
+    return Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort(descTime)
+  },
   dailyAggregations: state => (symbol) => {
+    console.debug('compute: dailyAggregations ' + symbol)
     const groups = Object.entries(groupBy(Object.values(state.data.trades[symbol] ?? {}), t => moment(t.time).startOf('day').valueOf()))
     return groups.map(([_, list]) => {
       const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
       return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
     }).sort((a, b) => a.time - b.time)
   },
-  enabledTradesFlat: (state, getters) => Object.entries(state.data.trades ?? {}).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
+  enabledTradesFlat: state => {
+    console.debug('compute: enabledTradesFlat')
+    return Object.entries(state.data.trades ?? {}).filter(([key, _]) => state.computed.enabled[key]).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time)
+  },
   firstTradeGlobal: (_, getters) => {
     const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[0] : null
@@ -100,6 +116,7 @@ const getters = {
       })
   },
   misc: state => (symbol) => state.data.misc[symbol],
+  miscEnabled: (_, getters) => (symbol) => getters.misc(symbol).en,
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,
   config: state => state.data.config,
@@ -117,15 +134,19 @@ const groupBy = function (xs, selector) {
 
 const setNested = function (collection, key1, key2, value) {
   if (key1 in collection) {
-    Vue.set(collection[key1], key2, value)
+    const nested = collection[key1]
+    const replace = !!nested[key2]
+    Vue.set(nested, key2, value)
+    return replace
   } else {
     Vue.set(collection, key1, { [key2]: value })
+    return false
   }
 }
 
 const updateDiffAll = function (trades) {
   let lastTrade
-  Object.values(trades).sort((a, b) => a.time - b.time).forEach(trade => {
+  Object.values(trades).sort(descTime).forEach(trade => {
     updateDiff(lastTrade, trade)
     lastTrade = trade
   })
@@ -143,29 +164,94 @@ const safeDiff = function (a, b) {
   return a - b
 }
 
+const descTime = function (a, b) {
+  return a.time - b.time
+}
+
+const ascTime = function (a, b) {
+  return b.time - a.time
+}
+
 const actions = {
   addTrade ({ commit, getters }, trade) {
-    const lastTrade = getters.lastTrade(trade.symbol)
-    if (lastTrade && lastTrade.time < trade.time) {
-      updateDiff(lastTrade, trade)
-      commit(EVENTS_TRADE_ADD, trade)
-    } else {
-      commit(EVENTS_TRADE_ADD, trade)
-      commit(EVENTS_TRADE_RECALCULATE, trade.symbol)
+    const firstTradeGlobal = getters.firstTradeGlobal
+    if (!firstTradeGlobal || trade.time < firstTradeGlobal.time) {
+      const misc = getters.misc(trade.symbol)
+      if (misc && misc.en) {
+        commit(EVENTS_FIRST_TRADE_SET, trade)
+      }
     }
+
+    const lastTradeGlobal = getters.lastTradeGlobal
+    if (!lastTradeGlobal || trade.time > lastTradeGlobal.time) {
+      const misc = getters.misc(trade.symbol)
+      if (misc && misc.en) {
+        commit(EVENTS_LAST_TRADE_SET, trade)
+      }
+    }
+
+    // const lastTrade = getters.lastTrade(trade.symbol)
+    // if (lastTrade && lastTrade.time < trade.time) {
+    //   updateDiff(lastTrade, trade)
+    //   commit(EVENTS_TRADE_ADD, trade)
+    // } else {
+    //   commit(EVENTS_TRADE_ADD, trade)
+    //   commit(EVENTS_TRADE_RECALCULATE, trade.symbol)
+    // }
   }
 }
 
+const updateComputed = function (state, symbol, trades) {
+  // todo: recalculate all stats
+  const asc = Object.values(trades ?? {}).sort(ascTime)
+  Vue.set(state.computed.tradesAsc, symbol, asc)
+
+  const desc = Object.values(trades ?? {}).sort(descTime)
+  Vue.set(state.computed.tradesDesc, symbol, desc)
+}
+
 const mutations = {
+  [EVENTS_FIRST_TRADE_SET]: (state, trade) => {
+    console.log('set first')
+    state.computed.firstTradeGlobal = trade
+  },
+  [EVENTS_LAST_TRADE_SET]: (state, trade) => {
+    console.log('set last')
+    state.computed.lastTradeGlobal = trade
+  },
   [EVENTS_TRANSACTION]: (state, data) => {
-    Object.values(data.trades).forEach(trades => updateDiffAll(trades))
+    state.computed.tradesAsc = {}
+    state.computed.tradesDesc = {}
+    state.computed.firstTradeGlobal = null
+    state.computed.lastTradeGlobal = null
+
+    var en = {}
+    Object.entries(data.misc).forEach(([symbol, misc]) => {
+      en[symbol] = misc.en
+    })
+    state.computed.enabled = en
+
+    Object.entries(data.trades).forEach(([symbol, trades]) => {
+      updateDiffAll(trades)
+      updateComputed(state, symbol, trades)
+    })
     state.data = data
+  },
+  [EVENTS_TRADE_ADD]: (state, trade) => {
+    if (setNested(state.data.trades, trade.symbol, trade.id, trade)) {
+      updateComputed(state, trade.symbol, state.data.trades[trade.symbol])
+    } else {
+      var tradesAsc = state.computed.tradesAsc[trade.symbol]
+      if (!tradesAsc) Vue.set(state.computed.tradesAsc, trade.symbol, tradesAsc = [])
+      tradesAsc.addSorted(trade, descTime)
+
+      var tradesDesc = state.computed.tradesDesc[trade.symbol]
+      if (!tradesDesc) Vue.set(state.computed.tradesDesc, trade.symbol, tradesDesc = [])
+      tradesDesc.addSorted(trade, ascTime)
+    }
   },
   [EVENTS_VERSION_SET]: (state, version) => {
     state.data.backendVersion = version
-  },
-  [EVENTS_TRADE_ADD]: (state, trade) => {
-    setNested(state.data.trades, trade.symbol, trade.id, trade)
   },
   [EVENTS_TRADE_RECALCULATE]: (state, symbol) => {
     updateDiffAll(state.data.trades[symbol])
@@ -181,6 +267,9 @@ const mutations = {
   },
   [EVENTS_MISC_ADD]: (state, misc) => {
     Vue.set(state.data.misc, misc.symbol, misc)
+    if (misc.en !== state.computed[misc.symbol]) {
+      Vue.set(state.computed.enabled, misc.symbol, misc.en)
+    }
   },
   [EVENTS_PRICE_ADD]: (state, price) => {
     Vue.set(state.data.price, price.symbol, price)

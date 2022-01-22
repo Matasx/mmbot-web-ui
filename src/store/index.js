@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistance from 'vuex-persist'
+import localforage from 'localforage'
 import auth from './modules/auth'
 import events from './modules/events'
 import settings from './modules/settings'
@@ -10,7 +11,8 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 const vuexLocal = new VuexPersistance({
-  storage: window.localStorage,
+  storage: localforage,
+  asyncStorage: true,
   key: Vue.prototype.$storageKey
 })
 

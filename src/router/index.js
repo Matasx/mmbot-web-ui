@@ -39,6 +39,11 @@ const router = new Router({
       component: () => import('@/views/Carousel.vue')
     },
     {
+      path: '/debug',
+      name: 'Debug',
+      component: () => import('@/views/Debug.vue')
+    },
+    {
       path: '/test',
       name: 'Test',
       component: () => import('@/views/Test.vue'),
@@ -59,7 +64,7 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, _from, next) => {
+router.beforeEach(async (to, _from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters['auth/isAuthenticated']) {
       next()
