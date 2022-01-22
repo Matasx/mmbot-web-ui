@@ -39,6 +39,11 @@ const router = new Router({
       component: () => import('@/views/Carousel.vue')
     },
     {
+      path: '/debug',
+      name: 'Debug',
+      component: () => import('@/views/Debug.vue')
+    },
+    {
       path: '/test',
       name: 'Test',
       component: () => import('@/views/Test.vue'),

@@ -12,11 +12,19 @@ import store from '@/store'
 import { setupStream } from '@/eventsource'
 import '@/registerServiceWorker'
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-  created () {
-    setupStream()
-  }
-}).$mount('#app')
+start()
+
+async function start () {
+  console.debug('Initializing store ...')
+  await store.restored
+  console.debug('Store was restored')
+
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+    created () {
+      setupStream()
+    }
+  }).$mount('#app')
+}

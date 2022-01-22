@@ -29,22 +29,55 @@ const state = {
     price: {},
     logs: []
   },
+  computed: {
+    enabled: {}
+  },
   lastEventTime: 0
 }
 
 const getters = {
   backendVersion: state => state.data.backendVersion,
-  trades: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => a.time - b.time),
-  tradesRev: state => (symbol) => Object.values(state.data.trades[symbol] ?? {}).sort((a, b) => b.time - a.time),
-  tradesFlat: state => Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort((a, b) => a.time - b.time),
-  dailyAggregations: state => (symbol) => {
-    const groups = Object.entries(groupBy(Object.values(state.data.trades[symbol] ?? {}), t => moment(t.time).startOf('day').valueOf()))
-    return groups.map(([_, list]) => {
-      const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
-      return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
-    }).sort((a, b) => a.time - b.time)
+
+  tradesCached: state => {
+    console.debug('compute: tradesCached')
+    return Object.entries(state.data.trades).reduce((map, [symbol, trades]) => {
+      map[symbol] = Object.values(trades ?? {}).sort(descTime)
+      return map
+    }, { })
   },
-  enabledTradesFlat: (state, getters) => Object.entries(state.data.trades ?? {}).filter(([key, _]) => getters.misc(key).en).flatMap(([_, list]) => Object.values(list)).sort((a, b) => a.time - b.time),
+  trades: (_, getters) => (symbol) => getters.tradesCached[symbol] ?? [],
+
+  tradesRevCached: state => {
+    console.debug('compute: tradesRevCached')
+    return Object.entries(state.data.trades).reduce((map, [symbol, trades]) => {
+      map[symbol] = Object.values(trades ?? {}).sort(ascTime)
+      return map
+    }, { })
+  },
+  tradesRev: (_, getters) => (symbol) => getters.tradesRevCached[symbol] ?? [],
+
+  tradesFlat: state => {
+    console.debug('compute: tradesFlat')
+    return Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort(descTime)
+  },
+
+  dailyAggregationsCached: state => {
+    console.debug('compute: dailyAggregationsCached')
+    return Object.entries(state.data.trades).reduce((map, [symbol, trades]) => {
+      const groups = Object.entries(groupBy(Object.values(trades ?? {}), t => moment(t.time).startOf('day').valueOf()))
+      map[symbol] = groups.map(([_, list]) => {
+        const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
+        return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
+      }).sort((a, b) => a.time - b.time)
+      return map
+    }, { })
+  },
+  dailyAggregations: (_, getters) => (symbol) => getters.dailyAggregationsCached[symbol] ?? [],
+
+  enabledTradesFlat: state => {
+    console.debug('compute: enabledTradesFlat')
+    return Object.entries(state.data.trades ?? {}).filter(([key, _]) => state.computed.enabled[key]).flatMap(([_, list]) => Object.values(list)).sort(descTime)
+  },
   firstTradeGlobal: (_, getters) => {
     const sorted = getters.enabledTradesFlat
     return sorted.length > 0 ? sorted[0] : null
@@ -107,6 +140,14 @@ const getters = {
   logs: state => state.data.logs
 }
 
+const ascTime = function (a, b) {
+  return b.time - a.time
+}
+
+const descTime = function (a, b) {
+  return a.time - b.time
+}
+
 const groupBy = function (xs, selector) {
   return xs.reduce((rv, x) => {
     const key = selector(x);
@@ -125,7 +166,7 @@ const setNested = function (collection, key1, key2, value) {
 
 const updateDiffAll = function (trades) {
   let lastTrade
-  Object.values(trades).sort((a, b) => a.time - b.time).forEach(trade => {
+  Object.values(trades).sort(descTime).forEach(trade => {
     updateDiff(lastTrade, trade)
     lastTrade = trade
   })
@@ -158,6 +199,12 @@ const actions = {
 
 const mutations = {
   [EVENTS_TRANSACTION]: (state, data) => {
+    var en = {}
+    Object.entries(data.misc).forEach(([symbol, misc]) => {
+      en[symbol] = misc.en
+    })
+    state.computed.enabled = en
+
     Object.values(data.trades).forEach(trades => updateDiffAll(trades))
     state.data = data
   },
@@ -180,6 +227,10 @@ const mutations = {
     setNested(state.data.orders, order.symbol, order.dirStr, order)
   },
   [EVENTS_MISC_ADD]: (state, misc) => {
+    if (misc.en !== state.computed[misc.symbol]) {
+      Vue.set(state.computed.enabled, misc.symbol, misc.en)
+    }
+
     Vue.set(state.data.misc, misc.symbol, misc)
   },
   [EVENTS_PRICE_ADD]: (state, price) => {
