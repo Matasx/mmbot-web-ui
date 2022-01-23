@@ -1,4 +1,8 @@
-import { EVENTS_TRANSACTION, EVENTS_LAST_EVENT_TIME_SET } from '@/store/actions/events'
+import {
+  EVENTS_TRANSACTION,
+  EVENTS_BATCH,
+  EVENTS_LAST_EVENT_TIME_SET
+} from '@/store/actions/events'
 import store from '@/store'
 import tradeHandler from './handlers/trade'
 import infoHandler from './handlers/info'
@@ -25,15 +29,35 @@ const handlers = {
   log: logHandler
 }
 
+let batch = null
+
+function newTransaction () {
+  const transaction = {
+    empty: true
+  }
+  Object.values(handlers).forEach(handler => handler.reset(transaction))
+  return transaction
+}
+
+function dispatch () {
+  if (batch.empty) return
+
+  store.commit('events/' + EVENTS_BATCH, batch)
+  store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
+  batch = newTransaction()
+}
+
 export function setupStream () {
+  batch = newTransaction()
+  setInterval(dispatch, 5000)
+
   const source = new EventSource(Vue.prototype.$serviceUrl + 'data')
 
   let isTransaction = false
   let transaction = {}
 
   const resetTransaction = () => {
-    transaction = {}
-    Object.values(handlers).forEach(handler => handler.reset(transaction))
+    transaction = newTransaction()
   }
 
   source.onerror = () => {
@@ -52,15 +76,11 @@ export function setupStream () {
       } else {
         const mapped = handler.map(payload)
         if (isTransaction) {
+          transaction.empty = false
           handler.add(transaction, mapped)
         } else {
-          // console.debug('new data: ' + payload.type)
-          if (handler.commitName) {
-            store.commit('events/' + handler.commitName, mapped)
-          } else {
-            store.dispatch('events/' + handler.dispatchName, mapped)
-          }
-          store.commit('events/' + EVENTS_LAST_EVENT_TIME_SET, Date.now())
+          batch.empty = false
+          handler.add(batch, mapped)
         }
       }
     } else {

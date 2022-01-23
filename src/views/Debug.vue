@@ -12,9 +12,10 @@
 import TradesTable from '@/components/TradesTable.vue'
 import TraderFilter from '@/components/TraderFilter.vue'
 import moment from 'moment'
+import { EVENTS_BATCH } from '@/store/actions/events'
 import { createNamespacedHelpers } from 'vuex'
 import tradeHandler from '@/eventsource/handlers/trade'
-const { mapActions } = createNamespacedHelpers('events')
+const { mapMutations, mapGetters } = createNamespacedHelpers('events')
 export default {
   name: 'Debug',
   data () {
@@ -36,7 +37,7 @@ export default {
         volume: 0.0004491420531
       },
       id: '1111',
-      symbol: 'tradeogre_BTC-GRIN',
+      symbol: null,
       type: 'trade'
     }
     return {
@@ -52,13 +53,22 @@ export default {
     TradesTable,
     TraderFilter
   },
+  computed: {
+    ...mapGetters(['infos'])
+  },
   methods: {
-    ...mapActions({
-      addTradeRepository: 'addTrade'
+    ...mapMutations({
+      commitBatch: EVENTS_BATCH
     }),
     addTrade () {
-      const trade = tradeHandler.map(JSON.parse(this.trade))
-      this.addTradeRepository(trade)
+      const batch = {}
+      tradeHandler.reset(batch)
+      const trade = JSON.parse(this.trade)
+      if (!trade.symbol) {
+        trade.symbol = this.infos[0].symbol
+      }
+      tradeHandler.add(batch, tradeHandler.map(trade))
+      this.commitBatch(batch)
     }
   }
 }

@@ -1,8 +1,6 @@
-import { EVENTS_ORDER_ADD } from '@/store/actions/events'
 import common from './common'
 
 export default {
-  commitName: EVENTS_ORDER_ADD,
   map (dto) {
     return {
       dir: dto.dir, // -2, -1, 1, 2
@@ -16,6 +14,6 @@ export default {
     store.orders = {}
   },
   add (store, dao) {
-    common.addNested(store.orders, dao.symbol, dao.dirStr, dao)
+    common.addNested(store.orders, dao.symbol, dao)
   }
 }

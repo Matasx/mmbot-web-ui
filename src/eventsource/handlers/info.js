@@ -1,8 +1,6 @@
-import { EVENTS_INFO_ADD } from '@/store/actions/events'
 import CurrencyMap from '@/data/currency'
 
 export default {
-  commitName: EVENTS_INFO_ADD,
   map (dto) {
     const assetCurrency = CurrencyMap[dto.data.asset.toUpperCase()]
     const currencyCurrency = CurrencyMap[dto.data.currency.toUpperCase()]

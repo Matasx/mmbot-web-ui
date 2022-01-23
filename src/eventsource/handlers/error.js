@@ -1,7 +1,4 @@
-import { EVENTS_ERROR_ADD } from '@/store/actions/events'
-
 export default {
-  commitName: EVENTS_ERROR_ADD,
   map (dto) {
     dto.pk = dto.symbol
 

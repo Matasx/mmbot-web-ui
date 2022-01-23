@@ -1,7 +1,6 @@
 import common from './common'
 
 export default {
-  dispatchName: 'addTrade',
   map (dto) {
     return {
       key: dto.symbol + '' + JSON.stringify(dto.data.id),
@@ -33,6 +32,6 @@ export default {
     store.trades = {}
   },
   add (store, dao) {
-    common.addNested(store.trades, dao.symbol, dao.id, dao)
+    common.addNested(store.trades, dao.symbol, dao)
   }
 }
