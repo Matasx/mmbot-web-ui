@@ -27,6 +27,11 @@
           <b-th class="text-right"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" :class="openPriceDiff < 0 ? 'text-success' : 'text-danger'" /></b-th>
         </b-tr>
         <b-tr>
+          <b-td>Value of asset:</b-td>
+          <b-th class="text-right"><price :value="stats.aval" :currency-info="info.currencyInfo" title="Asset" class="text-info" /></b-th>
+          <b-th class="text-right"><price :value="stats.aval_pp" :currency-info="percentageInfo" compress-title :allow-micro="false" title="Total portion of budget" class="text-info" /></b-th>
+        </b-tr>
+        <b-tr>
           <b-td>Realized P/L:</b-td>
           <b-th class="text-right"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign colored title="Total" /></b-th>
           <b-th class="text-right"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign colored :allow-micro="false" title="Total portion of budget" /></b-th>
@@ -39,12 +44,12 @@
         <b-tr>
           <b-td>Avg. P/L position:</b-td>
           <b-th class="text-right"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign colored title="Per year" />/y</b-th>
-          <b-th class="text-right"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign colored :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign colored :allow-micro="false" title="Per year" />/y</b-th>
         </b-tr>
         <b-tr>
           <b-td>Avg. income norm:</b-td>
           <b-th class="text-right"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign colored title="Per year" />/y</b-th>
-          <b-th class="text-right"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign colored :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign colored :allow-micro="false" title="Per year" />/y</b-th>
         </b-tr>
       </b-tbody>
     </b-table-simple>
@@ -146,6 +151,7 @@ export default {
       const avgh = interval * lastTradeOrDefault.norm / tt
       const pldiff = lastTradeOrDefault.pl - firstTradeOrDefault.pl
       const normdiff = this.tradesRev(this.info.symbol).reduce((acc, trade) => acc + trade.normch, 0)
+      const aval = misc.pos * this.priceCurrent.price
 
       return this.lastDayTrades
         .filter(trade => !trade.alert)
@@ -167,7 +173,9 @@ export default {
           avgh_pp: avgh / bt * 100,
           rating: this.rating(pldiff, normdiff),
           rpnl_pp: misc.rpnl / bt * 100,
-          upnl_pp: misc.upnl / bt * 100
+          upnl_pp: misc.upnl / bt * 100,
+          aval: aval,
+          aval_pp: aval / bt * 100
         })
     }
   },
