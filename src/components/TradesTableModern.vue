@@ -132,7 +132,7 @@ export default {
       const alert = this.typeFilter.includes('alert')
       const buy = this.typeFilter.includes('buy')
       const sell = this.typeFilter.includes('sell')
-      return prefiltered.filter(t => (buy && t.buy) || (sell && !t.buy) || (alert && t.alert))
+      return prefiltered.filter(t => (buy && t.buy && !t.alert) || (sell && !t.buy && !t.alert) || (alert && t.alert))
     },
     dataView () {
       const result = [...this.filtered]
