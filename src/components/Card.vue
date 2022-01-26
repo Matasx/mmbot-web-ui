@@ -29,14 +29,14 @@
           <span class="float-left">Realized P/L:</span>
           <span class="float-right">
             <b-badge :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
-            <b-badge :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
+            <b-badge :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Total portion of budget" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.upnl" class="clearfix">
           <span class="float-left">Unrealized P/L:</span>
           <span class="float-right">
             <b-badge :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
-            <b-badge :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
+            <b-badge :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Total portion of budget" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.avgPlPosition" class="clearfix">
@@ -183,8 +183,8 @@ export default {
           avgh,
           avgh_pp: avgh / bt * 100,
           rating: this.rating(pldiff, normdiff),
-          rpnl_pp: (interval * misc.rpnl / tt) / bt * 100,
-          upnl_pp: (interval * misc.upnl / tt) / bt * 100
+          rpnl_pp: misc.rpnl / bt * 100,
+          upnl_pp: misc.upnl / bt * 100
         })
     }
   },

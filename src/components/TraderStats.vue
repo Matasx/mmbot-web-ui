@@ -22,28 +22,28 @@
         </b-tr>
         <b-tr>
           <b-td>Enter price:</b-td>
-          <b-th variant="info" class="text-right"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-th>
-          <b-th :variant="openPriceDiff < 0 ? 'success' : 'danger'"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" /></b-th>
+          <b-th class="text-right" variant="info"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-th>
+          <b-th class="text-right" :variant="openPriceDiff < 0 ? 'success' : 'danger'"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" /></b-th>
         </b-tr>
         <b-tr>
           <b-td>Realized P/L:</b-td>
-          <b-th :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
-          <b-th :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right" :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
+          <b-th class="text-right" :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Total portion of budget" /></b-th>
         </b-tr>
         <b-tr>
           <b-td>Unrealized P/L:</b-td>
-          <b-th :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
-          <b-th :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right" :variant="localMisc.upnl >= 0 ? 'success' : 'danger'"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
+          <b-th class="text-right" :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Total portion of budget" /></b-th>
         </b-tr>
         <b-tr>
           <b-td>Avg. P/L position:</b-td>
-          <b-th :variant="stats.avghpl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
-          <b-th :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right" :variant="stats.avghpl >= 0 ? 'success' : 'danger'"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
+          <b-th class="text-right" :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
         </b-tr>
         <b-tr>
           <b-td>Avg. income norm:</b-td>
-          <b-th :variant="stats.avgh >= 0 ? 'success' : 'danger'" class="text-right"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
-          <b-th :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+          <b-th class="text-right" :variant="stats.avgh >= 0 ? 'success' : 'danger'"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
+          <b-th class="text-right" :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
         </b-tr>
       </b-tbody>
     </b-table-simple>
@@ -165,8 +165,8 @@ export default {
           avgh,
           avgh_pp: avgh / bt * 100,
           rating: this.rating(pldiff, normdiff),
-          rpnl_pp: (interval * misc.rpnl / tt) / bt * 100,
-          upnl_pp: (interval * misc.upnl / tt) / bt * 100
+          rpnl_pp: misc.rpnl / bt * 100,
+          upnl_pp: misc.upnl / bt * 100
         })
     }
   },
