@@ -28,13 +28,15 @@
         <div v-if="dashboardSettings.rpnl" class="clearfix">
           <span class="float-left">Realized P/L:</span>
           <span class="float-right">
-            <b-badge :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
+            <b-badge :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
+            <b-badge :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.upnl" class="clearfix">
           <span class="float-left">Unrealized P/L:</span>
           <span class="float-right">
-            <b-badge :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
+            <b-badge :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
+            <b-badge :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
           </span>
         </div>
         <div v-if="dashboardSettings.avgPlPosition" class="clearfix">
@@ -153,8 +155,9 @@ export default {
         pl: 0,
         norm: 0
       }
-      const tt = this.localMisc.tt ? this.localMisc.tt : 1
-      const bt = this.localMisc.bt ? this.localMisc.bt : 1
+      const misc = this.localMisc
+      const tt = misc.tt ? misc.tt : 1
+      const bt = misc.bt ? misc.bt : 1
       const interval = 365 * 3600 * 24 * 1000
       const avghpl = interval * lastTradeOrDefault.pl / tt
       const avgh = interval * lastTradeOrDefault.norm / tt
@@ -179,7 +182,9 @@ export default {
           avghpl_pp: avghpl / bt * 100,
           avgh,
           avgh_pp: avgh / bt * 100,
-          rating: this.rating(pldiff, normdiff)
+          rating: this.rating(pldiff, normdiff),
+          rpnl_pp: (interval * misc.rpnl / tt) / bt * 100,
+          upnl_pp: (interval * misc.upnl / tt) / bt * 100
         })
     }
   },
