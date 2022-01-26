@@ -3,7 +3,6 @@
     <div class="clearfix">
       <span class="float-left h5">
         <broker-name :info="info"/>
-        <rating :rating="stats.rating" class="ml-1 mb-1"/>
       </span>
       <span class="float-right text-info">
         <span v-if="localMisc.pos !== undefined">
@@ -13,42 +12,41 @@
         </span>
       </span>
     </div>
-    <order-slider :info="info"/>
-    <div class="clearfix">
-      <span class="float-left">Enter price:</span>
-      <span class="float-right">
-        <b-badge variant="info" pill class="mr-1 text-white"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-badge>
-        <b-badge :variant="openPriceDiff < 0 ? 'success' : 'danger'" pill class="text-white"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" /></b-badge>
-      </span>
-    </div>
-    <div class="clearfix">
-      <span class="float-left">Realized P/L:</span>
-      <span class="float-right">
-        <b-badge :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
-        <b-badge :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
-      </span>
-    </div>
-    <div class="clearfix">
-      <span class="float-left">Unrealized P/L:</span>
-      <span class="float-right">
-        <b-badge :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-badge>
-        <b-badge :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
-      </span>
-    </div>
-    <div class="clearfix">
-      <span class="float-left">Avg. P/L position:</span>
-      <span class="float-right">
-        <b-badge :variant="stats.avghpl >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-badge>
-        <b-badge :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
-      </span>
-    </div>
-    <div class="clearfix">
-      <span class="float-left">Avg. income norm:</span>
-      <span class="float-right">
-        <b-badge :variant="stats.avgh >= 0 ? 'success' : 'danger'" pill class="mr-1 text-white"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-badge>
-        <b-badge :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'" pill class="text-white"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-badge>
-      </span>
-    </div>
+    <order-slider :info="info" class="mb-2"/>
+    <b-table-simple hover small responsive caption-top>
+      <caption>Statistics:</caption>
+      <b-tbody>
+        <b-tr>
+          <b-td>Rating:</b-td>
+          <b-th colspan="2"><rating :rating="stats.rating"/></b-th>
+        </b-tr>
+        <b-tr>
+          <b-td>Enter price:</b-td>
+          <b-th variant="info" class="text-right"><price :value="localMisc.op" :currency-info="info.currencyInfo" title="Cost basis" /></b-th>
+          <b-th :variant="openPriceDiff < 0 ? 'success' : 'danger'"><price :value="openPriceDiff" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Difference to current price" /></b-th>
+        </b-tr>
+        <b-tr>
+          <b-td>Realized P/L:</b-td>
+          <b-th :variant="localMisc.rpnl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="localMisc.rpnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
+          <b-th :variant="stats.rpnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.rpnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+        </b-tr>
+        <b-tr>
+          <b-td>Unrealized P/L:</b-td>
+          <b-th :variant="localMisc.upnl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="localMisc.upnl" :currency-info="info.currencyInfo" add-sign title="Total" /></b-th>
+          <b-th :variant="stats.upnl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.upnl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+        </b-tr>
+        <b-tr>
+          <b-td>Avg. P/L position:</b-td>
+          <b-th :variant="stats.avghpl >= 0 ? 'success' : 'danger'" class="text-right"><price :value="stats.avghpl" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
+          <b-th :variant="stats.avghpl_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avghpl_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+        </b-tr>
+        <b-tr>
+          <b-td>Avg. income norm:</b-td>
+          <b-th :variant="stats.avgh >= 0 ? 'success' : 'danger'" class="text-right"><price :value="stats.avgh" :currency-info="info.currencyInfo" add-sign title="Per year" />/y</b-th>
+          <b-th :variant="stats.avgh_pp >= 0 ? 'success' : 'danger'"><price :value="stats.avgh_pp" :currency-info="percentageInfo" compress-title add-sign :allow-micro="false" title="Per year" /></b-th>
+        </b-tr>
+      </b-tbody>
+    </b-table-simple>
     <!-- 24h t: {{ stats.trades }}<br/>
     vol: {{ stats.volume }}<br/>
     pos: {{ stats.achg }}<br/>
