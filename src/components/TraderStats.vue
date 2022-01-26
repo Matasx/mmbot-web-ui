@@ -18,7 +18,8 @@
       <b-tbody>
         <b-tr>
           <b-td>Rating:</b-td>
-          <b-th colspan="2"><rating :rating="stats.rating"/></b-th>
+          <b-th class="text-right"><rating :rating="stats.rating"/></b-th>
+          <b-th class="text-right">{{ stats.rating }}</b-th>
         </b-tr>
         <b-tr>
           <b-td>Enter price:</b-td>
