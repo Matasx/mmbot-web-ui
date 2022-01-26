@@ -13,7 +13,7 @@
           </div>
         </b-card>
       </b-collapse>
-      <card style="max-width: 500px" class="mb-3" :info="localInfo" show-details />
+      <trader-stats class="mb-3" :info="localInfo"/>
       <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-4"
         :info="localInfo"
         :source-name="settings.sourceName"
@@ -39,7 +39,7 @@
 import { createNamespacedHelpers } from 'vuex'
 import TraderSettings from '@/components/settings/TraderSettings.vue'
 import chartVariants from '@/data/charts'
-import Card from '@/components/Card.vue'
+import TraderStats from '@/components/TraderStats.vue'
 import CryptoChart from '@/components/CryptoChart.vue'
 import TradesTable from '@/components/TradesTable.vue'
 
@@ -54,7 +54,7 @@ export default {
     }
   },
   components: {
-    Card,
+    TraderStats,
     CryptoChart,
     TradesTable,
     TraderSettings
