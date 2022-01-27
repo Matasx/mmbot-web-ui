@@ -18,8 +18,7 @@
       </template>
       <template #cell(symbol)="data">
         <span :set="itemInfo = info(data.item.symbol)" class="text-nowrap">
-          <!-- Temporary fix for trainer - remove icon -->
-          <b-img v-if="!itemInfo.emulated" width="25" :src="$serviceUrl + itemInfo.brokerIcon" alt="Ex." v-b-tooltip.top="itemInfo.brokerName" class="mr-1"></b-img>
+          <b-img width="25" :src="itemInfo.brokerIcon" alt="Ex." v-b-tooltip.top="itemInfo.brokerName" class="mr-1"></b-img>
           <router-link :to="'/trader/' + itemInfo.symbol">{{ itemInfo.title }}</router-link>
         </span>
       </template>

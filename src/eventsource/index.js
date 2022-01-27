@@ -51,7 +51,7 @@ export function setupStream () {
   batch = newTransaction()
   setInterval(dispatch, 5000)
 
-  const source = new EventSource(Vue.prototype.$serviceUrl + 'data')
+  const source = new EventSource(Vue.prototype.$serviceUrl + 'api/data')
 
   let isTransaction = false
   let transaction = {}
