@@ -14,7 +14,7 @@
         </b-card>
       </b-collapse>
       <trader-stats :info="localInfo"/>
-      <h2>Charts</h2>
+      <h2 v-if="charts && charts.length">Charts</h2>
       <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-2"
         :info="localInfo"
         :source-name="settings.sourceName"
@@ -28,7 +28,7 @@
         :chart-title-symbol="false"
         :flip-order-titles="settings.flipOrderTitles"
       />
-      <h2>Transactions</h2>
+      <h2 v-if="traderSettings.tradesSettings.show">Transactions</h2>
       <trades-table :settings="traderSettings.tradesSettings" :trader-filter="filter" />
     </div>
     <div v-else>
