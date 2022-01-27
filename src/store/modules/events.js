@@ -120,12 +120,81 @@ const getters = {
         })
       })
   },
+  stats: (_, getters) => (symbol) => {
+    // const intervals = [
+    //   ['h',3600],
+    //   ['d',3600 * 24],
+    //   ['w',3600 * 24 * 7],
+    //   ['m',30 * 3600 * 24],
+    //   ['y',365 * 3600 * 24]
+    // ]
+
+    const firstTradeOrDefault = getters.firstTrade(symbol) ?? {
+      pl: 0,
+      norm: 0
+    }
+    const lastTradeOrDefault = getters.lastTrade(symbol) ?? {
+      pl: 0,
+      norm: 0
+    }
+
+    const tradesRev = getters.tradesRev(symbol)
+    const dayFilter = moment().subtract(1, 'days')
+    const lastDayTrades = tradesRev.filter(trade => trade.time > dayFilter)
+    const misc = getters.misc(symbol)
+    const price = getters.price(symbol)
+    const tt = misc.tt ? misc.tt : 1
+    const bt = misc.bt ? misc.bt : 1
+    const interval = 365 * 3600 * 24 * 1000
+    const avghpl = interval * lastTradeOrDefault.pl / tt
+    const avgh = interval * lastTradeOrDefault.norm / tt
+    const pldiff = lastTradeOrDefault.pl - firstTradeOrDefault.pl
+    const normdiff = tradesRev.reduce((acc, trade) => acc + trade.normch, 0)
+    const aval = misc.pos * price.price
+
+    return lastDayTrades
+      .filter(trade => !trade.alert)
+      .reduce((acc, trade) => {
+        acc.gain += trade.gain
+        acc.normch += trade.normch
+        acc.volume += trade.volume
+        acc.achg += trade.achg
+        return acc
+      }, {
+        trades: lastDayTrades.length,
+        gain: 0,
+        normch: 0,
+        volume: 0,
+        achg: 0,
+        avghpl,
+        avghpl_pp: avghpl / bt * 100,
+        avgh,
+        avgh_pp: avgh / bt * 100,
+        rating: rating(pldiff, normdiff),
+        rpnl_pp: misc.rpnl / bt * 100,
+        upnl_pp: misc.upnl / bt * 100,
+        aval: aval,
+        aval_pp: aval / bt * 100
+      })
+  },
   misc: state => (symbol) => state.data.misc[symbol],
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,
   config: state => state.data.config,
   lastEventTime: state => state.lastEventTime,
   logs: state => state.data.logs
+}
+
+const rating = function (pldiff, normdiff) {
+  if (pldiff > 0) {
+    if (normdiff > pldiff) return 'A'
+    else if (normdiff > 0 && normdiff < pldiff) return 'B'
+    return 'C'
+  } else if (normdiff > 0) {
+    if (normdiff > -pldiff) return 'B'
+    return 'D'
+  }
+  return 'E'
 }
 
 const descTime = function (a, b) {

@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <div v-if="localInfo">
-      <h1>{{ localInfo.title }}</h1>
+      <h1><broker-name :info="localInfo"/></h1>
       <b-button-toolbar class="mb-2">
         <b-button v-b-toggle.settings-collapse class="mx-1" size="sm" variant="link"><fa-icon icon="sliders-h"/></b-button>
       </b-button-toolbar>
@@ -13,8 +13,9 @@
           </div>
         </b-card>
       </b-collapse>
-      <trader-stats class="mb-3" :info="localInfo"/>
-      <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-4"
+      <trader-stats :info="localInfo"/>
+      <h2>Charts</h2>
+      <crypto-chart v-for="[key, settings] in charts" :key="key" class="pb-2"
         :info="localInfo"
         :source-name="settings.sourceName"
         :chart-type="settings.type"
@@ -27,6 +28,7 @@
         :chart-title-symbol="false"
         :flip-order-titles="settings.flipOrderTitles"
       />
+      <h2>Transactions</h2>
       <trades-table :settings="traderSettings.tradesSettings" :trader-filter="filter" />
     </div>
     <div v-else>
@@ -42,6 +44,7 @@ import chartVariants from '@/data/charts'
 import TraderStats from '@/components/TraderStats.vue'
 import CryptoChart from '@/components/CryptoChart.vue'
 import TradesTable from '@/components/TradesTable.vue'
+import BrokerName from '@/components/BrokerName.vue'
 
 const events = createNamespacedHelpers('events')
 const settings = createNamespacedHelpers('settings')
@@ -57,7 +60,8 @@ export default {
     TraderStats,
     CryptoChart,
     TradesTable,
-    TraderSettings
+    TraderSettings,
+    BrokerName
   },
   computed: {
     ...events.mapGetters(['info']),
