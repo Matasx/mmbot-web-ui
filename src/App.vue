@@ -86,8 +86,10 @@ const events = createNamespacedHelpers('events')
 export default {
   components: { SkinToggle, ConnectivityIndicator, NavCollapse }, // SkinPicker
   data () {
+    const mobileThreshold = 1100
     return {
-      sidebar: window.innerWidth >= 1100
+      mobileThreshold,
+      sidebar: window.innerWidth >= mobileThreshold
     }
   },
   computed: {
@@ -101,14 +103,30 @@ export default {
     ...auth.mapActions({
       authLogout: AUTH_LOGOUT
     }),
+    setSidebar (toggle) {
+      if (this.sidebar !== toggle) {
+        this.sidebar = toggle
+        setTimeout(this.reflowCharts, 600)
+      }
+    },
     toggleSidebar () {
-      this.sidebar = !this.sidebar
-      setTimeout(this.reflowCharts, 600)
+      this.setSidebar(!this.sidebar)
     },
     reflowCharts () {
       Highcharts.charts
         .filter(x => x)
         .forEach(x => x.reflow())
+    },
+    isMobile () {
+      console.log(window.innerWidth)
+      return window.innerWidth < this.mobileThreshold
+    }
+  },
+  watch: {
+    $route () {
+      if (this.isMobile()) {
+        this.setSidebar(false)
+      }
     }
   }
 }
