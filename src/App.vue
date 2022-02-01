@@ -118,7 +118,6 @@ export default {
         .forEach(x => x.reflow())
     },
     isMobile () {
-      console.log(window.innerWidth)
       return window.innerWidth < this.mobileThreshold
     }
   },
