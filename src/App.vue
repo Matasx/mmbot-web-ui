@@ -105,7 +105,7 @@ export default {
     }),
     setSidebar (toggle) {
       if (this.sidebar !== toggle) {
-        this.sidebar = toggle
+        setTimeout(() => { this.sidebar = toggle }, 100)
         setTimeout(this.reflowCharts, 600)
       }
     },
