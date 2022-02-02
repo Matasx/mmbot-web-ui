@@ -71,8 +71,8 @@ const isMobile = function () {
   return window.innerWidth < mobileThreshold
 }
 
-const navigate = function (next) {
-  if (isMobile()) {
+const navigate = function (next, delay) {
+  if (delay) {
     setTimeout(next, 500)
   } else {
     next()
@@ -80,18 +80,20 @@ const navigate = function (next) {
 }
 
 router.beforeEach((to, _from, next) => {
-  if (isMobile()) {
+  const delay = store.getters['runtime/sidebar'] && isMobile()
+  if (delay) {
+    console.log('delay')
     store.commit('runtime/' + RUNTIME_SIDEBAR_SET, false)
   }
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (store.getters['auth/isAuthenticated']) {
-      navigate(next)
+      navigate(next, delay)
       return
     }
-    navigate(() => next('/login'))
+    navigate(() => next('/login'), delay)
   } else {
-    navigate(next)
+    navigate(next, delay)
   }
 })
 
