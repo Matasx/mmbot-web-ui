@@ -35,6 +35,11 @@ const router = new Router({
       component: () => import('@/views/TradesModern.vue')
     },
     {
+      path: '/performance',
+      name: 'Performance',
+      component: () => import('@/views/Performance.vue')
+    },
+    {
       path: '/carousel',
       name: 'Carousel',
       component: () => import('@/views/Carousel.vue')

@@ -1,6 +1,11 @@
 export default {
   map (dto) {
-    return dto.data
+    return {
+      avg: dto.data.avg,
+      hdr: dto.data.hdr,
+      rows: dto.data.rows,
+      sums: dto.data.sums
+    }
   },
   reset (store) {
     store.performance = null

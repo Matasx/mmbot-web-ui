@@ -43,6 +43,7 @@
       <div id="sidebar-wrapper">
         <b-nav vertical class="sidebar-links">
           <b-nav-item to="/">Dashboard</b-nav-item>
+          <b-nav-item to="/performance">Daily performance</b-nav-item>
           <b-nav-item to="/wallets">Wallets</b-nav-item>
           <b-nav-item to="/test">Admin</b-nav-item>
         </b-nav>
