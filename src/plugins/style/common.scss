@@ -69,6 +69,15 @@
   }
 }
 
+.toggled .card-columns {
+  @include media-breakpoint-only(xl) {
+    column-count: 2;
+  }
+  @media (min-width: 1450px) {
+    column-count: 3;
+  }
+}
+
 .card-body {
   padding: 0.6rem 0.6rem;  
   border-top: $card-border-width solid $card-border-color;

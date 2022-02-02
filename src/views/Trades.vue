@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>Trades</h1>
     <trader-filter v-model="filter"/>
     <trades-table :settings="settings" :trader-filter="filter" />

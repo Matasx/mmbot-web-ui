@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>Settings</h1>
     <pn-l-picker v-model="local.pnlType"/>
     <h2>Export / import</h2>

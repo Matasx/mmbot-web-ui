@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>Sign in</h1>
     <login-form></login-form>
   </b-container>

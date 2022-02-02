@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <div v-if="localInfo">
       <h1><broker-name :info="localInfo"/></h1>
       <b-button-toolbar class="mb-2">

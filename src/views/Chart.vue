@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>{{ settings.title }}</h1>
     <trader-filter v-model="filter"/>
     <crypto-chart v-for="info in filteredInfos" :key="info.symbol" class="pb-4"

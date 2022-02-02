@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>Debug</h1>
     <b-textarea ref="area" v-model="trade" rows="10" />
     <b-button class="mt-3" variant="danger" block @click="addTrade()">Add trade</b-button>

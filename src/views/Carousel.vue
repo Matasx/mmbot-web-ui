@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container fluid="xl">
     <h1>Activity</h1>
     <b-carousel
       :interval="5000"
