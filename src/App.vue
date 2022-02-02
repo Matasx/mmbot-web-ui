@@ -103,14 +103,20 @@ export default {
     ...auth.mapActions({
       authLogout: AUTH_LOGOUT
     }),
-    setSidebar (toggle) {
+    setSidebar (toggle, user = false) {
       if (this.sidebar !== toggle) {
-        setTimeout(() => { this.sidebar = toggle }, 100)
-        setTimeout(this.reflowCharts, 600)
+        if (user) {
+          this.sidebar = toggle
+        } else {
+          setTimeout(() => { this.sidebar = toggle }, 800)
+        }
+        if (!this.isMobile()) {
+          setTimeout(this.reflowCharts, 600)
+        }
       }
     },
     toggleSidebar () {
-      this.setSidebar(!this.sidebar)
+      this.setSidebar(!this.sidebar, true)
     },
     reflowCharts () {
       Highcharts.charts

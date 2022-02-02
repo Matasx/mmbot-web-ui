@@ -22,6 +22,11 @@ Highcharts.setOptions({
   },
   yAxis: {
     tickAmount: 8
+  },
+  plotOptions: {
+    series: {
+      animation: false
+    }
   }
 })
 

@@ -13,6 +13,7 @@
       :y-title-secondary="settings.secondaryTitle"
       :chart-title="settings.title"
       :flip-order-titles="settings.flipOrderTitles"
+      :loaded="loaded"
     />
   </b-container>
 </template>
@@ -35,7 +36,8 @@ export default {
   data () {
     return { // todo: local configuration (enable filter)
       settings: this.getSettings(this.$route.params.type),
-      filter: []
+      filter: [],
+      loaded: false
     }
   },
   computed: {
@@ -50,12 +52,24 @@ export default {
   methods: {
     getSettings (type) {
       return chartVariants[type] ?? chartVariants.price
+    },
+    setLoaded () {
+      if (!this.loaded) {
+        setTimeout(() => { this.loaded = true }, 1)
+      }
     }
   },
   watch: {
     $route (to) {
+      this.loaded = false
       this.settings = this.getSettings(to.params.type)
     }
+  },
+  mounted () {
+    this.setLoaded()
+  },
+  updated () {
+    this.setLoaded()
   }
 }
 </script>

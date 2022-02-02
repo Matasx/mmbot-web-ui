@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body :border-variant="info.emulated ? 'info' : (localStats.avghpl >= 0 ? 'success' : 'danger')">
+  <b-card v-if="loaded" no-body :border-variant="info.emulated ? 'info' : (localStats.avghpl >= 0 ? 'success' : 'danger')">
     <b-card-header>
       <div class="clearfix">
         <span class="float-left h5">
@@ -60,6 +60,14 @@
       <em>{{ localError.error }}</em>
     </b-card-footer>
   </b-card>
+  <b-skeleton-wrapper loading v-else>
+    <template #loading>
+      <b-card>
+        <b-skeleton width="85%"></b-skeleton>
+        <b-skeleton-img no-aspect height="40px"></b-skeleton-img>
+      </b-card>
+    </template>
+  </b-skeleton-wrapper>
 </template>
 
 <script>
@@ -86,6 +94,10 @@ export default {
     showLink: {
       type: Boolean,
       default: false
+    },
+    loaded: {
+      type: Boolean,
+      default: true
     }
   },
   components: {

@@ -27,6 +27,7 @@
         :chart-title="settings.title"
         :chart-title-symbol="false"
         :flip-order-titles="settings.flipOrderTitles"
+        :loaded="loaded"
       />
       <h2 v-if="traderSettings.tradesSettings.show">Transactions</h2>
       <trades-table :settings="traderSettings.tradesSettings" :trader-filter="filter" />
@@ -53,7 +54,8 @@ export default {
   name: 'Trader',
   data () {
     return {
-      symbol: this.$route.params.symbol
+      symbol: this.$route.params.symbol,
+      loaded: false
     }
   },
   components: {
@@ -83,10 +85,24 @@ export default {
         .sort(([_, a], [__, b]) => a.order - b.order)
     }
   },
+  methods: {
+    setLoaded () {
+      if (!this.loaded) {
+        setTimeout(() => { this.loaded = true }, 1)
+      }
+    }
+  },
   watch: {
     $route (to) {
+      this.loaded = false
       this.symbol = to.params.symbol
     }
+  },
+  mounted () {
+    this.setLoaded()
+  },
+  updated () {
+    this.setLoaded()
   }
 }
 </script>

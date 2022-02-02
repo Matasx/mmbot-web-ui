@@ -17,7 +17,7 @@
     </b-collapse>
     <trader-filter v-if="cfg.traderFilter" v-model="filter"/>
     <b-card-group columns>
-      <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" show-link />
+      <card v-for="info in filteredInfos" :key="info.symbol" :info="info" :show-details="showDetails" :loaded="loaded" show-link />
     </b-card-group>
     <trades-table :settings="cfg.tradesSettings" :trader-filter="filter" />
   </b-container>
@@ -38,7 +38,8 @@ export default {
   name: 'Dashboard',
   data () {
     return {
-      filter: []
+      filter: [],
+      loaded: false
     }
   },
   computed: {
@@ -68,6 +69,11 @@ export default {
     DashboardSettings,
     TradesTable,
     TraderFilter
+  },
+  mounted () {
+    if (!this.loaded) {
+      setTimeout(() => { this.loaded = true }, 1)
+    }
   }
 }
 </script>

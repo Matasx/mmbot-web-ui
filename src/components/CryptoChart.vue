@@ -1,5 +1,14 @@
 <template>
-  <highcharts :options="chartOptions"/>
+  <highcharts v-if="loaded" :options="chartOptions"/>
+  <b-skeleton-wrapper loading v-else>
+    <template #loading>
+      <b-card>
+        <b-skeleton width="85%"></b-skeleton>
+        <br />
+        <b-skeleton-img no-aspect height="330px"></b-skeleton-img>
+      </b-card>
+    </template>
+  </b-skeleton-wrapper>
 </template>
 
 <script>
@@ -49,6 +58,10 @@ export default {
       type: Boolean,
       require: false,
       default: false
+    },
+    loaded: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
