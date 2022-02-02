@@ -55,10 +55,10 @@ const getters = {
   dailyAggregationsCached: state => {
     console.debug('compute: dailyAggregationsCached')
     return Object.entries(state.data.trades).reduce((map, [symbol, trades]) => {
-      const groups = Object.entries(groupBy(Object.values(trades ?? {}), t => moment(t.time).startOf('day').valueOf()))
+      const groups = Object.entries(groupBy(Object.values(trades ?? {}), t => moment.utc(t.time).startOf('day').valueOf()))
       map[symbol] = groups.map(([_, list]) => {
         const rplDiff = list.reduce((acc, t) => acc + t.rplDiff, 0)
-        return { time: moment(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
+        return { time: moment.utc(list[0].time).startOf('day').valueOf(), rplDiff: rplDiff, agg: true }
       }).sort((a, b) => a.time - b.time)
       return map
     }, { })
