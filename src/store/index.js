@@ -5,6 +5,7 @@ import localforage from 'localforage'
 import auth from './modules/auth'
 import events from './modules/events'
 import settings from './modules/settings'
+import runtime from './modules/runtime'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ export default new Vuex.Store({
   modules: {
     auth,
     events,
-    settings
+    settings,
+    runtime
   },
   strict: debug
 })

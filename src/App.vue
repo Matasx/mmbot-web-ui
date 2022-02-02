@@ -39,7 +39,7 @@
         <b>Server:</b> {{ backendVersion }}
       </b-popover>
     </header>
-    <div id="wrapper" :class="{ toggled: sidebar }">
+    <div id="wrapper" :class="{ toggled: showSidebar }">
       <div id="sidebar-wrapper">
         <b-nav vertical class="sidebar-links">
           <b-nav-item to="/">Dashboard</b-nav-item>
@@ -76,12 +76,14 @@ import SkinToggle from '@/components/SkinToggle'
 import ConnectivityIndicator from '@/components/ConnectivityIndicator'
 import NavCollapse from '@/components/NavCollapse'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
+import { RUNTIME_SIDEBAR_SET } from '@/store/actions/runtime'
 import { createNamespacedHelpers } from 'vuex'
 import ClientVersion from '@/version'
 import Highcharts from 'highcharts'
 
 const auth = createNamespacedHelpers('auth')
 const events = createNamespacedHelpers('events')
+const runtime = createNamespacedHelpers('runtime')
 
 export default {
   components: { SkinToggle, ConnectivityIndicator, NavCollapse }, // SkinPicker
@@ -89,34 +91,38 @@ export default {
     const mobileThreshold = 1100
     return {
       mobileThreshold,
-      sidebar: window.innerWidth >= mobileThreshold
+      localSidebar: window.innerWidth >= mobileThreshold
     }
   },
   computed: {
     ...auth.mapGetters(['username', 'isAuthenticated']),
     ...events.mapGetters(['backendVersion', 'infos', 'logs']),
+    ...runtime.mapGetters(['sidebar']),
     frontendVersion () {
       return ClientVersion
+    },
+    showSidebar () {
+      return this.localSidebar && this.sidebar
     }
   },
   methods: {
     ...auth.mapActions({
       authLogout: AUTH_LOGOUT
     }),
-    setSidebar (toggle, user = false) {
-      if (this.sidebar !== toggle) {
-        if (user) {
-          this.sidebar = toggle
-        } else {
-          setTimeout(() => { this.sidebar = toggle }, 800)
-        }
+    ...runtime.mapMutations({
+      setSidebar: RUNTIME_SIDEBAR_SET
+    }),
+    setLocalSidebar (toggle) {
+      if (this.showSidebar !== toggle) {
+        this.localSidebar = toggle
+        this.setSidebar(toggle)
         if (!this.isMobile()) {
           setTimeout(this.reflowCharts, 600)
         }
       }
     },
     toggleSidebar () {
-      this.setSidebar(!this.sidebar, true)
+      this.setLocalSidebar(!this.sidebar)
     },
     reflowCharts () {
       Highcharts.charts
@@ -125,13 +131,6 @@ export default {
     },
     isMobile () {
       return window.innerWidth < this.mobileThreshold
-    }
-  },
-  watch: {
-    $route () {
-      if (this.isMobile()) {
-        this.setSidebar(false)
-      }
     }
   }
 }

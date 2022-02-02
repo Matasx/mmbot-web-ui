@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Dashboard from '@/views/Dashboard.vue'
 import store from '@/store'
+import { RUNTIME_SIDEBAR_SET } from '@/store/actions/runtime'
 
 Vue.use(Router)
 
@@ -64,15 +65,33 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, _from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters['auth/isAuthenticated']) {
-      next()
-      return
-    }
-    next('/login')
+const mobileThreshold = 1100
+
+const isMobile = function () {
+  return window.innerWidth < mobileThreshold
+}
+
+const navigate = function (next) {
+  if (isMobile()) {
+    setTimeout(next, 500)
   } else {
     next()
+  }
+}
+
+router.beforeEach((to, _from, next) => {
+  if (isMobile()) {
+    store.commit('runtime/' + RUNTIME_SIDEBAR_SET, false)
+  }
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters['auth/isAuthenticated']) {
+      navigate(next)
+      return
+    }
+    navigate(() => next('/login'))
+  } else {
+    navigate(next)
   }
 })
 
