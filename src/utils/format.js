@@ -16,6 +16,10 @@ export default {
       significantDigits = 8
     } else if (abs < 0.1 && allowMicro) {
       significantDigits = 5
+    } else if (abs < 10) {
+      significantDigits = 4
+    } else if (abs < 100) {
+      significantDigits = 3
     } else if (abs < 1000) {
       significantDigits = 2
     }
