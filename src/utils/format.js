@@ -31,6 +31,6 @@ export default {
     if (allowMicro && significantDigits > 6) {
       return sign + (value * 1000000).toFixed(significantDigits - 6) + 'μ'
     }
-    return sign + value.toFixed(significantDigits)
+    return sign + Number(value.toFixed(significantDigits))
   }
 }
