@@ -29,13 +29,15 @@ import {
   faMeh,
   faFrownOpen,
   faSadCry,
-  faVial
+  faVial,
+  faCrown,
+  faExclamation
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faKey, faPowerOff, faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExclamationTriangle)
 library.add(faWifi, faSyncAlt, faMapPin, faSlidersH, faBurn, faHandPaper, faExternalLinkAlt, faCommentDollar)
 library.add(faDizzy, faCaretDown, faCaretUp, faMoon, faSun, faBars, faBug, faGrinStars, faGrinBeam)
-library.add(faMeh, faFrownOpen, faSadCry, faVial)
+library.add(faMeh, faFrownOpen, faSadCry, faVial, faCrown, faExclamation)
 
 Vue.component('fa-icon', FontAwesomeIcon)

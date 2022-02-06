@@ -31,9 +31,11 @@
 </template>
 
 <script>
-import { AUTH_REQUEST } from '@/store/actions/auth'
+import { AUTH_CHECK } from '@/store/actions/auth'
 import { createNamespacedHelpers } from 'vuex'
-const { mapActions } = createNamespacedHelpers('auth')
+import axios from 'axios'
+import router from '@/router'
+const { mapGetters, mapActions } = createNamespacedHelpers('auth')
 
 export default {
   name: 'LoginForm',
@@ -46,11 +48,28 @@ export default {
       alertCountDown: 0
     }
   },
+  computed: {
+    ...mapGetters(['user', 'viewer', 'admin']),
+    redirect () {
+      const redirect = this.$route.query.redirect
+      return !!redirect && redirect.length > 0 ? redirect : '/'
+    }
+  },
   methods: {
     login: async function () {
-      const { username, password } = this
       try {
-        await this.authLogin({ username, password })
+        const response = await axios.post('api/user', {
+          user: this.username,
+          password: this.password,
+          cookie: 'permanent' // temporary, return
+        })
+
+        if (!!response.data && (response.data.viewer || response.data.admin)) {
+          await this.authCheck()
+          this.doRedirect()
+        } else {
+          throw new Error('Login attempt failed!')
+        }
       } catch (error) {
         this.error = error.toString()
         this.alertCountDown = this.dismissSecs
@@ -60,8 +79,22 @@ export default {
       this.alertCountDown = remaining
     },
     ...mapActions({
-      authLogin: AUTH_REQUEST
-    })
+      authCheck: AUTH_CHECK
+    }),
+    doRedirect () {
+      router.push(this.redirect)
+    }
+  },
+  async mounted () {
+    try {
+      await this.authCheck()
+      if (this.admin) {
+        this.doRedirect()
+      }
+    } catch (error) {
+      this.error = error.toString()
+      this.alertCountDown = this.dismissSecs
+    }
   }
 }
 </script>

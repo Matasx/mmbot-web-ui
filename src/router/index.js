@@ -47,20 +47,26 @@ const router = new Router({
     {
       path: '/debug',
       name: 'Debug',
-      component: () => import('@/views/Debug.vue')
+      component: () => import('@/views/Debug.vue'),
+      meta: {
+        admin: true
+      }
     },
     {
       path: '/test',
       name: 'Test',
       component: () => import('@/views/Test.vue'),
       meta: {
-        requiresAuth: true
+        admin: true
       }
     },
     {
       path: '/login',
       name: 'Login',
-      component: () => import('@/views/Login.vue')
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        public: true
+      }
     },
     {
       path: '/settings',
@@ -87,18 +93,23 @@ const navigate = function (next, delay) {
 router.beforeEach((to, _from, next) => {
   const delay = store.getters['runtime/sidebar'] && isMobile()
   if (delay) {
-    console.log('delay')
     store.commit('runtime/' + RUNTIME_SIDEBAR_SET, false)
   }
 
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters['auth/isAuthenticated']) {
+  const navigateRole = function (role) {
+    if (store.getters[role]) {
       navigate(next, delay)
-      return
+    } else {
+      navigate(() => next({ path: '/login', query: { redirect: to.fullPath } }), delay)
     }
-    navigate(() => next('/login'), delay)
-  } else {
+  }
+
+  if (to.matched.every(x => x.meta.public)) {
     navigate(next, delay)
+  } else if (to.matched.some(x => x.meta.admin)) {
+    navigateRole('auth/admin')
+  } else {
+    navigateRole('auth/viewer')
   }
 })
 

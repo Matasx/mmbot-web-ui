@@ -15,9 +15,9 @@
           <b-nav-item v-b-modal.modal-log v-b-tooltip.bottom title="Log"><fa-icon icon="bug"/></b-nav-item>
           <skin-toggle/>
           <!-- <skin-picker/> -->
-          <b-nav-item-dropdown v-if="isAuthenticated" right>
+          <b-nav-item-dropdown v-if="user" right>
             <template #button-content>
-              {{ username }}
+              <fa-icon v-if="admin" icon="crown" class="mr-1 text-warning" />{{ user }}
             </template>
             <b-dropdown-item @click="authLogout">
               <fa-icon icon="power-off" class="mb-1"/> Sign Out
@@ -96,7 +96,7 @@ export default {
     }
   },
   computed: {
-    ...auth.mapGetters(['username', 'isAuthenticated']),
+    ...auth.mapGetters(['user', 'admin']),
     ...events.mapGetters(['backendVersion', 'infos', 'logs']),
     ...runtime.mapGetters(['sidebar']),
     frontendVersion () {

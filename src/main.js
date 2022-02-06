@@ -9,6 +9,10 @@ start()
 async function start () {
   try {
     const config = (await axios.get('config.json')).data
+
+    axios.defaults.withCredentials = true
+    axios.defaults.baseURL = config.url
+
     Vue.prototype.$serviceUrl = config.url
     Vue.prototype.$storageKey = config.storage
 

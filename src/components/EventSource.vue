@@ -1,8 +1,9 @@
 <template>
   <b-nav-item id="connectivity">
-    <fa-icon v-if="isConnected" icon="wifi"/>
+    <fa-icon v-if="!viewer" icon="exclamation" class="text-danger"/>
+    <fa-icon v-else-if="isConnected" icon="wifi"/>
     <fa-icon v-else icon="sync-alt" class="text-danger" spin/>
-    <b-popover target="connectivity" triggers="hover" placement="bottom" variant="secondary">
+    <b-popover v-if="viewer" target="connectivity" triggers="hover" placement="bottom" variant="secondary">
       <template #title>Last update</template>
       {{ timeDiffSec }}s ago
     </b-popover>
@@ -25,7 +26,9 @@ import performanceHandler from '@/eventsource/handlers/performance'
 import configHandler from '@/eventsource/handlers/config'
 import logHandler from '@/eventsource/handlers/log'
 import { createNamespacedHelpers } from 'vuex'
-const { mapMutations } = createNamespacedHelpers('events')
+import { AUTH_CHECK } from '@/store/actions/auth'
+const events = createNamespacedHelpers('events')
+const auth = createNamespacedHelpers('auth')
 
 const handlers = {
   trade: tradeHandler,
@@ -40,6 +43,8 @@ const handlers = {
   log: logHandler
 }
 
+let source = null
+
 export default {
   name: 'EventSource',
   data () {
@@ -50,6 +55,7 @@ export default {
     }
   },
   computed: {
+    ...auth.mapGetters(['viewer']),
     timeDiffSec () {
       return (this.timeDiff / 1000).toFixed(0)
     },
@@ -60,8 +66,21 @@ export default {
       return this.timeDiff < 70000
     }
   },
+  watch: {
+    viewer (newViewer) {
+      if (newViewer) {
+        this.setupStream()
+      } else if (source) {
+        source.close()
+        source = null
+      }
+    }
+  },
   methods: {
-    ...mapMutations({
+    ...auth.mapActions({
+      authCheck: AUTH_CHECK
+    }),
+    ...events.mapMutations({
       commitBatch: EVENTS_BATCH,
       commitTransaction: EVENTS_TRANSACTION
     }),
@@ -70,6 +89,10 @@ export default {
     },
     setupConnectivityIndicator () {
       setInterval(this.updateCurrentTime, 1000)
+    },
+    setupDispatch () {
+      this.batch = this.newTransaction()
+      setInterval(this.dispatch, 5000)
     },
     newTransaction () {
       const transaction = {
@@ -87,9 +110,16 @@ export default {
     },
     setupStream () {
       this.batch = this.newTransaction()
-      setInterval(this.dispatch, 5000)
 
-      const source = new EventSource(this.$serviceUrl + 'api/data')
+      if (!this.viewer) return
+
+      if (source) {
+        source.close()
+      }
+
+      source = new EventSource(this.$serviceUrl + 'api/data', {
+        withCredentials: true
+      })
 
       let isTransaction = false
       let transaction = {}
@@ -98,8 +128,10 @@ export default {
         transaction = this.newTransaction()
       }
 
-      source.onerror = () => {
+      source.onerror = async () => {
         source.close()
+        source = null
+        await this.authCheck(true)
         setTimeout(this.setupStream, 5000)
       }
 
@@ -139,6 +171,7 @@ export default {
   },
   mounted () {
     this.setupConnectivityIndicator()
+    this.setupDispatch()
     this.setupStream()
   }
 }
