@@ -7,6 +7,10 @@
       <template #title>Last update</template>
       {{ timeDiffSec }}s ago
     </b-popover>
+    <b-popover v-else target="connectivity" triggers="hover" placement="bottom" variant="danger">
+      <template #title>Unauthorized access</template>
+      Please login
+    </b-popover>
   </b-nav-item>
 </template>
 
