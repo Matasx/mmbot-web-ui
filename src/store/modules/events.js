@@ -1,7 +1,6 @@
 import {
   EVENTS_TRANSACTION,
-  EVENTS_BATCH,
-  EVENTS_LAST_EVENT_TIME_SET
+  EVENTS_BATCH
 } from '@/store/actions/events'
 import Vue from 'vue'
 import moment from 'moment'
@@ -22,8 +21,7 @@ const state = {
   computed: {
     enabled: {},
     lastTrade: {}
-  },
-  lastEventTime: 0
+  }
 }
 
 const getters = {
@@ -180,8 +178,8 @@ const getters = {
   misc: state => (symbol) => state.data.misc[symbol],
   price: state => (symbol) => state.data.price[symbol],
   performance: state => state.data.performance,
+  performanceRows: state => [...state.data.performance.rows].sort((a, b) => b[0] - a[0]),
   config: state => state.data.config,
-  lastEventTime: state => state.lastEventTime,
   logs: state => state.data.logs
 }
 
@@ -307,9 +305,6 @@ const mutations = {
         updateDiffAll(Object.values(state.data.trades[symbol]), state.computed)
       }
     })
-  },
-  [EVENTS_LAST_EVENT_TIME_SET]: (state, time) => {
-    state.lastEventTime = time
   }
 }
 

@@ -11,7 +11,7 @@
 
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/settings" v-b-tooltip.bottom title="Global settings"><fa-icon icon="sliders-h"/></b-nav-item>
-          <connectivity-indicator/>
+          <event-source/>
           <b-nav-item v-b-modal.modal-log v-b-tooltip.bottom title="Log"><fa-icon icon="bug"/></b-nav-item>
           <skin-toggle/>
           <!-- <skin-picker/> -->
@@ -74,7 +74,7 @@
 <script>
 import SkinToggle from '@/components/SkinToggle'
 // import SkinPicker from './components/SkinPicker'
-import ConnectivityIndicator from '@/components/ConnectivityIndicator'
+import EventSource from '@/components/EventSource'
 import NavCollapse from '@/components/NavCollapse'
 import { AUTH_LOGOUT } from '@/store/actions/auth'
 import { RUNTIME_SIDEBAR_SET } from '@/store/actions/runtime'
@@ -87,7 +87,7 @@ const events = createNamespacedHelpers('events')
 const runtime = createNamespacedHelpers('runtime')
 
 export default {
-  components: { SkinToggle, ConnectivityIndicator, NavCollapse }, // SkinPicker
+  components: { SkinToggle, NavCollapse, EventSource }, // SkinPicker
   data () {
     const mobileThreshold = 1100
     return {

@@ -9,7 +9,6 @@ import '@/plugins/cryptojs'
 import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store'
-import { setupStream } from '@/eventsource'
 import '@/registerServiceWorker'
 
 start()
@@ -22,9 +21,6 @@ async function start () {
   new Vue({
     router,
     store,
-    render: h => h(App),
-    created () {
-      setupStream()
-    }
+    render: h => h(App)
   }).$mount('#app')
 }
