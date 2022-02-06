@@ -1,4 +1,5 @@
 {
     "url": "https://www.mmbot.trade/live/",
-    "storage": "vuex"
+    "storage": "vuex",
+    "withCredentials": false
 }

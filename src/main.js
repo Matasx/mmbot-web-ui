@@ -10,9 +10,10 @@ async function start () {
   try {
     const config = (await axios.get('config.json')).data
 
-    axios.defaults.withCredentials = true
+    axios.defaults.withCredentials = !!config.withCredentials
     axios.defaults.baseURL = config.url
 
+    Vue.prototype.$withCredentials = !!config.withCredentials
     Vue.prototype.$serviceUrl = config.url
     Vue.prototype.$storageKey = config.storage
 

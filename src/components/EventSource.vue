@@ -118,7 +118,7 @@ export default {
       }
 
       source = new EventSource(this.$serviceUrl + 'api/data', {
-        withCredentials: true
+        withCredentials: this.$withCredentials
       })
 
       let isTransaction = false
