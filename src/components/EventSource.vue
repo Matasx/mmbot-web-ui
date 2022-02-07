@@ -135,8 +135,11 @@ export default {
       source.onerror = async () => {
         source.close()
         source = null
-        await this.authCheck(true)
-        setTimeout(this.setupStream, 5000)
+        try {
+          await this.authCheck(true)
+        } finally {
+          setTimeout(this.setupStream, 5000)
+        }
       }
 
       source.onmessage = event => {
