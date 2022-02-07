@@ -14,7 +14,7 @@
         <div class="col-sm-5 pt-1">
           <b-progress :value="v" :max="60000" :precision="2" variant="info"></b-progress>
         </div>
-        <div class="col-sm-2">{{ (v / 600).toFixed(2) }} %</div>
+        <div class="col-sm-2 text-right">{{ (v / 600).toFixed(2) }} %</div>
       </div>
     </div>
     <b-skeleton-wrapper v-else loading>
