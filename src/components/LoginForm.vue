@@ -17,6 +17,9 @@
           <b-form-input id="input-2" :state="!!password" v-model="password" autocomplete="current-password" placeholder="Enter your password" type="password" />
         </b-input-group>
       </b-form-group>
+      <b-input-group>
+        <b-form-checkbox v-model="persistent" switch>Remember me</b-form-checkbox>
+      </b-input-group>
       <b-form-row>
         <b-col cols="3" offset="6"><b-button block size="lg" type="reset" variant="outline-danger">Reset</b-button></b-col>
         <b-col cols="3"><b-button block size="lg" type="submit" variant="success">Login</b-button></b-col>
@@ -44,6 +47,7 @@ export default {
       username: '',
       password: '',
       error: '',
+      persistent: false,
       dismissSecs: 5,
       alertCountDown: 0
     }
@@ -61,7 +65,7 @@ export default {
         const response = await axios.post('api/user', {
           user: this.username,
           password: this.password,
-          cookie: 'permanent' // temporary, return
+          cookie: this.persistent ? 'permanent' : 'temporary' // 'return'
         })
 
         if (!!response.data && (response.data.viewer || response.data.admin)) {
