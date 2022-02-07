@@ -44,8 +44,7 @@
         <b-nav vertical class="sidebar-links">
           <b-nav-item to="/">Dashboard</b-nav-item>
           <b-nav-item to="/performance">Daily performance</b-nav-item>
-          <b-nav-item to="/wallets">Wallets</b-nav-item>
-          <b-nav-item to="/test">Admin</b-nav-item>
+          <b-nav-item to="/admin">Administration</b-nav-item>
         </b-nav>
         <nav-collapse title="Charts" id="charts">
           <b-nav-item to="/chart/price">Price</b-nav-item>
@@ -62,6 +61,9 @@
         <nav-collapse title="Transactions" id="transactions">
           <b-nav-item to="/trades">Classic</b-nav-item>
           <b-nav-item to="/trades-modern">Modern</b-nav-item>
+        </nav-collapse>
+        <nav-collapse v-if="admin" title="Administration" id="administration">
+          <b-nav-item to="/utilization">CPU utilization</b-nav-item>
         </nav-collapse>
       </div>
       <div id="page-content-wrapper">
