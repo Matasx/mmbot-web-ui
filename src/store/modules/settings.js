@@ -9,6 +9,7 @@ import {
   SETTINGS_MENU_TOGGLE_SET,
   LIGHT_SKIN
 } from '@/store/actions/settings'
+import Vue from 'vue'
 
 const state = {
   data: {
@@ -90,7 +91,7 @@ const mutations = {
     state.data.performanceSettings = settings
   },
   [SETTINGS_MENU_TOGGLE_SET]: (state, toggle) => {
-    state.data.menuToggle[toggle.id] = toggle.state
+    Vue.set(state.data.menuToggle, toggle.id, toggle.state)
   }
 }
 
