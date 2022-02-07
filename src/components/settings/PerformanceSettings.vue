@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-form-checkbox v-model="local.currency" switch>Show currency</b-form-checkbox>
     <label for="page-size">Page size: {{ local.pageSize }}</label>
     <b-form-input v-model="local.pageSize" id="page-size" type="range" min="3" max="100" number/>
   </div>

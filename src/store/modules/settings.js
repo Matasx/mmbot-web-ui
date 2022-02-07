@@ -46,6 +46,7 @@ const state = {
       formatAutoElipsis: false
     },
     performanceSettings: {
+      currency: false,
       pageSize: 20
     },
     menuToggle: { }

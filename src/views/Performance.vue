@@ -20,7 +20,7 @@
         <b-tr>
           <b-th class="text-center">∑ total</b-th>
           <b-th v-for="(sum, index) in performance.sums" :key="index" class="text-center">
-            <price :value="sum" :currency-info="infos[index+1]" :add-symbol="false" colored hide-zero />
+            <price :value="sum" :currency-info="infos[index+1]" :add-symbol="performanceSettings.currency" colored hide-zero />
           </b-th>
         </b-tr>
       </b-thead>
@@ -28,7 +28,7 @@
         <b-tr v-for="(row, index) in rowsPage" :key="index">
           <b-td v-for="(cell, index2) in row" :key="index2" class="text-center">
             <span v-if="index2 === 0">{{ cell | date }}</span>
-            <price v-else :value="cell" :currency-info="infos[index2]" :add-symbol="false" colored hide-zero />
+            <price v-else :value="cell" :currency-info="infos[index2]" :add-symbol="performanceSettings.currency" colored hide-zero />
           </b-td>
         </b-tr>
       </b-tbody>
