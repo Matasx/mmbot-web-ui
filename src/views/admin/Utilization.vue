@@ -55,7 +55,7 @@ export default {
     }),
     async fetchData () {
       try {
-        const response = await axios.get('admin/api/utilization')
+        const response = await axios.get('api/admin/utilization')
         if (response.data && (!this.data || this.data.last_update !== response.data.last_update)) {
           this.data = response.data
         }
