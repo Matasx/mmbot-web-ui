@@ -266,7 +266,7 @@ const mutations = {
 
     Object.entries(data.trades).forEach(([symbol, trades]) => {
       data.trades[symbol] = trades.reduce((map, trade) => {
-        map[trade.id] = trade
+        map[trade.key] = trade
         return map
       }, { })
     })
@@ -296,7 +296,7 @@ const mutations = {
       const updated = updateDiffAll(trades, state.computed)
 
       trades.forEach(trade => {
-        setNested(state.data.trades, symbol, trade.id, trade)
+        setNested(state.data.trades, symbol, trade.key, trade)
       })
 
       if (!updated) {

@@ -3,12 +3,12 @@ import common from './common'
 export default {
   map (dto) {
     return {
-      key: dto.symbol + '' + JSON.stringify(dto.data.id),
+      key: dto.symbol + '' + JSON.stringify(dto.id),
       symbol: dto.symbol,
       alert: dto.data.achg === 0, // && JSON.stringify(dao.data.id).startsWith('"ALERT'),
       alertObj: dto.data.alert,
       buy: dto.data.achg > 0,
-      id: dto.data.id, // Rransaction id
+      id: dto.data.id, // Transaction id
       time: dto.data.time,
       normch: dto.data.normch, // Normalized P/L
       achg: dto.data.achg, // Size
