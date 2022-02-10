@@ -1,6 +1,6 @@
 {
   "name": "mmbot-ui",
-  "version": "0.40.1",
+  "version": "0.40.2",
   "private": true,
   "scripts": {
     "serve": "genversion src/version.js && vue-cli-service serve",
