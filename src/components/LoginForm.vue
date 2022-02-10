@@ -72,7 +72,7 @@ export default {
           await this.authCheck()
           this.doRedirect()
         } else {
-          throw new Error('Login attempt failed!')
+          throw new Error('Invalid username or password.')
         }
       } catch (error) {
         this.error = error.toString()
