@@ -1,0 +1,42 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/')
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Extract tag
+      run: |
+        tagVersion = ${GITHUB_REF/refs\/tags\//}
+        echo "version={tagVersion}" >> $GITHUB_ENV
+    
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+        cache: 'npm'
+        
+    - name: NPM init
+      run: npm ci
+      
+    - name: NPM build ${{ env.version }}
+      run: npm run build
+      
+    - name: Update config.json
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'dist/config.json'
+      env:
+        url: ""
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: release
+        path: dist/
