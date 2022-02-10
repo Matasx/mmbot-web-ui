@@ -1,4 +1,5 @@
 # mmbot-ui
+[![Build](https://github.com/Matasx/mmbot-web-ui/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/Matasx/mmbot-web-ui/actions/workflows/build.yaml)
 
 ## Project setup
 ```
