@@ -16,3 +16,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+    - uses: microsoft/variable-substitution@v1
+      with:
+        files: 'dist/config.json'
+      env:
+        url: ""
+    - uses: actions/upload-artifact@v2
+      with:
+        name: release
+        path: dist/
