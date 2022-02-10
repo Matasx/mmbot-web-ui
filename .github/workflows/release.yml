@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Extract tag
+    - name: Extract version from tag
       run: |
-        tagVersion = ${GITHUB_REF/refs\/tags\//}
-        echo "version={tagVersion}" >> $GITHUB_ENV
+        tagVersion=${GITHUB_REF/refs\/tags\//}
+        echo "version=${tagVersion}" >> $GITHUB_ENV
     
     - name: Checkout repository
       uses: actions/checkout@v2
