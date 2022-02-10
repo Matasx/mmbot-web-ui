@@ -55,13 +55,21 @@ export default {
       setData: SETTINGS_DATA_SET
     }),
     doExport () {
-      navigator.clipboard.writeText(this.exportString)
-      this.$bvModal.hide('modal-export')
-      this.$bvToast.toast('Settings were copied to clipboard!', {
-        title: 'Export success',
-        autoHideDelay: 5000,
-        variant: 'success'
-      })
+      try {
+        navigator.clipboard.writeText(this.exportString)
+        this.$bvModal.hide('modal-export')
+        this.$bvToast.toast('Settings were copied to the clipboard!', {
+          title: 'Export success',
+          autoHideDelay: 5000,
+          variant: 'success'
+        })
+      } catch {
+        this.$bvToast.toast('Unable to copy the settings to the clipboard. Please check the website permissions in your browser or copy the settings manually.', {
+          title: 'Export error',
+          autoHideDelay: 5000,
+          variant: 'danger'
+        })
+      }
     },
     doImport () {
       this.importString(this.settingsInput)
