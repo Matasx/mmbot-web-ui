@@ -2222,6 +2222,11 @@ export default {
     name: 'Counterparty',
     color: '#ed1650'
   },
+  XDB: {
+    symbol: 'XDB',
+    name: 'DigitalBits',
+    color: '#4f7aa2'
+  },
   XDN: {
     symbol: 'XDN',
     name: 'DigitalNote',
