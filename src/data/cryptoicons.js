@@ -112,6 +112,11 @@ export default {
     name: 'Aragon',
     color: '#2cd3e1'
   },
+  APE: {
+    symbol: 'APE',
+    name: 'ApeCoin',
+    color: '#fd875e'
+  },
   APPC: {
     symbol: 'APPC',
     name: 'AppCoins',
@@ -2021,6 +2026,11 @@ export default {
     symbol: 'TPAY',
     name: 'TokenPay',
     color: '#3058a6'
+  },
+  TRAC: {
+    symbol: 'TRAC',
+    name: 'OriginTrail',
+    color: '#30c0f2'
   },
   TRIG: {
     symbol: 'TRIG',
