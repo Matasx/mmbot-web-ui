@@ -27,6 +27,9 @@ Highcharts.setOptions({
     series: {
       animation: false
     }
+  },
+  time: {
+    useUTC: false
   }
 })
 
