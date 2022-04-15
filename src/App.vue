@@ -50,6 +50,7 @@
           <b-nav-item to="/chart/price">Price</b-nav-item>
           <b-nav-item to="/chart/neutraldist">Distance to neutral price</b-nav-item>
           <b-nav-item to="/chart/profit">P&amp;L</b-nav-item>
+          <b-nav-item to="/chart-currency">P&amp;L by currency</b-nav-item>
           <b-nav-item to="/chart/dailyProfit">Daily P&amp;L</b-nav-item>
           <b-nav-item to="/chart/position">Position</b-nav-item>
           <b-nav-item to="/chart/norm">Normalized profit</b-nav-item>

@@ -36,6 +36,11 @@ const router = new Router({
       component: () => import('@/views/TradesModern.vue')
     },
     {
+      path: '/chart-currency',
+      name: 'ChartByCurrency',
+      component: () => import('@/views/ChartByCurrency.vue')
+    },
+    {
       path: '/performance',
       name: 'Performance',
       component: () => import('@/views/Performance.vue')

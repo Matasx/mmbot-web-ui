@@ -50,6 +50,41 @@ const getters = {
     return Object.values(state.data.trades ?? {}).flatMap(list => Object.values(list)).sort(ascTime)
   },
 
+  hourlyTradesCached: (state, getters) => {
+    console.debug('compute: hourlyTradesCached')
+    return Object.entries(state.data.trades).reduce((map, [symbol, tr]) => {
+      const trades = Object.values(tr ?? {})
+      if (trades.length === 0) {
+        map[symbol] = []
+        return map
+      }
+      const first = moment(trades[0].time).startOf('hour').valueOf()
+      const last = moment(getters.lastTradeGlobal.time).startOf('hour').valueOf()
+      const agg = []
+      let i = 0
+      let current = null
+      let next = null
+      let nextTime = 0
+      for (let t = first; t <= last; t += 3600000) {
+        if ((!current || t >= nextTime) && i < trades.length) {
+          current = trades[i]
+          i++
+          if (i < trades.length) {
+            next = trades[i]
+            nextTime = moment(next.time).startOf('hour').valueOf()
+          }
+        }
+        agg.push({
+          time: t,
+          pl: current.pl
+        })
+      }
+      map[symbol] = agg
+      return map
+    }, { })
+  },
+  hourlyTrades: (_, getters) => (symbol) => getters.hourlyTradesCached[symbol] ?? [],
+
   dailyAggregationsCached: state => {
     console.debug('compute: dailyAggregationsCached')
     return Object.entries(state.data.trades).reduce((map, [symbol, trades]) => {
