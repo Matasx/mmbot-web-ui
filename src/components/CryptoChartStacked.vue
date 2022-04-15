@@ -23,10 +23,6 @@ export default {
       type: Array,
       required: true
     },
-    chartType: {
-      type: String,
-      default: 'area'
-    },
     chartTitle: {
       type: String,
       required: true
@@ -71,15 +67,15 @@ export default {
           text: this.chartTitle
         },
         chart: {
-          type: this.chartType
+          type: 'line'
         },
         plotOptions: {
-          area: {
+          line: {
             stacking: 'normal'
           }
         },
         legend: {
-          enabled: false
+          enabled: true
         },
         tooltip: {
           shared: true,
@@ -107,7 +103,13 @@ export default {
             format: '{value} ' + this.unit
           },
           startOnTick: false,
-          endOnTick: false
+          endOnTick: false,
+          plotLines: [{
+            className: 'plot-line-buy',
+            width: 1,
+            value: 0,
+            zIndex: 2
+          }]
         },
         series: this.tradeSeries
       }

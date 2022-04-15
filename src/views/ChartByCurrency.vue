@@ -36,12 +36,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['infos']),
+    ...mapGetters(['infos', 'misc']),
     currencyGroups () {
-      // todo: filter out disabled by misc
       // todo: respect P&L type
-      // todo: option to hide simulators
-      return Object.entries(groupBy(this.infos, i => i.currency))
+      // todo: trader filter
+      const filtered = this.infos.filter(i => this.misc(i.symbol).en)
+      return Object.entries(groupBy(filtered, i => i.currency))
     }
   },
   methods: {
