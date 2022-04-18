@@ -82,6 +82,11 @@ export default {
     name: 'Aion',
     color: '#00bfec'
   },
+  ALPHA: {
+    symbol: 'ALPHA',
+    name: 'Alpha Venture DAO',
+    color: '#000000'
+  },
   ALGO: {
     symbol: 'ALGO',
     name: 'Algorand',
@@ -407,6 +412,11 @@ export default {
     name: 'BZEdge',
     color: '#00aeef'
   },
+  CAKE: {
+    symbol: 'CAKE',
+    name: 'PancakeSwap',
+    color: '#fbb413'
+  },
   CALL: {
     symbol: 'CALL',
     name: 'Capital',
@@ -615,6 +625,11 @@ export default {
   DGD: {
     symbol: 'DGD',
     name: 'DigixDAO',
+    color: '#f4d029'
+  },
+  DGTX: {
+    symbol: 'DGTX',
+    name: 'Digitex',
     color: '#f4d029'
   },
   DLT: {
@@ -860,6 +875,11 @@ export default {
   FTC: {
     symbol: 'FTC',
     name: 'Feathercoin',
+    color: '#27323a'
+  },
+  FTM: {
+    symbol: 'FTM',
+    name: 'Fantom',
     color: '#27323a'
   },
   FUEL: {
@@ -1212,6 +1232,11 @@ export default {
     name: 'Lunyr',
     color: '#f55749'
   },
+  LUNA: {
+    symbol: 'LUNA',
+    name: 'Terra',
+    color: '#f55749'
+  },
   MAID: {
     symbol: 'MAID',
     name: 'MaidSafeCoin',
@@ -1361,6 +1386,11 @@ export default {
     symbol: 'NDZ',
     name: 'NDZ',
     color: '#622fba'
+  },
+  NEAR: {
+    symbol: 'NEAR',
+    name: 'NEAR Protocol',
+    color: '#50479e'
   },
   NEBL: {
     symbol: 'NEBL',
@@ -1787,6 +1817,11 @@ export default {
     name: 'Siacoin',
     color: '#20ee82'
   },
+  SHIB: {
+    symbol: 'SHIB',
+    name: 'Shiba Inu',
+    color: '#964b9c'
+  },
   SHIFT: {
     symbol: 'SHIFT',
     name: 'Shift',
@@ -2186,6 +2221,11 @@ export default {
     symbol: 'WICC',
     name: 'WaykiChain',
     color: '#5783cb'
+  },
+  WIN: {
+    symbol: 'WIN',
+    name: 'WINkLink',
+    color: '#0dc9f7'
   },
   WINGS: {
     symbol: 'WINGS',
