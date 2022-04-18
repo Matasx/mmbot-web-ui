@@ -52,10 +52,7 @@ export default {
       return this.infos.map(x => ({
         name: x.title,
         data: this.hourlyTrades(x.symbol)
-          .map(trade => ({
-            x: trade.time,
-            y: trade[this.yValue]
-          }))
+          .map(trade => ([trade.time, trade[this.yValue]]))
       }))
     },
     unit () {
