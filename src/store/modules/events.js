@@ -54,20 +54,19 @@ const getters = {
     console.debug('compute: hourlyTradesCached')
     return Object.entries(state.data.trades).reduce((map, [symbol, tr]) => {
       const trades = Object.values(tr ?? {})
+      const agg = []
+      map[symbol] = agg
       if (trades.length === 0) {
-        map[symbol] = []
         return map
       }
-      const first = moment(trades[0].time).startOf('hour').valueOf()
       const last = moment(getters.lastTradeGlobal.time).startOf('hour').valueOf()
-      const agg = []
       let i = 0
       let current = null
-      let next = null
-      let nextTime = 0
-      for (let t = first; t <= last; t += 3600000) {
-        if ((!current || t >= nextTime) && i < trades.length) {
-          current = trades[i]
+      let next = trades[0]
+      let nextTime = moment(next.time).startOf('hour').valueOf()
+      for (let t = nextTime; t <= last; t += 3600000) {
+        while ((!current || t >= nextTime) && i < trades.length) {
+          current = next
           i++
           if (i < trades.length) {
             next = trades[i]
@@ -79,7 +78,6 @@ const getters = {
           pl: current.pl
         })
       }
-      map[symbol] = agg
       return map
     }, { })
   },
