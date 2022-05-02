@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     getSrc (entry) {
-      return 'crypto/' + (entry.symbol.image ?? entry.symbol.toLowerCase()) + '.png'
+      return 'crypto/' + (entry.image ?? entry.symbol.toLowerCase()) + '.png'
     }
   }
 }
