@@ -407,6 +407,11 @@ export default {
     name: 'Burst',
     color: '#2d2d2d'
   },
+  BUSD: {
+    symbol: 'BUSD',
+    name: 'Binance USD',
+    color: '#2d2d2d'
+  },
   BZE: {
     symbol: 'BZE',
     name: 'BZEdge',
@@ -521,6 +526,11 @@ export default {
     symbol: 'CRED',
     name: 'Verify',
     color: '#37e8a3'
+  },
+  CRO: {
+    symbol: 'CRO',
+    name: 'Cronos',
+    color: '#00bdcd'
   },
   CRPT: {
     symbol: 'CRPT',
@@ -1006,6 +1016,11 @@ export default {
     symbol: 'GZR',
     name: 'Gizer',
     color: '#56c9e9'
+  },
+  HBAR: {
+    symbol: 'HBAR',
+    name: 'Hedera',
+    color: '#000000'
   },
   HIGHT: {
     symbol: 'HIGHT',
